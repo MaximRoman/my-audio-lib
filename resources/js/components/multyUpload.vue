@@ -1,8 +1,8 @@
 <template>
     <div id="template">
-        <div class="card bg-gray">
+        <div class="card" id="card">
             <div class="card-header">
-                <div class="progress bg-secondary" style="height: 40px;">
+                <div class="progress" id="progress" style="height: 40px;">
                     <div class="progress-bar" role="progressbar" :style="{width: fileProgress + '%'}">
                         {{ fileProgress }}%
                     </div>
@@ -12,7 +12,7 @@
                 <div class="row justify-content-evenly">
                     <div class="col-5 row justify-content-center">
                         <h3 class="text-center">Files to upload {{ filesOrder.length }}</h3>
-                        <select class="form-control bg-secondary" multiple style="overflow: auto;" disabled>
+                        <select class="form-control" id="text1" multiple style="overflow: auto;" disabled>
                             <option  v-for="file in filesOrder">
                                 {{ file.name }}  
                             </option>
@@ -20,7 +20,7 @@
                     </div>
                     <div class="col-5 row justify-content-center">
                         <h3 class="text-center">Files uploaded   {{ filesFinish.length }}</h3>
-                        <select class="form-control bg-secondary" multiple style="overflow: auto;" disabled>
+                        <select class="form-control" id="text2" multiple style="overflow: auto;" disabled>
                             <option v-for="file in filesFinish">
                                 {{ file.name }}
                             </option>
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card-footer">
-                <input class="form-control bg-secondary text-light" type="file" name="book" accept="audio/mpeg" multiple @change="fileInputChange()">
+                <input class="form-control" id="inp" type="file" name="book" accept="audio/mpeg" multiple @change="fileInputChange()">
             </div>
             <a id="home" href="/"></a>
         </div>
@@ -38,8 +38,10 @@
 
 <script>
     export default {
-        mounted() {
-        },
+        props: [
+            'card',
+            'childs'
+        ],
         data() {
             return {
                 filesOrder: [],
@@ -47,6 +49,13 @@
                 fileProgress: 0,
                 fileCurrent: '',
             }
+        },
+        mounted() {
+            document.getElementById('card').classList.value = document.getElementById('card').classList.value + ' ' + this.card;
+            document.getElementById('progress').classList.value = document.getElementById('progress').classList.value + ' ' + this.childs;
+            document.getElementById('text1').classList.value = document.getElementById('text1').classList.value + ' ' + this.childs;
+            document.getElementById('text2').classList.value = document.getElementById('text2').classList.value + ' ' + this.childs;
+            document.getElementById('inp').classList.value = document.getElementById('inp').classList.value + ' ' + this.childs;
         },
         methods: {
             async fileInputChange() {

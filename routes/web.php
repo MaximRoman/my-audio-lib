@@ -39,6 +39,9 @@ Route::get('/edit-book', [HomeController::class, 'editBook'])->name('editBook');
 
 Route::get('/add-image', [HomeController::class, 'addImage'])->name('addImage');
 Route::post('/upload-image', [ImageController::class,  'uploadImage'])->name('uploadImage');
+Route::put('/upload-other-image/{image}', [ImageController::class,  'uploadOtherImage'])->name('uploadOtherImage');
+Route::put('/delete-image/{image}', [ImageController::class,  'deleteImage'])->name('deleteImage');
+Route::get('/edit-image/{image}', [HomeController::class,  'editImage'])->name('editImage');
 
 Route::get('/add-author', [HomeController::class, 'addAuthor'])->name('addAuthor');
 Route::post('/create-author', [AuthorController::class, 'createAuthor'])->name('createAuthor');

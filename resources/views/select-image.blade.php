@@ -7,14 +7,14 @@
             @if (isset($images))
                 <div class="row gap-3 justify-content-center mt-3">
                     @foreach ($images as $item)
-                        <img class="col-3 img-fluid " src="{{ asset('/storage/' . $item->image) }}" onclick="event.preventDefault(); document.getElementById('image-{{$item->id}}').submit();">
+                        <form id="image-{{$item->id}}" class="col-3" action="/add-book/select-image/{{ $item->id }}" method="POST">
+                            @csrf
+                            <a class="btn btn-warning w-100 rounded-0 rounded-top" href="/edit-image/{{$item->id}}"><i class="fa-solid fa-gear"></i></a>
+                            <img class=" img-fluid" src="{{ asset('/storage/' . $item->image) }}" >
+                            <button class="btn btn-success w-100 rounded-0 rounded-bottom" type="submit">Выбрать</button>
+                        </form>           
                     @endforeach
                 </div>
-                @foreach ($images as $item)
-                    <form id="image-{{$item->id}}" action="/add-book/select-image/{{ $item->id }}" method="POST">
-                        @csrf
-                    </form>                        
-                @endforeach
             @endif
         </div>
     </div>

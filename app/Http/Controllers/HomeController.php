@@ -22,9 +22,14 @@ class HomeController extends Controller
     }
 
     public function addBook() {
-        $image = '';
+        $image = [];
+        $title = [];
         $authors = [];
         $readers = [];
+        $year = [];
+        $series = [];
+        $categories = [];
+        $description = [];
         if (Session::get('bookImage')) {
             $image = Images::all()->where('id', Session::get('bookImage'));
         }
@@ -34,13 +39,28 @@ class HomeController extends Controller
         if (Session::get('bookReaders')) {
             $readers = Readers::all()->whereIn('id', Session::get('bookReaders'));
         }
-        return view('add-book', ['image' => $image, 'authors' => $authors, 'readers' => $readers]);
+        return view('add-book', [
+                                    'image' => $image, 
+                                    'title' => $title, 
+                                    'authors' => $authors, 
+                                    'readers' => $readers,
+                                    'year' => $year,
+                                    'series' => $series,
+                                    'categories' => $categories,
+                                    'description' => $description,
+                                ]);
     }
 
     public function selectImage() {
         $images = Images::all();
 
         return view('select-image', ['images' => $images]);
+    }
+
+    public function editImage(Request $request) {
+        $images = Images::all()->where('id', $request->image);
+
+        return view('edit-image', ['images' => $images]);
     }
 
     public function selectBookImage(Request $request) {

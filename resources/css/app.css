@@ -9482,7 +9482,12 @@ fieldset:disabled .btn {
 }
 
 .invisible {
-	visibility: hidden !important
+	visibility: hidden !important;
+	width: 0.1px;
+	height: 0.1px;
+	font-size: 0.1px;
+	padding: 0;
+	margin: 0;
 }
 
 @media (min-width:576px) {

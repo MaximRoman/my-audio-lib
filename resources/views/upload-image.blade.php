@@ -9,7 +9,7 @@
                     @csrf
                     <div class="col-7">
                         <label for="image">Обложка книги</label>
-                        <input class="form-control bg-secondary text-light @error('image') is-invalid @enderror" type="file" name="image" id="image" accept="image" oninput="document.getElementById('image-upload-form').submit()">
+                        <input class="form-control bg-secondary text-light @error('image') is-invalid @enderror" type="file" name="image" id="image" accept="image/*" oninput="document.getElementById('image-upload-form').submit()">
                         @error('image')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
