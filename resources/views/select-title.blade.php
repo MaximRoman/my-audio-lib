@@ -4,7 +4,7 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Название Книги :</h3>
-            <form class="form-group row justify-content-center gap-3" action={{ route('createAuthor') }} method="POST">
+            <form class="form-group row justify-content-center gap-3" action={{ route('selectBookTitle') }} method="POST">
                 @csrf
                 <div class="col-7">
                     <label for="title">Название</label>

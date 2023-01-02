@@ -9,7 +9,7 @@ class AuthorController extends Controller
 {
     public function createAuthor(Request $request) {
         $form = $request->validate([
-            'author' => ['required', 'max:255']
+            'author' => ['required', 'unique:authors', 'max:255']
         ]);
 
         Authors::create($form);

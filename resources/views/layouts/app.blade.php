@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+{{-- <html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> --}}
+<html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,7 +93,7 @@
                         <div class="card-body">
                             <h3 class="d-flex align-items-center gap-2"><img src={{ asset("/pictures/icons/left-menu.png") }} alt=""> Категории:</h3>
                             <ul class="list-group">
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
+                                {{-- <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
                                     <a class="btn btn-outline-success w-100 text-start" href="/audiospektakl">Аудиоспектакль</a>
                                 </li>
                                 <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
@@ -119,7 +120,7 @@
                                 <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
                                     <a class="btn btn-outline-success w-100 text-start" href="/klassika">Классика</a>
                                 </li>
-                                {{-- <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
+                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
                                     <a class="btn btn-outline-success w-100 text-start" href="/lyubovnyy-romani">Любовный роман</a>
                                 </li>
                                 <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">

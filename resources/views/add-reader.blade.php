@@ -3,13 +3,13 @@
 @section('content')
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
-            <h3 class="text-center">Год издания Книги :</h3>
-            <form class="form-group row justify-content-center gap-3" action={{ route('createAuthor') }} method="POST">
+            <h3 class="text-center">Добавить нового Читателя :</h3>
+            <form class="form-group row justify-content-center gap-3" action={{ route('createReader') }} method="POST">
                 @csrf
                 <div class="col-7">
-                    <label for="year">Год</label>
-                    <input class="form-control bg-secondary text-light @error('year') is-invalid @enderror" type="number" name="year" id="year">
-                    @error('year')
+                    <label for="reader">Читатель</label>
+                    <input class="form-control bg-secondary text-light @error('reader') is-invalid @enderror" type="text" name="reader" id="reader">
+                    @error('reader')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
@@ -20,4 +20,3 @@
         </div>
     </div>
 @endsection
-                        

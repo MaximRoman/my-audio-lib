@@ -3,25 +3,25 @@
 @section('content')
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
-            <h3 class="text-center">Выбор Автора Книги : <a class="btn btn-success" href="/add-author"><i class="fa-solid fa-plus"></i></a></h3>
-            @if (isset($authors))
+            <h3 class="text-center">Выбор Читателей Книги : <a class="btn btn-success" href="/add-reader"><i class="fa-solid fa-plus"></i></a></h3>
+            @if (isset($readers))
             
-                <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookAuthor') }} method="POST">
+                <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookReader') }} method="POST">
                     @csrf
                     <ul class="col-7 list-group bg-secondary p-3">
-                        <label class="col-7">Список Авторов :</label>
-                        @foreach ($authors as $item)
+                        <label class="col-7">Список Читателей :</label>
+                        @foreach ($readers as $item)
                             <li class="list-group-item bg-gray text-light d-flex justify-content-between mt-2 rounded" id="li-{{ $item->id }}" 
                                 onclick="
-                                    document.getElementById('author-{{ $item->id }}').click(); 
-                                    if (document.getElementById('author-{{ $item->id }}').checked) {
+                                    document.getElementById('reader-{{ $item->id }}').click(); 
+                                    if (document.getElementById('reader-{{ $item->id }}').checked) {
                                         document.getElementById('li-{{ $item->id }}').classList.add('active');
                                     } else {
                                         document.getElementById('li-{{ $item->id }}').classList.remove('active');
                                     }"
                             >
-                                <span>{{ $item->author }}</span>
-                                <input class="form-check-input" type="checkbox" name="authors[]" id="author-{{ $item->id }}" value="{{ $item->id }}" onclick="document.getElementById('li-{{ $item->id }}').click(); ">
+                                <span>{{ $item->reader }}</span>
+                                <input class="form-check-input" type="checkbox" name="readers[]" id="reader-{{ $item->id }}" value="{{ $item->id }}" onclick="document.getElementById('li-{{ $item->id }}').click(); ">
                             </li>    
                         @endforeach
                     </ul>

@@ -2,110 +2,65 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Authors;
+use App\Models\BookAuthor;
+use App\Models\BookImages;
 use App\Models\Books;
 use App\Models\Images;
-use App\Models\Readers;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
     public function index() {
         $books = Books::all();
+        $images = DB::table('images')->join('book_image', 'book_image.image_id', '=', 'images.id')
+                                     ->get([
+                                        'book_id',
+                                        'image',
+                                     ]);
+        $authors = DB::table('authors')->join('book_author', 'book_author.author_id', '=', 'authors.id')
+                                     ->get([
+                                        'book_id',
+                                        'author',
+                                     ]);
+        $readers = DB::table('readers')->join('book_reader', 'book_reader.reader_id', '=', 'readers.id')
+                                     ->get([
+                                        'book_id',
+                                        'reader',
+                                     ]);
+        $series = DB::table('series')->join('book_series', 'book_series.series_id', '=', 'series.id')
+                                     ->get([
+                                        'book_id',
+                                        'series',
+                                     ]);
+        $categories = DB::table('categories')->join('book_category', 'book_category.category_id', '=', 'categories.id')
+                                     ->get([
+                                        'book_id',
+                                        'category',
+                                     ]);
 
-        return view('index', ['books' => $books]);
+        return view('index', [
+                                'books' => $books, 
+                                'images' => $images, 
+                                'authors' => $authors, 
+                                'readers' => $readers, 
+                                'series' => $series,
+                                'categories' => $categories,
+                            ]);
     }
 
     public function addAuthor() {
         return view('add-author');
     }
 
-    public function addBook() {
-        $image = [];
-        $title = [];
-        $authors = [];
-        $readers = [];
-        $year = [];
-        $series = [];
-        $categories = [];
-        $description = [];
-        if (Session::get('bookImage')) {
-            $image = Images::all()->where('id', Session::get('bookImage'));
-        }
-        if (Session::get('bookAuthors')) {
-            $authors = Authors::all()->whereIn('id', Session::get('bookAuthors'));
-        }
-        if (Session::get('bookReaders')) {
-            $readers = Readers::all()->whereIn('id', Session::get('bookReaders'));
-        }
-        return view('add-book', [
-                                    'image' => $image, 
-                                    'title' => $title, 
-                                    'authors' => $authors, 
-                                    'readers' => $readers,
-                                    'year' => $year,
-                                    'series' => $series,
-                                    'categories' => $categories,
-                                    'description' => $description,
-                                ]);
+    public function addReader() {
+        return view('add-reader');
     }
 
-    public function selectImage() {
-        $images = Images::all();
-
-        return view('select-image', ['images' => $images]);
+    public function addSeries() {
+        return view('add-series');
     }
 
-    public function editImage(Request $request) {
-        $images = Images::all()->where('id', $request->image);
-
-        return view('edit-image', ['images' => $images]);
-    }
-
-    public function selectBookImage(Request $request) {
-        $imageId = $request['image'];
-        Session::put('bookImage', $imageId);
-        return redirect('/add-book');
-    }
-
-    public function selectAuthor() {
-        $authors = Authors::all();
-
-        return view('select-author', ['authors' => $authors]);
-    }
-
-    public function selectBookAuthor(Request $request) {
-        $authorId = $request['authors'];
-        Session::put('bookAuthors', $authorId);
-        return redirect('/add-book');
-    }
-
-    public function selectReader() {
-        $readers = Readers::all();
-
-        return view('select-reader', ['readers' => $readers]);
-    }
-
-    public function selectBookReader(Request $request) {
-        $readers = $request['authors'];
-        Session::put('bookReaders', $readers);
-        return redirect('/add-book');
-    }
-    
-    public function addImage() {
-        return view('upload-image');
-    }
-
-    public function editBook() {
-        return view('edit-book');
-    }
-
-    public function uploadFiles() {
-        return view('upload-files');
-    }
-
-    public function uploadBookImage() {
-        return view('upload-image');
+    public function addCategory() {
+        return view('add-category');
     }
 }

@@ -4,11 +4,11 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Описание Книги :</h3>
-            <form class="form-group row justify-content-center gap-3" action={{ route('createAuthor') }} method="POST">
+            <form class="form-group row justify-content-center gap-3" action={{ route('selectBookDescription') }} method="POST">
                 @csrf
                 <div class="col-7">
                     <label for="description">Описание</label>
-                    <textarea class="form-control bg-secondary text-light @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="10" disabled></textarea>
+                    <textarea class="form-control bg-secondary text-light @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="10"></textarea>
                     @error('description')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>

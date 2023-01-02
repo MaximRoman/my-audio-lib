@@ -11,6 +11,7 @@ class Categories extends Model
 
     protected $fillable = [
         'category',
+        'temp_category',
     ];
 
     protected $table = 'categories';

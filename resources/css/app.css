@@ -8448,6 +8448,10 @@ fieldset:disabled .btn {
 	max-height: 100% !important
 }
 
+.mvh-50 {
+	max-height: 50vh !important
+}
+
 .vh-100 {
 	height: 100vh !important
 }

@@ -25,19 +25,19 @@
                         @endif        
                     </div>
                 </div>
-                <div class="col-8 row gap-3 justify-content-start  p-0 m-0">
+                <div class="col-8 row justify-content-start  p-0 m-0">
                     <div class="col-12 d-flex flex-column align-items-start">
                         <label>Название</label>
                         @if (isset($title))
                             @if (count($title) > 0)
-                                <div class="d-flex flex-warp mw-100 gap-1">
-                                    @foreach ($title as $key => $item)
+                                <div>
+                                    @foreach ($title as $item)
                                         <span class="h4 text-success">{{ $item }}</span>                
                                     @endforeach
+                                    <a class="btn btn-warning ms-2 h4" href="/add-book/select-title"><i class="fa-solid fa-pen"></i></a>
                                 </div>
-                                <a class="btn btn-warning" href="/add-book/add-title"><i class="fa-solid fa-pen"></i></a>
                             @else
-                            <a class="btn btn-success" href="/add-book/add-title"><i class="fa-solid fa-plus"></i></a>
+                                <a class="btn btn-success" href="/add-book/select-title"><i class="fa-solid fa-plus"></i></a>
                             @endif
                         @endif
                     </div>
@@ -45,17 +45,17 @@
                         <label>Автор</label>
                         @if (isset($authors))
                             @if (count($authors) > 0)
-                                <div class="d-flex flex-warp mw-100 gap-1">
-                                    @foreach ($authors as $key => $item)
+                                <div>
+                                    @foreach ($authors as $item)
                                         <span class="h4 text-success">{{ $item->author }}</span>
-                                        @if ($key < count($authors) - 1)
-                                            <span class="h4">/</span>
+                                        @if ($loop->index < count($authors) - 1)
+                                            <span class="h4 me-2">,</span>
                                         @endif                              
                                     @endforeach
+                                    <a class="btn btn-warning ms-2 h4" href="/add-book/select-author"><i class="fa-solid fa-pen"></i></a>
                                 </div>
-                                <a class="btn btn-warning" href="/add-book/select-author"><i class="fa-solid fa-pen"></i></a>
                             @else
-                            <a class="btn btn-success" href="/add-book/select-author"><i class="fa-solid fa-plus"></i></a>
+                                <a class="btn btn-success" href="/add-book/select-author"><i class="fa-solid fa-plus"></i></a>
                             @endif
                         @endif
                     </div>
@@ -63,17 +63,17 @@
                         <label>Читает</label>
                         @if (isset($readers))
                             @if (count($readers) > 0)
-                                <div class="d-flex flex-warp mw-100 gap-1">
-                                    @foreach ($readers as $key => $item)
-                                        <span class="h4 text-success">{{ $item->reader }}</span>
-                                        @if ($key < count($readers) - 1)
-                                            <span class="h4">/</span>
+                                <div>
+                                    @foreach ($readers as $item)
+                                        <span class="h4 w-100 text-success">{{ $item->reader }}</span>
+                                        @if ($loop->index < count($readers) - 1)
+                                            <span class="h4 me-2">,</span>
                                         @endif                              
-                                    @endforeach
+                                    @endforeach 
+                                    <a class="btn btn-warning ms-2 h4" href="/add-book/select-reader"><i class="fa-solid fa-pen"></i></a>
                                 </div>
-                                <a class="btn btn-warning" href="/add-book/select-reader"><i class="fa-solid fa-pen"></i></a>
-                            @else
-                            <a class="btn btn-success" href="/add-book/select-reader"><i class="fa-solid fa-plus"></i></a>
+                           @else
+                                <a class="btn btn-success" href="/add-book/select-reader"><i class="fa-solid fa-plus"></i></a>
                             @endif
                         @endif
                     </div>
@@ -81,14 +81,14 @@
                         <label>Год</label>
                         @if (isset($year))
                             @if (count($year) > 0)
-                                <div class="d-flex flex-warp mw-100 gap-1">
-                                    @foreach ($year as $key => $item)
+                                <div>
+                                    @foreach ($year as $item)
                                         <span class="h4 text-success">{{ $item }}</span>                
                                     @endforeach
+                                    <a class="btn btn-warning ms-2 h4" href="/add-book/select-year"><i class="fa-solid fa-pen"></i></a>
                                 </div>
-                                <a class="btn btn-warning" href="/add-book/add-year"><i class="fa-solid fa-pen"></i></a>
                             @else
-                            <a class="btn btn-success" href="/add-book/add-year"><i class="fa-solid fa-plus"></i></a>
+                            <a class="btn btn-success" href="/add-book/select-year"><i class="fa-solid fa-plus"></i></a>
                             @endif
                         @endif
                     </div>
@@ -97,14 +97,14 @@
                         @if (isset($series))
                             @if (count($series) > 0)
                                 <div class="d-flex flex-warp mw-100 gap-1">
-                                    @foreach ($series as $key => $item)
+                                    @foreach ($series as $item)
                                         <span class="h4 text-success">{{ $item->series }}</span>
-                                        @if ($key < count($series) - 1)
-                                            <span class="h4">/</span>
+                                        @if ($loop->index < count($series) - 1)
+                                            <span class="h4 me-1 ms-1">/</span>
                                         @endif                              
                                     @endforeach
+                                    <a class="btn btn-warning ms-2 h4" href="/add-book/select-series"><i class="fa-solid fa-pen"></i></a>
                                 </div>
-                                <a class="btn btn-warning" href="/add-book/select-series"><i class="fa-solid fa-pen"></i></a>
                             @else
                             <a class="btn btn-success" href="/add-book/select-series"><i class="fa-solid fa-plus"></i></a>
                             @endif
@@ -112,43 +112,43 @@
                     </div>
                     <div class="col-12 d-flex flex-column align-items-start">
                         <label>Категория</label>
-                        <div class="d-flex flex-warp mw-100">
-                            @if (isset($categories))
-                                @foreach ($categories as $item)
-                                    <span>{{ $item->category }} /</span>
-                                @endforeach
-                            @endif
-                        </div>
-                        <a class="btn btn-success" id="categories" href="/add-book/select-category"><i class="fa-solid fa-plus"></i></a>
-                    </div>
-                    <div class="col-12 d-flex flex-column align-items-start">
-                        <label>Категория</label>
                         @if (isset($categories))
                             @if (count($categories) > 0)
-                                <div class="d-flex flex-warp mw-100 gap-1">
-                                    @foreach ($categories as $key => $item)
+                                <div>
+                                    @foreach ($categories as $item)
                                         <span class="h4 text-success">{{ $item->category }}</span>
-                                        @if ($key < count($categories) - 1)
-                                            <span class="h4">/</span>
+                                        @if ($loop->index < count($categories) - 1)
+                                            <span class="h4 me-1 ms-1">/</span>
                                         @endif                              
                                     @endforeach
+                                    <a class="btn btn-warning ms-2 h4" href="/add-book/select-category"><i class="fa-solid fa-pen"></i></a>
                                 </div>
-                                <a class="btn btn-warning" href="/add-book/select-category"><i class="fa-solid fa-pen"></i></a>
                             @else
-                            <a class="btn btn-success" href="/add-book/select-category"><i class="fa-solid fa-plus"></i></a>
+                                <a class="btn btn-success" href="/add-book/select-category"><i class="fa-solid fa-plus"></i></a>
                             @endif
                         @endif
                     </div>
                 </div>
                 <div class="col-12 p-0 m-0 mt-3">
-                    <label class="w-100 d-flex justify-content-between align-items-center mb-1"><span>Описание</span> <a class="btn btn-success" href=""><i class="fa-solid fa-plus"></i></a></label>
-                    <textarea class="form-control bg-secondary text-light @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="10" disabled></textarea>
+                    
+                    @if (isset($description))
+                        @if (count($description) > 0)
+                            <label class="w-100 d-flex justify-content-between align-items-center mb-1"><span>Описание</span> <a class="btn btn-warning" href="/add-book/select-description"><i class="fa-solid fa-pen"></i></a></label>
+                            @foreach ($description as $item)
+                                <textarea class="form-control bg-secondary text-light @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="10" disabled>{{ $item }}</textarea>
+                            @endforeach
+                        @else
+                            <label class="w-100 d-flex justify-content-between align-items-center mb-1"><span>Описание</span> <a class="btn btn-success" href="/add-book/select-description"><i class="fa-solid fa-plus"></i></a></label>
+                            <textarea class="form-control bg-secondary text-light @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="10" disabled></textarea>
+                        @endif
+                    @endif
+                    
                 </div>
                 {{-- <div class="col-12 mt-3">
                     <label>Аудио Файлы Книги</label>
                     <multy-upload card="bg-secondary text-light" childs="bg-gray text-light"></multy-upload>
                 </div> --}}
-                <button type="submit" class="col-6 btn btn-success mt-3">Далее</button>
+                <button type="submit" class="col-6 btn btn-success mt-3" style="display: {{ $validate ? 'block': 'none'; }}">Далее</button>
             </form>
         </div>
     </div>

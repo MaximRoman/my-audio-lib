@@ -9,7 +9,7 @@ class ReaderController extends Controller
 {
     public function createReader(Request $request) {
         $form = $request->validate([
-            'reader' => ['required', 'max:255']
+            'reader' => ['required', 'unique:readers', 'max:255']
         ]);
 
         Readers::create($form);
