@@ -15,9 +15,54 @@ use App\Models\Readers;
 use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
+    public function showBook(Request $request) {
+        $bookId = $request->book;
+        $book = Books::all()->where('id', '=', $bookId)->first();
+        $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
+                        ->where('book_id', '=', $bookId)
+                        ->get([
+                            'book_id',
+                            'image',
+                        ]);
+        $authors = Authors::join('book_author', 'book_author.author_id', '=', 'authors.id')
+                            ->where('book_id', '=', $bookId)
+                            ->get([
+                                'book_id',
+                                'author',
+                            ]);
+        $readers = Readers::join('book_reader', 'book_reader.reader_id', '=', 'readers.id')
+                                    ->get([
+                                        'book_id',
+                                        'reader',
+                                    ]);
+        $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
+                        ->where('book_id', '=', $bookId)
+                        ->get([
+                            'book_id',
+                            'series',
+                        ]);
+        $categories = Categories::join('book_category', 'book_category.category_id', '=', 'categories.id')
+                                ->where('book_id', '=', $bookId)
+                                ->get([
+                                    'book_id',
+                                    'category',
+                                ]);        
+        $files = Storage::disk('public')->files('/' . $book->title);
+        $files = json_encode($files);
+        return view('book-index', [
+                                'book' => $book, 
+                                'images' => $images, 
+                                'authors' => $authors, 
+                                'readers' => $readers, 
+                                'series' => $series,
+                                'categories' => $categories,
+                                'files' => $files,
+                            ]);
+    }
 
     public function addBook() {
         $validate = false;
@@ -167,6 +212,7 @@ class BookController extends Controller
 
     public function deleteBook(Request $request) {
         $bookId = $request->book;
+        $title = Books::all()->where('id', '=', $bookId)->first()->title;
         $bookAuthor = BookAuthor::where('book_id', $bookId);
         $bookReader =  BookReader::where('book_id', $bookId);
         $bookCategory = BookCategory::where('book_id', $bookId);
@@ -180,6 +226,7 @@ class BookController extends Controller
         $this->deleteRowFromTable($bookSeries);
         $this->deleteRowFromTable($bookImages);
         $this->deleteRowFromTable($books);
+        Storage::disk('public')->deleteDirectory('/' . $title);
 
         return redirect('/');
     }
@@ -300,15 +347,13 @@ class BookController extends Controller
         return view('upload-image');
     }
 
-    public function editBook() {
-        return view('edit-book');
+    public function deleteDirectory(Request $request) {
+        $title = $request->title;
+        Storage::disk('public')->deleteDirectory('/' . $title);
     }
 
-    public function uploadFiles() {
-        return view('upload-files');
-    }
-
-    public function uploadBookImage() {
-        return view('upload-image');
+    public function addBookFiles(Request $request) {
+        $title = $request->title;
+        $request->file('book')->storeAs($title, $request->book->getClientOriginalName(), 'public');
     }
 }

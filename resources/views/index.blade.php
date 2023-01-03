@@ -3,12 +3,12 @@
 @section('content')
     <div class="d-flex flex-column-reverse">
         @forelse ($books as $item)
+        <form id="book-{{$item->id}}" action="/book/{{$item->id}}"></form>
         <div class="card bg-gray border-success mb-3">
             <div class="card-header d-flex justify-content-between align-items-center border-success">
-                <h4 class="text-center w-100">{{ $item->title }}</h4>
+                <h4 class="text-center w-100"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }}</h4>
                 <div class="d-flex gap-2">
-                    <a  href={{ route('editBook') }}></a>
-                    <form action="{{ route('editBook') }}" method="GET">
+                    <form action="/edit-book/{{ $item->id }}">
                         <button class="btn btn-warning h4" type="submit"><i class="fa-solid fa-pen"></i></button>
                     </form>
                     <form action='/delete-book/{{ $item->id }}' method="POST">
@@ -22,7 +22,7 @@
                 <div class="col-4">
                     @foreach ($images as $image)
                         @if ($item->id === $image->book_id)
-                            <img class="img-fluid" src="{{ asset('/storage/' . $image->image) }}">
+                            <img class="img-fluid" src="{{ asset('/storage/' . $image->image) }}"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
                         @endif
                     @endforeach
                 </div>
@@ -31,7 +31,7 @@
                         <span class="h5 me-2">Автор :</span>
                         @foreach ($authors as $author)
                             @if ($item->id === $author->book_id)
-                                <span class="h5 text-success">{{ $author->author }}</span>
+                                <a class="h5 text-success" href="/">{{ $author->author }}</a>
                                 @if ($loop->index < count($authors) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
@@ -42,7 +42,7 @@
                         <span class="h5 me-2">Читает :</span>
                         @foreach ($readers as $reader)
                             @if ($item->id === $reader->book_id)
-                                <span class="h5 text-success">{{ $reader->reader }}</span>
+                                <a class="h5 text-success" href="/">{{ $reader->reader }}</a>
                                 @if ($loop->index < count($readers) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
@@ -57,7 +57,7 @@
                         <span class="h5 me-2">Цыкл :</span>
                         @foreach ($series as $seriesItem)
                             @if ($item->id === $seriesItem->book_id)
-                                <span class="h5 text-success">{{ $seriesItem->series }}</span>
+                                <a class="h5 text-success" href="/">{{ $seriesItem->series }}</a>
                                 {{-- <span class="h5 text-light">( {{ count($series) }} )</span> --}}
                                 @break
                             @endif
@@ -67,7 +67,7 @@
                         <span class="h5 me-2">Категория :</span>
                         @foreach ($categories as $category)
                             @if ($item->id === $category->book_id)
-                                <span class="h5 text-success">{{ $category->category }}</span>
+                                <a class="h5 text-success" href="/">{{ $category->category }}</a>
                                 @if ($loop->index < count($categories) - 1)
                                     <span class="h5 me-1 ms-1">/</span>
                                 @endif
@@ -76,7 +76,7 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Описание :</span>
-                        <p>
+                        <p  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
                             @foreach (explode(' ', $item->description) as $str)
                                 @if ($loop->index < 30)
                                     {{ $str }}
@@ -93,7 +93,7 @@
                     <a class="btn btn-outline-success" href=""><i class="fa-regular fa-thumbs-down"></i> {{ 0 }}</a>
                     <a class="btn btn-outline-success" href=""><i class="fa-regular fa-comment"></i> {{ 0 }}</a>
                 </div>
-                <a class="btn btn-success" href="">Подробнее</a>
+                <button class="btn btn-success" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">Подробнее</button>
             </div>
         </div>
         @empty

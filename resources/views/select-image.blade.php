@@ -7,7 +7,11 @@
             @if (isset($images))
                 <div class="row gap-3 justify-content-center mt-3">
                     @foreach ($images as $item)
-                        <form id="image-{{$item->id}}" class="col-3" action="/add-book/select-image/{{ $item->id }}" method="POST">
+                        @if (isset($bookId))
+                            <form id="image-{{$item->id}}" class="col-3" action="/edit-book/{{$bookId}}/select-book-image/{{ $item->id }}" method="POST">
+                        @else
+                            <form id="image-{{$item->id}}" class="col-3" action="/add-book/select-image/{{ $item->id }}" method="POST">
+                        @endif
                             @csrf
                             <a class="btn btn-warning w-100 rounded-0 rounded-top" href="/edit-image/{{$item->id}}"><i class="fa-solid fa-gear"></i></a>
                             <img class=" img-fluid" src="{{ asset('/storage/' . $item->image) }}" >

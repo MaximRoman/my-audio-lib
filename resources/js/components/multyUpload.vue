@@ -2,6 +2,7 @@
     <div id="template">
         <div class="card" id="card">
             <div class="card-header">
+                <h4 class="mb-2 text-success">Название : {{ obj.title }}</h4>
                 <div class="progress" id="progress" style="height: 40px;">
                     <div class="progress-bar" role="progressbar" :style="{width: fileProgress + '%'}">
                         {{ fileProgress }}%
@@ -40,7 +41,8 @@
     export default {
         props: [
             'card',
-            'childs'
+            'childs',
+            'obj',
         ],
         data() {
             return {
@@ -51,6 +53,7 @@
             }
         },
         mounted() {
+            console.log(this.obj);
             document.getElementById('card').classList.value = document.getElementById('card').classList.value + ' ' + this.card;
             document.getElementById('progress').classList.value = document.getElementById('progress').classList.value + ' ' + this.childs;
             document.getElementById('text1').classList.value = document.getElementById('text1').classList.value + ' ' + this.childs;
@@ -62,18 +65,20 @@
                 let files = Array.from(event.target.files);
             
                 this.filesOrder = files.slice();
-            
+
+                await axios.post('/add-book/delete-directory', {'title': this.obj.title})
+                
                 for (let item of files) {
                     await this.uploadFile(item);
                 }
-               // window.location = '/add-book/complete';
+                window.location = '/book/' + this.obj.id;
             },
         
             async uploadFile(item) {
                 let form = new FormData();
             
                 form.append('book', item);
-                
+                form.append('title', this.obj.title);
                 await axios.post('/add-book/create-url', form, {
                     onUploadProgress: (itemUpload) => {
                         this.fileProgress = Math.round((itemUpload.loaded / itemUpload.total) * 100);

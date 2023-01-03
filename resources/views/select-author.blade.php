@@ -6,7 +6,11 @@
             <h3 class="text-center">Выбор Автора Книги : <a class="btn btn-success" href="/add-author"><i class="fa-solid fa-plus"></i></a></h3>
             @if (isset($authors))
             
-                <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookAuthor') }} method="POST">
+                @if (isset($bookId))
+                    <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-author" method="POST">
+                @else
+                    <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookAuthor') }} method="POST">
+                @endif
                     @csrf
                     <ul class="col-7 list-group bg-secondary p-3">
                         <label class="col-7">Список Авторов :</label>
@@ -25,7 +29,7 @@
                             </li>    
                         @endforeach
                     </ul>
-                    <button class="col-6 btn btn-success">Выбрать</button>
+                    <button class="col-6 btn btn-success">Сохранить</button>
                 </form>
             @endif
         </div>

@@ -15,9 +15,11 @@ const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
 import MultyUpload from './components/multyUpload.vue';
+import AudioPlayer from './components/audioPlayer.vue';
 
 app.component('example-component', ExampleComponent);
 app.component('multy-upload', MultyUpload);
+app.component('audio-player', AudioPlayer);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

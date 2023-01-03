@@ -5,8 +5,11 @@
         <div class="card-body">
             <h3 class="text-center">Выбор Цыкла Книги : <a class="btn btn-success" href="/add-series"><i class="fa-solid fa-plus"></i></a></h3>
             @if (isset($series))
-            
-                <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookSeries') }} method="POST">
+                @if (isset($bookId))
+                    <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-series" method="POST">
+                @else
+                    <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookSeries') }} method="POST">
+                @endif
                     @csrf
                     <ul class="col-7 list-group bg-secondary p-3">
                         <label class="col-7">Список Цыклов :</label>
@@ -31,7 +34,7 @@
                             </li>    
                         @endforeach
                     </ul>
-                    <button class="col-6 btn btn-success">Выбрать</button>
+                    <button class="col-6 btn btn-success">Сохранить</button>
                 </form>
             @endif
         </div>

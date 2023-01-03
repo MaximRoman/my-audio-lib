@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\EditBookController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\SeriesController;
@@ -25,6 +26,7 @@ Auth::routes([
 ]);
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/book/{book}', [BookController::class, 'showBook'])->name('showBook');
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/add-book', [BookController::class, 'addBook'])->name('addBook');
@@ -47,7 +49,25 @@ Route::post('/add-book/select-description', [BookController::class, 'selectBookD
 
 Route::post('/create-book', [BookController::class, 'createBook'])->name('createBook');
 
-Route::get('/edit-book', [HomeController::class, 'editBook'])->name('editBook');
+Route::get('/edit-book/{book}', [EditBookController::class, 'editBook'])->name('editBook');
+Route::get('/edit-book/{book}/select-image', [EditBookController::class, 'editImage'])->name('editImage');
+Route::post('/edit-book/{book}/select-book-image/{image}', [EditBookController::class, 'editBookImage'])->name('editBookImage');
+Route::get('/edit-book/{book}/select-title', [EditBookController::class, 'editTitle'])->name('editTitle');
+Route::post('/edit-book/{book}/select-book-title', [EditBookController::class, 'editBookTitle'])->name('editBookTitle');
+Route::get('/edit-book/{book}/select-author', [EditBookController::class, 'editAuthor'])->name('editAuthor');
+Route::post('/edit-book/{book}/select-book-author', [EditBookController::class, 'editBookAuthor'])->name('editBookAuthor');
+Route::get('/edit-book/{book}/select-reader', [EditBookController::class, 'editReader'])->name('editReader');
+Route::post('/edit-book/{book}/select-book-reader', [EditBookController::class, 'editBookReader'])->name('editBookReader');
+Route::get('/edit-book/{book}/select-year', [EditBookController::class, 'editYear'])->name('editYear');
+Route::post('/edit-book/{book}/select-book-year', [EditBookController::class, 'editBookYear'])->name('editBookYear');
+Route::get('/edit-book/{book}/select-series', [EditBookController::class, 'editSeries'])->name('editSeries');
+Route::post('/edit-book/{book}/select-book-series', [EditBookController::class, 'editBookSeries'])->name('editBookSeries');
+Route::get('/edit-book/{book}/select-category', [EditBookController::class, 'editCategory'])->name('editCategory');
+Route::post('/edit-book/{book}/select-book-category', [EditBookController::class, 'editBookCategory'])->name('editBookCategory');
+Route::get('/edit-book/{book}/select-description', [EditBookController::class, 'editDescription'])->name('editDescription');
+Route::post('/edit-book/{book}/select-book-description', [EditBookController::class, 'editBookDescription'])->name('editBookDescription');
+Route::get('/edit-book/{book}/upload-files', [EditBookController::class, 'editBookFiles'])->name('editBookFiles');
+
 
 Route::get('/add-image', [BookController::class, 'addImage'])->name('addImage');
 Route::post('/upload-image', [ImageController::class,  'uploadImage'])->name('uploadImage');
@@ -67,20 +87,8 @@ Route::post('/create-series', [SeriesController::class, 'createSeries'])->name('
 Route::get('/add-category', [HomeController::class, 'addCategory'])->name('addCategory');
 Route::post('/create-category', [CategoryController::class, 'createCategory'])->name('createCategory');
 
-
-Route::get('/edit-book/edit-info', [HomeController::class,  'editBookInfo'])->name('editBookInfo');
-Route::get('/edit-book/upload-image', [HomeController::class,  'uploadBookImage'])->name('editBookImage');
-Route::get('/edit-book/edit-authors', [HomeController::class,  'editBookAuthors'])->name('editBookAuthors');
-Route::get('/edit-book/edit-readers', [HomeController::class,  'editBookReaders'])->name('editBookReaders');
-Route::get('/edit-book/edit-categories', [HomeController::class,  'editBookCategories'])->name('editBookCategories');
-Route::get('/edit-book/upload-files', [HomeController::class,  'uploadFiles'])->name('editBookFiles');
+Route::post('/add-book/create-url', [BookController::class, 'addBookFiles'])->name('addBookFiles');
+Route::post('/add-book/delete-directory', [BookController::class, 'deleteDirectory'])->name('deleteDirectory');
 
 Route::delete('/delete-book/{book}', [BookController::class, 'deleteBook'])->name('deleteBook');
-
-Route::get('/add-book/upload-files', [HomeController::class, 'uploadFiles'])->name('uploadFiles');
-
-
-
-// Route::post('/add-author', [App\Http\Controllers\HomeController::class, 'addAuthor'])->name('addAuthor');
-
 

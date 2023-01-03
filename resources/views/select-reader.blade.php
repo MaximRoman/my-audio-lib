@@ -6,7 +6,11 @@
             <h3 class="text-center">Выбор Читателей Книги : <a class="btn btn-success" href="/add-reader"><i class="fa-solid fa-plus"></i></a></h3>
             @if (isset($readers))
             
-                <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookReader') }} method="POST">
+                @if (isset($bookId))
+                    <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-reader" method="POST">
+                @else
+                    <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookReader') }} method="POST">
+                @endif
                     @csrf
                     <ul class="col-7 list-group bg-secondary p-3">
                         <label class="col-7">Список Читателей :</label>
@@ -25,7 +29,7 @@
                             </li>    
                         @endforeach
                     </ul>
-                    <button class="col-6 btn btn-success">Выбрать</button>
+                    <button class="col-6 btn btn-success">Сохранить</button>
                 </form>
             @endif
         </div>
