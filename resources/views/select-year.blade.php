@@ -5,6 +5,11 @@
         <div class="card-body">
             <h3 class="text-center">Год издания Книги :</h3>
             @if (isset($bookId))
+                <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
+            @else
+                <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
+            @endif
+            @if (isset($bookId))
                 <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-year" method="POST">
             @else
                 <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookYear') }} method="POST">

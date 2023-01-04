@@ -52,6 +52,10 @@
                         <span class="h5 text-primary">{{ $book->year }}</span>
                     </div>
                     <div class="mt-3">
+                        <span class="h5 me-2">Длительность :</span>
+                        {{-- <audio-duration class="h5 text-primary" totalDuration="0"></audio-duration> --}}
+                    </div>
+                    <div class="mt-3">
                         <span class="h5 me-2">Цыкл :</span>
                         @foreach ($series as $seriesItem)
                             @if ($book->id === $seriesItem->book_id)

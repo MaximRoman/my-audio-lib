@@ -8,11 +8,10 @@ use App\Models\Categories;
 use App\Models\Images;
 use App\Models\Readers;
 use App\Models\Series;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-
     public function index() {
         $books = Books::all();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
@@ -40,6 +39,16 @@ class HomeController extends Controller
                                         'book_id',
                                         'category',
                                     ]);
+                                    
+        Session::pull('bookTitle');
+        Session::pull('bookYear');
+        Session::pull('bookDescription');
+        Session::pull('bookImage');
+        Session::pull('bookAuthors');
+        Session::pull('bookReaders');
+        Session::pull('bookSeries');
+        Session::pull('bookCategories');
+
         return view('index', [
                                 'books' => $books, 
                                 'images' => $images, 

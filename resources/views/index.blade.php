@@ -31,7 +31,7 @@
                         <span class="h5 me-2">Автор :</span>
                         @foreach ($authors as $author)
                             @if ($item->id === $author->book_id)
-                                <a class="h5 text-success" href="/">{{ $author->author }}</a>
+                                <a class="my-link h5 text-success" href="/">{{ $author->author }}</a>
                                 @if ($loop->index < count($authors) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
@@ -42,7 +42,7 @@
                         <span class="h5 me-2">Читает :</span>
                         @foreach ($readers as $reader)
                             @if ($item->id === $reader->book_id)
-                                <a class="h5 text-success" href="/">{{ $reader->reader }}</a>
+                                <a class="my-link h5 text-success" href="/">{{ $reader->reader }}</a>
                                 @if ($loop->index < count($readers) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
@@ -57,7 +57,7 @@
                         <span class="h5 me-2">Цыкл :</span>
                         @foreach ($series as $seriesItem)
                             @if ($item->id === $seriesItem->book_id)
-                                <a class="h5 text-success" href="/">{{ $seriesItem->series }}</a>
+                                <a class="my-link h5 text-success" href="/">{{ $seriesItem->series }}</a>
                                 {{-- <span class="h5 text-light">( {{ count($series) }} )</span> --}}
                                 @break
                             @endif
@@ -67,7 +67,7 @@
                         <span class="h5 me-2">Категория :</span>
                         @foreach ($categories as $category)
                             @if ($item->id === $category->book_id)
-                                <a class="h5 text-success" href="/">{{ $category->category }}</a>
+                                <a class="my-link h5 text-success" href="/">{{ $category->category }}</a>
                                 @if ($loop->index < count($categories) - 1)
                                     <span class="h5 me-1 ms-1">/</span>
                                 @endif

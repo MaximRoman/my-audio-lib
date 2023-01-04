@@ -53,6 +53,7 @@ class BookController extends Controller
                                 ]);        
         $files = Storage::disk('public')->files('/' . $book->title);
         $files = json_encode($files);
+        $duration = 0;
         return view('book-index', [
                                 'book' => $book, 
                                 'images' => $images, 
@@ -61,6 +62,7 @@ class BookController extends Controller
                                 'series' => $series,
                                 'categories' => $categories,
                                 'files' => $files,
+                                'duration' => $duration,
                             ]);
     }
 
@@ -78,49 +80,49 @@ class BookController extends Controller
             $image = Images::all()->where('id', Session::get('bookImage'));
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookTitle')) {
             $title = Session::get('bookTitle');
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookAuthors')) {
             $authors = Authors::all()->whereIn('id', Session::get('bookAuthors'));
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookReaders')) {
             $readers = Readers::all()->whereIn('id', Session::get('bookReaders'));
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookYear')) {
             $year = Session::get('bookYear');
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookSeries')) {
             $series = Series::all()->whereIn('id', Session::get('bookSeries'));
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookCategories')) {
             $categories = Categories::all()->whereIn('id', Session::get('bookCategories'));
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
         if (Session::get('bookDescription')) {
             $description = Session::get('bookDescription');
             $validate = true;
         } else {
-            $validate = true;
+            $validate = false;
         }
 
         return view('add-book', [
@@ -207,8 +209,15 @@ class BookController extends Controller
         Session::pull('bookSeries');
         Session::pull('bookCategories');
 
-        return redirect('/'); 
+        return redirect('/add-book/' . $bookId . '/upload-files'); 
     }
+    public function addBookFilesPage(Request $request) {
+        $bookId = $request->book;
+        $title = Books::all()->where('id', $bookId)->first()->title;
+        $json = json_encode(['id' => $bookId, 'title' => $title]);
+        return view('upload-files', ['book' => $json]);
+    }
+    
 
     public function deleteBook(Request $request) {
         $bookId = $request->book;
@@ -341,10 +350,6 @@ class BookController extends Controller
         Session::put('bookDescription', $description);
 
         return redirect('/add-book');
-    }
-    
-    public function addImage() {
-        return view('upload-image');
     }
 
     public function deleteDirectory(Request $request) {

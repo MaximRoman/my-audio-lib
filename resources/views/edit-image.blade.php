@@ -4,6 +4,9 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Сменить / Удалить Обложку :</h3>
+            @if (isset($_GET['message']))
+                <p class="h5 text-center text-danger">{{ $_GET['message'] }}</p>
+            @endif
             <div class="row justify-content-center">
                 <div class="col-4 ">
                     @foreach ($images as $item)

@@ -48,6 +48,8 @@ Route::get('/add-book/select-description', [BookController::class, 'selectDescri
 Route::post('/add-book/select-description', [BookController::class, 'selectBookDescription'])->name('selectBookDescription');
 
 Route::post('/create-book', [BookController::class, 'createBook'])->name('createBook');
+Route::get('/add-book/{book}/upload-files', [BookController::class, 'addBookFilesPage'])->name('addBookFilesPage');
+
 
 Route::get('/edit-book/{book}', [EditBookController::class, 'editBook'])->name('editBook');
 Route::get('/edit-book/{book}/select-image', [EditBookController::class, 'editImage'])->name('editImage');
@@ -69,11 +71,11 @@ Route::post('/edit-book/{book}/select-book-description', [EditBookController::cl
 Route::get('/edit-book/{book}/upload-files', [EditBookController::class, 'editBookFiles'])->name('editBookFiles');
 
 
-Route::get('/add-image', [BookController::class, 'addImage'])->name('addImage');
+Route::get('/add-image', [ImageController::class, 'addImage'])->name('addImage');
 Route::post('/upload-image', [ImageController::class,  'uploadImage'])->name('uploadImage');
 Route::put('/upload-other-image/{image}', [ImageController::class,  'uploadOtherImage'])->name('uploadOtherImage');
 Route::put('/delete-image/{image}', [ImageController::class,  'deleteImage'])->name('deleteImage');
-Route::get('/edit-image/{image}', [HomeController::class,  'editImage'])->name('editImage');
+Route::get('/edit-image/{image}', [ImageController::class,  'editImage'])->name('editImage');
 
 Route::get('/add-author', [HomeController::class, 'addAuthor'])->name('addAuthor');
 Route::post('/create-author', [AuthorController::class, 'createAuthor'])->name('createAuthor');

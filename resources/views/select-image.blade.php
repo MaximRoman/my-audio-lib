@@ -3,7 +3,18 @@
 @section('content')
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
-            <h3 class="text-center">Выбор обложки книги : <a class="btn btn-success" href="/add-image"><i class="fa-solid fa-plus"></i></a></h3>
+            <h3 class="text-center">Выбор обложки книги :</h3>
+            @if (isset($bookId))
+                <div class="h3 d-flex justify-content-between">
+                    <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
+                    <a class="btn btn-success" href="/add-image"><i class="fa-solid fa-plus"></i></a>
+                </div>
+            @else
+                <div class="h3 d-flex justify-content-between">
+                    <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
+                    <a class="btn btn-success" href="/add-image"><i class="fa-solid fa-plus"></i></a>
+                </div>
+            @endif
             @if (isset($images))
                 <div class="row gap-3 justify-content-center mt-3">
                     @foreach ($images as $item)
