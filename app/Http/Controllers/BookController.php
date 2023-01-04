@@ -16,6 +16,7 @@ use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use wapmorgan\Mp3Info\Mp3Info;
 
 class BookController extends Controller
 {
@@ -52,6 +53,12 @@ class BookController extends Controller
                                     'category',
                                 ]);        
         $files = Storage::disk('public')->files('/' . $book->title);
+        // $audio = [];
+        // foreach ($files as $value) {
+        //     // $audio = new Mp3Info(asset('/storage/' . $value));
+        //     array_push($audio, new Mp3Info(asset('/storage/' . $value)));
+        // }
+
         $files = json_encode($files);
         $duration = 0;
         return view('book-index', [
