@@ -8,11 +8,13 @@ use App\Models\Categories;
 use App\Models\Images;
 use App\Models\Readers;
 use App\Models\Series;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
     public function index() {
+        $admin = false;
         $books = Books::all();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
                         ->get([
@@ -39,7 +41,10 @@ class HomeController extends Controller
                                         'book_id',
                                         'category',
                                     ]);
-                                    
+        $userId = null;
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+        }
         Session::pull('bookTitle');
         Session::pull('bookYear');
         Session::pull('bookDescription');
@@ -56,6 +61,8 @@ class HomeController extends Controller
                                 'readers' => $readers, 
                                 'series' => $series,
                                 'categories' => $categories,
+                                'user' => $userId,
+                                'admin' => $admin,
                             ]);
     }
 

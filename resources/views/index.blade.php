@@ -88,11 +88,12 @@
                 </div>
             </div>
             <div class="card-footer border-success d-flex justify-content-between">
-                <div class="d-flex gap-2">
-                    <a class="btn btn-outline-success" href=""><i class="fa-regular fa-thumbs-up"></i> {{ 0 }}</a>
+                <like-system :book="{{json_encode($item)}}" :user="{{json_encode($user)}}"></like-system>
+                {{-- <div class="d-flex gap-2">
+                    <a class="btn btn-outline-success" href="/set-book-grade/{{$item->id}}/1"><i class="fa-regular fa-thumbs-up"></i> {{ 0 }}</a>
                     <a class="btn btn-outline-success" href=""><i class="fa-regular fa-thumbs-down"></i> {{ 0 }}</a>
                     <a class="btn btn-outline-success" href=""><i class="fa-regular fa-comment"></i> {{ 0 }}</a>
-                </div>
+                </div> --}}
                 <button class="btn btn-success" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">Подробнее</button>
             </div>
         </div>

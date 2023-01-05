@@ -7,7 +7,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EditBookController;
+use App\Http\Controllers\GradesController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\LikeSysController;
 use App\Http\Controllers\ReaderController;
 use App\Http\Controllers\SeriesController;
 
@@ -93,4 +95,8 @@ Route::post('/add-book/create-url', [BookController::class, 'addBookFiles'])->na
 Route::post('/add-book/delete-directory', [BookController::class, 'deleteDirectory'])->name('deleteDirectory');
 
 Route::delete('/delete-book/{book}', [BookController::class, 'deleteBook'])->name('deleteBook');
+
+
+Route::get('/set-book-grade/{book}/{grade}', [LikeSysController::class, 'setBookGrade'])->name('setBookGrade')->middleware('auth');
+Route::get('/get-book-grades/{book}', [LikeSysController::class, 'getBookGrades'])->name('getBookGrades');
 

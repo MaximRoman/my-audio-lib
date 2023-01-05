@@ -53,7 +53,16 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Длительность :</span>
-                        {{-- <audio-duration class="h5 text-primary" totalDuration="0"></audio-duration> --}}
+                        <audio-duration class="h5 text-primary" :obj="{{$duration}}"></audio-duration>
+                    </div>
+                    <div class="mt-3">
+                        <span class="h5 me-2">Оценка :</span>
+                        <span class="h5 text-primary">{{ 0 }} / {{10}}</span>
+                        @forelse ($grades as $item)
+                            {{$item}}
+                        @empty
+                            
+                        @endforelse
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Цыкл :</span>

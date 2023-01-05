@@ -10,6 +10,7 @@ use App\Models\BookReader;
 use App\Models\Books;
 use App\Models\BookSeries;
 use App\Models\Categories;
+use App\Models\Grades;
 use App\Models\Images;
 use App\Models\Readers;
 use App\Models\Series;
@@ -21,6 +22,7 @@ use wapmorgan\Mp3Info\Mp3Info;
 class BookController extends Controller
 {
     public function showBook(Request $request) {
+        $admin = false;
         $bookId = $request->book;
         $book = Books::all()->where('id', '=', $bookId)->first();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
@@ -52,15 +54,17 @@ class BookController extends Controller
                                     'book_id',
                                     'category',
                                 ]);        
+        $grades = Grades::all()->where('book_id', '=', $bookId);
+        
         $files = Storage::disk('public')->files('/' . $book->title);
-        // $audio = [];
-        // foreach ($files as $value) {
-        //     // $audio = new Mp3Info(asset('/storage/' . $value));
-        //     array_push($audio, new Mp3Info(asset('/storage/' . $value)));
-        // }
+        $duration = 0.0;
+
+        foreach ($files as $value) {
+            $audio = new Mp3Info('../public/storage/' . $value, true);
+            $duration = $duration + $audio->duration;
+        }
 
         $files = json_encode($files);
-        $duration = 0;
         return view('book-index', [
                                 'book' => $book, 
                                 'images' => $images, 
@@ -70,6 +74,8 @@ class BookController extends Controller
                                 'categories' => $categories,
                                 'files' => $files,
                                 'duration' => $duration,
+                                'grades' => $grades,
+                                'admin' => $admin,
                             ]);
     }
 

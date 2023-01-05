@@ -1,15 +1,12 @@
 <template>
-    <span id="duration"> {{ '00:00:00' }}</span>
-    <div v-for="(item, index) in fN">
-        <audio :id="'audio' + index" :src="item"></audio>
-    </div>
+    <span id="duration"> {{ duration || '00:00:00' }}</span>
 </template>
 <script>
 
 const formatTime = second => new Date(second * 1000).toISOString().substr(11, 8);
     export default {
         props: [
-            'totalDuration'
+            'obj'
         ],
         data() {
             return {
@@ -17,8 +14,8 @@ const formatTime = second => new Date(second * 1000).toISOString().substr(11, 8)
             }
         },
         mounted() {
-            console.log(this.totalDuration);
-            // this.duration = formatTime(this.totalDuration.duration);
+            console.log(this.obj);
+            this.duration = formatTime(this.obj);
         },
     }
 </script>
