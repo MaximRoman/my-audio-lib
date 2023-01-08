@@ -2,7 +2,7 @@
     <div class="d-flex gap-2">
         <button :id="'like-' + book.id" class="btn btn-outline-success" @click="likeFunction(1)"><i class="fa-regular fa-thumbs-up"></i> {{ like }}</button>
         <button :id="'dislike-' + book.id" class="btn btn-outline-success" @click="likeFunction(0)"><i class="fa-regular fa-thumbs-down"></i> {{ dislike }}</button>
-        <button class="btn btn-outline-success"><i class="fa-regular fa-comment"></i> {{ 0 }}</button>
+        <a class="btn btn-outline-success" :href="'/book/' + book.id + '/#comments'"><i class="fa-regular fa-comment"></i> {{ comments }}</a>
     </div>
 </template>
 
@@ -18,6 +18,7 @@
                 grades: [],
                 like: 0,
                 dislike: 0,
+                comments: 0,
             }
         },
         mounted() {
@@ -49,8 +50,9 @@
             },
             getJson() {
                 axios.get('/get-book-grades/' + this.book.id).then((response) => {
-                    this.usersGrades = response.data[1].usersGrades;
-                    this.grades = response.data[0].grades;
+                    this.usersGrades = response.data.usersGrades;
+                    this.grades = response.data.grades;
+                    this.comments = response.data.comments;
                     this.showGrades()
                 })
             },

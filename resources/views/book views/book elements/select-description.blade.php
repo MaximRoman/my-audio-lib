@@ -11,7 +11,7 @@
                 <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookDescription') }} method="POST">
             @endif
                 @csrf
-                <div class="col-7">
+                <div class="col-10">
                     <label for="description">Описание</label>
                     <textarea class="form-control bg-secondary text-light @error('description') is-invalid @enderror" name="description" id="description" cols="30" rows="10"></textarea>
                     @error('description')

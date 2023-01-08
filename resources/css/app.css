@@ -2423,9 +2423,9 @@ progress {
 .form-control:focus {
 	color: #212529;
 	background-color: #fff;
-	border-color: #86b7fe;
+	/* border-color: rgba(var(--bs-light-rgb), .25); */
 	outline: 0;
-	box-shadow: 0 0 0 .25rem rgba(13, 110, 253, .25)
+	/* box-shadow: 0 0 0 .25rem rgba(var(--bs-success-rgb), .25) */
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -8473,6 +8473,9 @@ fieldset:disabled .btn {
 .min-vh-100 {
 	min-height: 100vh !important
 }
+.min-h-100 {
+	min-height: 100% !important
+}
 
 .flex-fill {
 	flex: 1 1 auto !important
@@ -12823,6 +12826,7 @@ fieldset:disabled .btn {
 ::-webkit-file-upload-button {
 	color: white !important;
 	background-color: rgb(var(--bs-success-rgb)) !important;
+	color: var(--bs-light);
 }
 
 /*# sourceMappingURL=bootstrap.min.css.map */

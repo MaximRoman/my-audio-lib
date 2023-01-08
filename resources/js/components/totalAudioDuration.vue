@@ -14,7 +14,6 @@ const formatTime = second => new Date(second * 1000).toISOString().substr(11, 8)
             }
         },
         mounted() {
-            console.log(this.obj);
             this.duration = formatTime(this.obj);
         },
     }

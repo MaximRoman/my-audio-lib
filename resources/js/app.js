@@ -17,14 +17,18 @@ import ExampleComponent from './components/ExampleComponent.vue';
 import MultyUpload from './components/multyUpload.vue';
 import AudioPlayer from './components/audioPlayer.vue';
 import TotalAudioDuration from './components/totalAudioDuration.vue';
-import LikeSystem from './components/likeSystem.vue';
+import LikeBookSystem from './components/likeBookSystem.vue';
+import CommentsSystem from './components/commentsSystem.vue';
+import CalcGrade from './components/calcBookGrade.vue';
 
 
 app.component('example-component', ExampleComponent);
 app.component('multy-upload', MultyUpload);
 app.component('audio-player', AudioPlayer);
 app.component('audio-duration', TotalAudioDuration);
-app.component('like-system', LikeSystem);
+app.component('like-book', LikeBookSystem);
+app.component('calc-grade', CalcGrade);
+app.component('comments-system', CommentsSystem);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comments;
 use App\Models\Grades;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,7 @@ class LikeSysController extends Controller
     public function getBookGrades(Request $request) {
         $bookId = $request->book;
         $grades = Grades::where('book_id', $bookId)->get('status');
+        $comments = Comments::all()->where('book_id', $bookId);
         $usersGrades = null;
         if (Auth::user()) {
             if (Grades::all()->where('book_id', $bookId)->where('user_id', Auth::user()->id)->first()) {
@@ -38,8 +40,9 @@ class LikeSysController extends Controller
             }
         }
         return [
-            array('grades' => $grades),
-            array('usersGrades' => $usersGrades),
+            'grades' => $grades,
+            'usersGrades' => $usersGrades,
+            'comments' => count($comments)
         ];
     }
 }

@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\BookImages;
 use App\Models\Images;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
     public function addImage() {
-        return view('upload-image');
+        return view('book views/image/upload-image');
     }
 
     public function uploadImage(Request $request) {
@@ -43,7 +44,7 @@ class ImageController extends Controller
     public function editImage(Request $request) {
         $images = Images::all()->where('id', $request->image);
 
-        return view('edit-image', ['images' => $images]);
+        return view('book views/image/edit-image', ['images' => $images]);
     }
 
     public function deleteImage(Request $request) {
@@ -63,5 +64,30 @@ class ImageController extends Controller
         }
     }
 
-    
+    public function selectImage() {
+        $images = Images::all();
+
+        return view('book views/image/select-image', ['images' => $images]);
+    }
+
+    public function selectBookImage(Request $request) {
+        $imageId = $request['image'];
+        Session::put('bookImage', $imageId);
+        return redirect('/add-book');
+    }
+
+    public function editSelectedImage(Request $request) {
+        $bookId = $request->book;
+        $images = Images::all();
+
+        return view('book views/image/select-image', ['images' => $images, 'bookId' => $bookId]);
+    }
+
+    public function editSelectedBookImage(Request $request) {
+        $bookId = $request->book;
+        $imageId = [$request['image']];
+        $editBook = new EditBookController();
+        $editBook->updateBookJoin(BookImages::class, $bookId, 'image_id', $imageId);
+        return redirect('/edit-book/' . $bookId);
+    }
 }

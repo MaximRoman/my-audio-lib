@@ -57,12 +57,7 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Оценка :</span>
-                        <span class="h5 text-primary">{{ 0 }} / {{10}}</span>
-                        @forelse ($grades as $item)
-                            {{$item}}
-                        @empty
-                            
-                        @endforelse
+                        <calc-grade :grades="{{$grades}}"></calc-grade>
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Цыкл :</span>
@@ -90,8 +85,9 @@
                 <div class="mt-3">
                         <span class="h5 me-2">Описание :</span>
                         <p>{{$book->description}}</p>
-                    </div>
+                </div>
                 <audio-player class="mt-5" :file="{{ $files }}"></audio-player>
+                <comments-system class="mt-5" :book="{{$book->id}}"></comments-system>
             </div>
         </div>
     </div>

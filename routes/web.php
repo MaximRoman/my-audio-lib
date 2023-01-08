@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\AddBookController;
+use App\Http\Controllers\AdminsController;
 use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookFilesController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\DeleteBookController;
 use App\Http\Controllers\EditBookController;
-use App\Http\Controllers\GradesController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LikeSysController;
 use App\Http\Controllers\ReaderController;
@@ -27,77 +31,105 @@ Auth::routes([
     'verify' => true
 ]);
 
-Route::get('/', [HomeController::class, 'index']);
-Route::get('/book/{book}', [BookController::class, 'showBook'])->name('showBook');
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/home', 'index')->name('home');
+    Route::get('/add-author', 'addAuthor')->name('addAuthor');
+    Route::get('/add-reader', 'addReader')->name('addReader');
+    Route::get('/add-series', 'addSeries')->name('addSeries');
+    Route::get('/add-category', 'addCategory')->name('addCategory');
+});
 
-Route::get('/add-book', [BookController::class, 'addBook'])->name('addBook');
-Route::get('/add-book/select-image', [BookController::class, 'selectImage'])->name('selectImage');
-Route::post('/add-book/select-image/{image}', [BookController::class, 'selectBookImage'])->name('selectBookImage');
-Route::get('/add-book/select-title', [BookController::class, 'selectTitle'])->name('selectTitle');
-Route::post('/add-book/select-title', [BookController::class, 'selectBookTitle'])->name('selectBookTitle');
-Route::get('/add-book/select-author', [BookController::class, 'selectAuthor'])->name('selectAuthor');
-Route::post('/add-book/select-author', [BookController::class, 'selectBookAuthor'])->name('selectBookAuthor');
-Route::get('/add-book/select-reader', [BookController::class, 'selectReader'])->name('selectReader');
-Route::post('/add-book/select-reader', [BookController::class, 'selectBookReader'])->name('selectBookReader');
-Route::get('/add-book/select-year', [BookController::class, 'selectYear'])->name('selectYear');
-Route::post('/add-book/select-year', [BookController::class, 'selectBookYear'])->name('selectBookYear');
-Route::get('/add-book/select-series', [BookController::class, 'selectSeries'])->name('selectSeries');
-Route::post('/add-book/select-series', [BookController::class, 'selectBookSeries'])->name('selectBookSeries');
-Route::get('/add-book/select-category', [BookController::class, 'selectCategory'])->name('selectCategory');
-Route::post('/add-book/select-category', [BookController::class, 'selectBookCategory'])->name('selectBookCategory');
-Route::get('/add-book/select-description', [BookController::class, 'selectDescription'])->name('selectDescription');
-Route::post('/add-book/select-description', [BookController::class, 'selectBookDescription'])->name('selectBookDescription');
+Route::controller(BookController::class)->group(function () {
+    Route::get('/book/{book}', 'showBook')->name('showBook');
+    Route::get('/add-book/select-title', 'selectTitle')->name('selectTitle');
+    Route::post('/add-book/select-title', 'selectBookTitle')->name('selectBookTitle');
+    Route::get('/add-book/select-year', 'selectYear')->name('selectYear');
+    Route::post('/add-book/select-year', 'selectBookYear')->name('selectBookYear');
+    Route::get('/add-book/select-description', 'selectDescription')->name('selectDescription');
+    Route::post('/add-book/select-description', 'selectBookDescription')->name('selectBookDescription');
+});
 
-Route::post('/create-book', [BookController::class, 'createBook'])->name('createBook');
-Route::get('/add-book/{book}/upload-files', [BookController::class, 'addBookFilesPage'])->name('addBookFilesPage');
+Route::controller(AddBookController::class)->group(function () {
+    Route::get('/add-book', 'addBook')->name('addBook');
+    Route::post('/create-book', 'createBook')->name('createBook');
+});
 
+Route::controller(EditBookController::class)->group(function () {
+    Route::get('/edit-book/{book}', 'editBook')->name('editBook');
+    Route::get('/edit-book/{book}/select-title', 'editTitle')->name('editTitle');
+    Route::post('/edit-book/{book}/select-book-title', 'editBookTitle')->name('editBookTitle');
+    Route::get('/edit-book/{book}/select-year', 'editYear')->name('editYear');
+    Route::post('/edit-book/{book}/select-book-year', 'editBookYear')->name('editBookYear');
+    Route::get('/edit-book/{book}/select-description', 'editDescription')->name('editDescription');
+    Route::post('/edit-book/{book}/select-book-description', 'editBookDescription')->name('editBookDescription');
+});
 
-Route::get('/edit-book/{book}', [EditBookController::class, 'editBook'])->name('editBook');
-Route::get('/edit-book/{book}/select-image', [EditBookController::class, 'editImage'])->name('editImage');
-Route::post('/edit-book/{book}/select-book-image/{image}', [EditBookController::class, 'editBookImage'])->name('editBookImage');
-Route::get('/edit-book/{book}/select-title', [EditBookController::class, 'editTitle'])->name('editTitle');
-Route::post('/edit-book/{book}/select-book-title', [EditBookController::class, 'editBookTitle'])->name('editBookTitle');
-Route::get('/edit-book/{book}/select-author', [EditBookController::class, 'editAuthor'])->name('editAuthor');
-Route::post('/edit-book/{book}/select-book-author', [EditBookController::class, 'editBookAuthor'])->name('editBookAuthor');
-Route::get('/edit-book/{book}/select-reader', [EditBookController::class, 'editReader'])->name('editReader');
-Route::post('/edit-book/{book}/select-book-reader', [EditBookController::class, 'editBookReader'])->name('editBookReader');
-Route::get('/edit-book/{book}/select-year', [EditBookController::class, 'editYear'])->name('editYear');
-Route::post('/edit-book/{book}/select-book-year', [EditBookController::class, 'editBookYear'])->name('editBookYear');
-Route::get('/edit-book/{book}/select-series', [EditBookController::class, 'editSeries'])->name('editSeries');
-Route::post('/edit-book/{book}/select-book-series', [EditBookController::class, 'editBookSeries'])->name('editBookSeries');
-Route::get('/edit-book/{book}/select-category', [EditBookController::class, 'editCategory'])->name('editCategory');
-Route::post('/edit-book/{book}/select-book-category', [EditBookController::class, 'editBookCategory'])->name('editBookCategory');
-Route::get('/edit-book/{book}/select-description', [EditBookController::class, 'editDescription'])->name('editDescription');
-Route::post('/edit-book/{book}/select-book-description', [EditBookController::class, 'editBookDescription'])->name('editBookDescription');
-Route::get('/edit-book/{book}/upload-files', [EditBookController::class, 'editBookFiles'])->name('editBookFiles');
+Route::controller(DeleteBookController::class)->group(function () {
+    Route::delete('/delete-book/{book}', 'deleteBook')->name('deleteBook');
+});
 
+Route::controller(BookFilesController::class)->group(function () {
+    Route::post('/add-book/create-url', 'addBookFiles')->name('addBookFiles');
+    Route::post('/add-book/delete-directory', 'deleteDirectory')->name('deleteDirectory');
+    Route::get('/add-book/{book}/upload-files', 'addBookFilesPage')->name('addBookFilesPage');
+    Route::get('/edit-book/{book}/upload-files', 'editSelectedBookFiles')->name('editSelectedBookFiles');
+});
 
-Route::get('/add-image', [ImageController::class, 'addImage'])->name('addImage');
-Route::post('/upload-image', [ImageController::class,  'uploadImage'])->name('uploadImage');
-Route::put('/upload-other-image/{image}', [ImageController::class,  'uploadOtherImage'])->name('uploadOtherImage');
-Route::put('/delete-image/{image}', [ImageController::class,  'deleteImage'])->name('deleteImage');
-Route::get('/edit-image/{image}', [ImageController::class,  'editImage'])->name('editImage');
+Route::controller(AuthorController::class)->group(function () {
+    Route::get('/add-book/select-author', 'selectAuthor')->name('selectAuthor');
+    Route::post('/add-book/select-author', 'selectBookAuthor')->name('selectBookAuthor');
+    Route::get('/edit-book/{book}/select-author', 'editSelectedAuthor')->name('editSelectedAuthor');
+    Route::post('/edit-book/{book}/select-book-author', 'editSelectedBookAuthor')->name('editSelectedBookAuthor');
+    Route::post('/create-author', 'createAuthor')->name('createAuthor');
+});
 
-Route::get('/add-author', [HomeController::class, 'addAuthor'])->name('addAuthor');
-Route::post('/create-author', [AuthorController::class, 'createAuthor'])->name('createAuthor');
+Route::controller(ImageController::class)->group(function () {
+    Route::get('/add-book/select-image', 'selectImage')->name('selectImage');
+    Route::post('/add-book/select-image/{image}', 'selectBookImage')->name('selectBookImage');
+    Route::get('/edit-book/{book}/select-image', 'editSelectedImage')->name('editSelectedImage');
+    Route::post('/edit-book/{book}/select-book-image/{image}', 'editSelectedBookImage')->name('editSelectedBookImage');
+    Route::get('/add-image', 'addImage')->name('addImage');
+    Route::post('/upload-image',  'uploadImage')->name('uploadImage');
+    Route::put('/upload-other-image/{image}',  'uploadOtherImage')->name('uploadOtherImage');
+    Route::put('/delete-image/{image}',  'deleteImage')->name('deleteImage');
+    Route::get('/edit-image/{image}',  'editImage')->name('editImage');
+});
 
-Route::get('/add-reader', [HomeController::class, 'addReader'])->name('addReader');
-Route::post('/create-reader', [ReaderController::class, 'createReader'])->name('createReader');
+Route::controller(ReaderController::class)->group(function () {
+    Route::get('/add-book/select-reader', 'selectReader')->name('selectReader');
+    Route::post('/add-book/select-reader', 'selectBookReader')->name('selectBookReader');
+    Route::get('/edit-book/{book}/select-reader', 'editSelectedReader')->name('editSelectedReader');  
+    Route::post('/edit-book/{book}/select-book-reader', 'editSelectedBookReader')->name('editSelectedBookReader');
+    Route::post('/create-reader', 'createReader')->name('createReader');    
+});
 
-Route::get('/add-series', [HomeController::class, 'addSeries'])->name('addSeries');
-Route::post('/create-series', [SeriesController::class, 'createSeries'])->name('createSeries');
+Route::controller(SeriesController::class)->group(function () {
+    Route::get('/add-book/select-series', 'selectSeries')->name('selectSeries');
+    Route::post('/add-book/select-series', 'selectBookSeries')->name('selectBookSeries');
+    Route::get('/edit-book/{book}/select-series', 'editSelectedSeries')->name('editSelectedSeries');
+    Route::post('/edit-book/{book}/select-book-series', 'editSelectedBookSeries')->name('editSelectedBookSeries');
+    Route::post('/create-series', 'createSeries')->name('createSeries');
+});
 
-Route::get('/add-category', [HomeController::class, 'addCategory'])->name('addCategory');
-Route::post('/create-category', [CategoryController::class, 'createCategory'])->name('createCategory');
+Route::controller(CategoryController::class)->group(function () {
+    Route::get('/add-book/select-category', 'selectCategory')->name('selectCategory');
+    Route::post('/add-book/select-category', 'selectBookCategory')->name('selectBookCategory');
+    Route::get('/edit-book/{book}/select-category', 'editSelectedCategory')->name('editSelectedCategory');
+    Route::post('/edit-book/{book}/select-book-category', 'editSelectedBookCategory')->name('editSelectedBookCategory');
+    Route::post('/create-category', 'createCategory')->name('createCategory');
+});
 
-Route::post('/add-book/create-url', [BookController::class, 'addBookFiles'])->name('addBookFiles');
-Route::post('/add-book/delete-directory', [BookController::class, 'deleteDirectory'])->name('deleteDirectory');
+Route::controller(LikeSysController::class)->group(function () {
+    Route::get('/set-book-grade/{book}/{grade}', 'setBookGrade')->name('setBookGrade')->middleware('auth');
+    Route::get('/get-book-grades/{book}', 'getBookGrades')->name('getBookGrades');
+});
 
-Route::delete('/delete-book/{book}', [BookController::class, 'deleteBook'])->name('deleteBook');
+Route::controller(AdminsController::class)->group(function () {
+    Route::post('/admins', 'shoeAdmins')->name('shoeAdmins');
+});
 
-
-Route::get('/set-book-grade/{book}/{grade}', [LikeSysController::class, 'setBookGrade'])->name('setBookGrade')->middleware('auth');
-Route::get('/get-book-grades/{book}', [LikeSysController::class, 'getBookGrades'])->name('getBookGrades');
-
-Route::post('/admins', [BookController::class, 'shoeAdmins'])->name('shoeAdmins');
+Route::controller(CommentController::class)->group(function () {
+    Route::get('/get-comments/{book}', 'getComments')->name('getComments');
+    Route::post('/add-comment/{book}', 'addComment')->name('addComment');
+});
