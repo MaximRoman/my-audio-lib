@@ -100,3 +100,4 @@ Route::delete('/delete-book/{book}', [BookController::class, 'deleteBook'])->nam
 Route::get('/set-book-grade/{book}/{grade}', [LikeSysController::class, 'setBookGrade'])->name('setBookGrade')->middleware('auth');
 Route::get('/get-book-grades/{book}', [LikeSysController::class, 'getBookGrades'])->name('getBookGrades');
 
+Route::post('/admins', [BookController::class, 'shoeAdmins'])->name('shoeAdmins');

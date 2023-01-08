@@ -16,13 +16,13 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> --}}
     <script src="https://kit.fontawesome.com/736804efb5.js" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     @vite([ 'resources/js/app.js', 'resources/css/app.css'])
 </head>
 <body>
-    <div id="app" class="min-vh-100 w-100 row justify-content-center p-4_5 bg-dark text-light">
+    <div id="app" class="min-vh-100 row justify-content-center p-4_5 bg-dark text-light w-100 m-0">
         <nav class="border-bottom border-dark navbar rounded-top d-flex p-0 ">
             <div class="col-3 h-100 d-flex align-items-center justify-content-center bg-secondary rounded-top-start-4">
                 <a class="navbar-brand m-0 d-flex align-items-center h75 btn" href="/">
@@ -73,6 +73,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/add-book">{{ __('Добавить Книгу') }}</a>
+                                <a class="dropdown-item" href="/admins">{{ __('Права Администраторов') }}</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                                 document.getElementById('logout-form').submit();">
