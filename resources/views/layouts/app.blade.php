@@ -31,21 +31,7 @@
             </div>
             <div class="col-9 bg-gray h-100 d-flex align-items-center rounded-top-end-4 justify-content-between border-start border-dark" id="navbarSupportedContent">
                 <ul class="col-6 nav mr-auto d-flex align-items-center d-flex h-100">
-                    <li class="nav-item col-2 h-100 d-flex align-items-center justify-content-center ">
-                      <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src={{ asset("/pictures/icons/search.png") }} alt=""></a>
-                    </li>
-                    <li class="nav-item col-2 h-100 d-flex align-items-center justify-content-center">
-                      <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src={{ asset("/pictures/icons/fav.png") }} alt=""></a>
-                    </li>
-                    <li class="nav-item col-2 h-100 d-flex align-items-center justify-content-center">
-                      <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src={{ asset("/pictures/icons/obshalka.png") }} alt=""></a>
-                    </li>
-                    <li class="nav-item col-2 h-100 d-flex align-items-center justify-content-center">
-                      <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src={{ asset("/pictures/icons/faq1.png") }} alt=""></a>
-                    </li>
-                    <li class="nav-item col-2 h-100 d-flex align-items-center justify-content-center">
-                      <a class="text-dark nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" id="theme-btn"><h1><i class="fa-solid fa-moon" ></i></h1></a>
-                    </li>
+                    <top-navbar></top-navbar>
                 </ul>
                 <div class="col-4 d-flex justify-content-center">
                     @guest

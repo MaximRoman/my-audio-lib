@@ -20,6 +20,7 @@ import TotalAudioDuration from './components/totalAudioDuration.vue';
 import LikeBookSystem from './components/likeBookSystem.vue';
 import CommentsSystem from './components/commentsSystem.vue';
 import CalcGrade from './components/calcBookGrade.vue';
+import TopNavbar from './components/topNavbar.vue';
 
 
 app.component('example-component', ExampleComponent);
@@ -29,6 +30,7 @@ app.component('audio-duration', TotalAudioDuration);
 app.component('like-book', LikeBookSystem);
 app.component('calc-grade', CalcGrade);
 app.component('comments-system', CommentsSystem);
+app.component('top-navbar', TopNavbar);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
