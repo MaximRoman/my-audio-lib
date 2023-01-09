@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
-    public function index() {
+    private function getIndexData() {
         $admin = false;
         $books = Books::all();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
@@ -54,17 +54,26 @@ class HomeController extends Controller
         Session::pull('bookSeries');
         Session::pull('bookCategories');
 
-        return view('index', [
-                                'books' => $books, 
-                                'images' => $images, 
-                                'authors' => $authors, 
-                                'readers' => $readers, 
-                                'series' => $series,
-                                'categories' => $categories,
-                                'user' => $userId,
-                                'admin' => $admin,
-                            ]);
+        return [
+                'books' => $books, 
+                'images' => $images, 
+                'authors' => $authors, 
+                'readers' => $readers, 
+                'series' => $series,
+                'categories' => $categories,
+                'user' => $userId,
+                'admin' => $admin,
+            ];
     }
+    public function index() {
+        $data = $this->getIndexData();
+        return view('index', ['data' => $data]);
+    }
+
+    public function home() {
+        $data = $this->getIndexData();
+        return view('index', ['data' => $data]);
+    }   
 
     public function addAuthor() {
         return view('add-author');

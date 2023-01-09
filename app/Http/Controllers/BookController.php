@@ -10,6 +10,7 @@ use App\Models\Images;
 use App\Models\Readers;
 use App\Models\Series;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,8 @@ class BookController extends Controller
     public function showBook(Request $request) {
         $admin = false;
         $bookId = $request->book;
+        // $user = null;
+        $user = Auth::user();
         $book = Books::all()->where('id', '=', $bookId)->first();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
                         ->where('book_id', '=', $bookId)
@@ -54,7 +57,6 @@ class BookController extends Controller
                                                                 'id',
                                                                 'status'
                                                             ]);
-        $grades = json_encode($grades);
     
         $files = Storage::disk('public')->files('/' . $book->title);
         $duration = 0.0;
@@ -64,8 +66,12 @@ class BookController extends Controller
             $duration = $duration + $audio->duration;
         }
 
+        $grades = json_encode($grades);
         $files = json_encode($files);
+        $user = json_encode($user);
+
         return view('book views/book/book-index', [
+                                'user' => $user, 
                                 'book' => $book, 
                                 'images' => $images, 
                                 'authors' => $authors, 

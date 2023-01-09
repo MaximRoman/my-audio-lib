@@ -4,8 +4,8 @@
             <div class="row align-items-center">
                 <span class="col-3">Коментарии :</span>
                 <div class="col-9 d-flex">
-                    <input class="form-control rounded-0 rounded-start bg-secondary text-light" type="text" name="search-comment" placeholder="Поиск . . .">
-                    <button class="btn btn-success rounded-0 rounded-end border border-start-0 "><i class="fa-sharp fa-solid fa-magnifying-glass"></i></button>
+                    <input id="search-comment" class="form-control bg-secondary text-light" type="text" name="search-comment" placeholder="Поиск . . ." @input="searchComment()">
+                    <button id="search-comment-btn" class="btn btn-danger rounded-0 rounded-end border border-start-0 invisible" @click="searchResetInput()"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </div>
         </div>
@@ -18,6 +18,11 @@
                     </div>
                     <div class="card-body p-0">
                         <textarea class="form-control border-0 rounded-0 rounded-bottom bg-secondary text-light" name="comment" id="comment" cols="30" rows="5"></textarea>
+                    </div>
+                </div>
+                <div v-if="err !== null" class="card bg-gray p-0 border-danger text-danger">
+                    <div class="card-body">
+                        <span class="h5">{{ err }}</span>
                     </div>
                 </div>
                 <div class="card bg-gray p-0 border-success" v-for="item in comments">
@@ -42,15 +47,31 @@
 <script>
     export default {
         props: {
-            book: null
+            book: null,
+            user: null
         },
         data() {
             return {
                 comments: [],
+                err: null
             }
         },
         mounted() {
-            this.comments = "faidbidbaubd !";
+            document.getElementById('search-comment').addEventListener('input', (event) => {
+                switch (event.target.value.length) {
+                    case 0:
+                        document.getElementById('search-comment-btn').classList.add('invisible');
+                        document.getElementById('search-comment').classList.remove('rounded-0');
+                        document.getElementById('search-comment').classList.remove('rounded-start');
+                        break;
+                
+                    default:
+                        document.getElementById('search-comment-btn').classList.remove('invisible');
+                        document.getElementById('search-comment').classList.add('rounded-0');
+                        document.getElementById('search-comment').classList.add('rounded-start');
+                        break;
+                }
+            });
             this.refreshComments();
         },
         methods: {
@@ -62,15 +83,53 @@
                 });
             },
             addComment() {
+                if (this.user !== null) {
+                    if (this.user.email_verified_at !== null) {
+                        let form = new FormData();
+                        let text = document.getElementById('comment-text').value;
+                        form.append('comment', text);
+                        axios.post('/add-comment/' + this.book, form).then((result) => {
+                            document.getElementById('comment-text').value = '';
+                            this.refreshComments()
+                        }).catch((err) => {
+                            console.log(err);
+                        });
+                    } else {    
+                        window.location = '/email/verify';
+                    }
+                } else {
+                    window.location = '/login';
+                }
+            },
+            searchResetInput() {
+                document.getElementById('search-comment').value = '';
+                document.getElementById('search-comment-btn').classList.add('invisible');
+                document.getElementById('search-comment').classList.remove('rounded-0');
+                document.getElementById('search-comment').classList.remove('rounded-start');
+                this.err = null;
+                this.searchComment();
+            },
+            searchComment() {
                 let form = new FormData();
-                let text = document.getElementById('comment-text').value;
-                form.append('comment', text);
-                axios.post('/add-comment/' + this.book, form).then((result) => {
-                    document.getElementById('comment-text').value = '';
-                    this.refreshComments()
-                }).catch((err) => {
-                    console.log(err);
-                });
+                const inp = document.getElementById('search-comment');
+                if (inp.value.length > 0) {
+                    form.append('book', this.book);
+                    form.append('comment', inp.value);
+
+                    axios.post('/search-comments', form).then((result) => {
+                        if (result.data.comments.length > 0) {
+                            this.comments = result.data.comments;
+                            this.err = null;
+                        } else {
+                            this.comments = [];
+                            this.err = "По вашему запросу ничего не найдено.";
+                        }
+                    }).catch((err) => {
+                        console.log(err);
+                    });
+                } else {
+                    this.refreshComments();
+                }
             },
         },
     }

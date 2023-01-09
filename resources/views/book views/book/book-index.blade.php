@@ -87,7 +87,7 @@
                         <p>{{$book->description}}</p>
                 </div>
                 <audio-player class="mt-5" :file="{{ $files }}"></audio-player>
-                <comments-system class="mt-5" :book="{{$book->id}}"></comments-system>
+                <comments-system class="mt-5" :book="{{$book->id}}" :user="{{$user}}"></comments-system>
             </div>
         </div>
     </div>
