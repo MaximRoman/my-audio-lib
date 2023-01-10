@@ -26,12 +26,14 @@
                     }
                 });
                 this.calcGrades();
+            } else {
+                this.result = '?';
             }
         },
         methods: {
           calcGrades() {
             let likePercents = (10 * this.totalLikes) / this.totalGrades
-            this.result = likePercents.toFixed(2);
+            this.result = likePercents.toFixed(0);
           }  
         },
     }

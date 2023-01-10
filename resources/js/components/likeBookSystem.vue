@@ -2,7 +2,7 @@
     <div class="d-flex gap-2">
         <button :id="'like-' + book.id" class="btn btn-outline-success" @click="likeFunction(1)"><i class="fa-regular fa-thumbs-up"></i> {{ like }}</button>
         <button :id="'dislike-' + book.id" class="btn btn-outline-success" @click="likeFunction(0)"><i class="fa-regular fa-thumbs-down"></i> {{ dislike }}</button>
-        <a class="btn btn-outline-success" :href="'/book/' + book.id + '/#comments'"><i class="fa-regular fa-comment"></i> {{ comments }}</a>
+        <a v-if="btn" class="btn btn-outline-success" :href="'/book/' + book.id + '/#comments'"><i class="fa-regular fa-comment"></i> {{ comments }}</a>
     </div>
 </template>
 
@@ -11,6 +11,7 @@
         props: [
             'book',
             'user',
+            'btn',
         ],
         data() {
             return {
@@ -22,6 +23,7 @@
             }
         },
         mounted() {
+            console.log(this.btn);
             this.getJson();
         },
         methods: {
@@ -46,6 +48,9 @@
                         document.getElementById('like-' + this.book.id).classList = "btn btn-outline-success";
                         document.getElementById('dislike-' + this.book.id).classList = "btn btn-success";
                     }
+                } else {
+                    document.getElementById('like-' + this.book.id).classList = "btn btn-outline-success";
+                    document.getElementById('dislike-' + this.book.id).classList = "btn btn-outline-success";
                 }
             },
             getJson() {

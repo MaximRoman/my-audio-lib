@@ -25,7 +25,11 @@ class LikeSysController extends Controller
         if (!$grades) {
             Grades::create($form);
         } else {
-            $grades->update($form);
+            if ($grades->status == $grade) {
+                $grades->delete();
+            } else {
+                $grades->update($form);
+            }
         }
     }
 

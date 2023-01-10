@@ -131,13 +131,15 @@ Route::middleware('auth')->group(function () {
         
         Route::controller(CommentController::class)->group(function () {
             Route::post('/add-comment/{book}', 'addComment')->name('addComment');
-            Route::post('/search-comments', 'searchComments')->name('searchComments');
         });
     });
 });
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index');
+    Route::get('/search/{search}/', 'globalSearch')->name('globalSearch');
+    Route::get('/{category}/', 'getBooksByCategory')->name('getBooksByCategory');
+    
 });
 
 Route::controller(BookController::class)->group(function () {

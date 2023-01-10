@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="d-flex flex-column-reverse">
-        @forelse ($data['books'] as $item)
+        @forelse ($books as $item)
         <form id="book-{{$item->id}}" action="/book/{{$item->id}}"></form>
         <div class="card bg-gray border-success mb-3">
             <div class="card-header d-flex justify-content-between align-items-center border-success">
@@ -20,7 +20,7 @@
             </div>
             <div class="card-body row">
                 <div class="col-4">
-                    @foreach ($data['images'] as $image)
+                    @foreach ($images as $image)
                         @if ($item->id === $image->book_id)
                             <img class="img-fluid" src="{{ asset('/storage/' . $image->image) }}"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
                         @endif
@@ -29,10 +29,10 @@
                 <div class="col-8">
                     <div class="m-0">
                         <span class="h5 me-2">Автор :</span>
-                        @foreach ($data['authors'] as $author)
+                        @foreach ($authors as $author)
                             @if ($item->id === $author->book_id)
-                                <a class="my-link h5 text-success" href="/">{{ $author->author }}</a>
-                                @if ($loop->index < count($data['authors']) - 1)
+                                <a class="my-link h5 text-success" href="/search/{{$author->author}}">{{ $author->author }}</a>
+                                @if ($loop->index < count($authors) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
                             @endif
@@ -40,10 +40,10 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Читает :</span>
-                        @foreach ($data['readers'] as $reader)
+                        @foreach ($readers as $reader)
                             @if ($item->id === $reader->book_id)
-                                <a class="my-link h5 text-success" href="/">{{ $reader->reader }}</a>
-                                @if ($loop->index < count($data['readers']) - 1)
+                                <a class="my-link h5 text-success" href="/search/{{$reader->reader}}">{{ $reader->reader }}</a>
+                                @if ($loop->index < count($readers) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
                             @endif
@@ -55,9 +55,9 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Цыкл :</span>
-                        @foreach ($data['series'] as $seriesItem)
+                        @foreach ($series as $seriesItem)
                             @if ($item->id === $seriesItem->book_id)
-                                <a class="my-link h5 text-success" href="/">{{ $seriesItem->series }}</a>
+                                <a class="my-link h5 text-success" href="/search/{{$seriesItem->series}}">{{ $seriesItem->series }}</a>
                                 {{-- <span class="h5 text-light">( {{ count($series) }} )</span> --}}
                                 @break
                             @endif
@@ -65,12 +65,12 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Категория :</span>
-                        @foreach ($data['categories'] as $category)
+                        @foreach ($categories as $category)
                             @if ($item->id === $category->book_id)
-                                <a class="my-link h5 text-success" href="/">{{ $category->category }}</a>
-                                @if ($loop->index < count($data['categories']) - 1)
-                                    <span class="h5 me-1 ms-1">/</span>
-                                @endif
+                                <a class="my-link h5 text-success" href="/{{$category->temp_category}}/">{{ $category->category }}</a>
+                                <span class="h5 me-1 ms-1">/</span>
+                                {{-- @if ($loop->index > 1)
+                                @endif --}}
                             @endif
                         @endforeach
                     </div>
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="card-footer border-success d-flex justify-content-between">
-                <like-book :book="{{json_encode($item)}}" :user="{{json_encode($data['user'])}}"></like-book>
+                <like-book :book="{{json_encode($item)}}" :user="{{json_encode($user)}}" :btn="{{json_encode(true)}}"></like-book>
                 {{-- <div class="d-flex gap-2">
                     <a class="btn btn-outline-success" href="/set-book-grade/{{$item->id}}/1"><i class="fa-regular fa-thumbs-up"></i> {{ 0 }}</a>
                     <a class="btn btn-outline-success" href=""><i class="fa-regular fa-thumbs-down"></i> {{ 0 }}</a>

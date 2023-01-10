@@ -25,14 +25,12 @@
     <div id="app" class="min-vh-100 row justify-content-center p-4_5 bg-dark text-light w-100 m-0">
         <nav class="border-bottom border-dark navbar rounded-top d-flex p-0 ">
             <div class="col-3 h-100 d-flex align-items-center justify-content-center bg-secondary rounded-top-start-4">
-                <a class="navbar-brand m-0 d-flex align-items-center h75 btn" href="/">
+                <a class="navbar-brand m-0 d-flex align-items-center h75" href="/">
                     <h3 class="m-0 p-0 text-success">{{ config('app.name', 'Laravel') }}</h3>
                 </a>
             </div>
             <div class="col-9 bg-gray h-100 d-flex align-items-center rounded-top-end-4 justify-content-between border-start border-dark" id="navbarSupportedContent">
-                <ul class="col-6 nav mr-auto d-flex align-items-center d-flex h-100">
-                    <top-navbar></top-navbar>
-                </ul>
+                <top-navbar></top-navbar>
                 <div class="col-4 d-flex justify-content-center">
                     @guest
                     <div class="nav-item dropdown">
@@ -95,121 +93,7 @@
 
         <div class="container d-flex p-0 min-vh-80">
             <div class="col-3">
-                    <div class="card border-0 rounded-0 bg-secondary h-100 d-flex flex-column align-items-center">
-                        <div class="card-body">
-                            <h3 class="d-flex align-items-center gap-2"><img src={{ asset("/pictures/icons/left-menu.png") }} alt=""> Категории:</h3>
-                            <ul class="list-group">
-                                {{-- <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/audiospektakl">Аудиоспектакль</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/alternativnaya-istoriya">Альтернативная история</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/biznes">Бизнес</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/biografiya">Биографии, мемуары</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/boevik">Боевик</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/detektivy-trillery">Детективы, триллеры</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/dlya-detey">Для детей</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/istoriya">История</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/klassika">Классика</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/lyubovnyy-romani">Любовный роман</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/lyubovnoe-fentezi">Любовное фэнтези</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/medicina-zdorove">Медицина, здоровье</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/nauchno-populyarnoe">Научно-популярное</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/obuchenie">Обучение</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/poznavatelnaya-literatura">Познавательная литература</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/postapokalipsis">Постапокалипсис</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/poeziya">Поэзия</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/priklyucheniya">Приключения</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/psihologiya-filosofiya">Психология, философия</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/ranobe">Ранобэ</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/raznoe">Разное</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/religiya">Религия</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/roman-proza">Роман, проза</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/skazki">Сказки</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/uzhasy-mistika">Ужасы, мистика</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/ezoterika">Эзотерика</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/yumor-satira">Юмор, сатира</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/fantastika-fenteze">Фантастика, фэнтези</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/stalker">S.T.A.L.K.E.R.</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/s-t-i-k-s">S-T-I-K-S</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/litrpg">LitRPG</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/metro-2033">Метро 2033</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/etnogenez">Этногенез</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/tehnotma">Технотьма</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/eve-online">EVE online</a>
-                                </li>
-                                <li class="list-group-item border-0 bg-secondary p-0 pb-1 pt-1">
-                                    <a class="btn btn-outline-success w-100 text-start" href="/popadanci">Попаданцы</a>
-                                </li> --}}
-                            </ul>
-                        </div>
-                    </div>                
+                <categories-menu></categories-menu>       
             </div>
             <main class="col-9 border-start border-dark">
                 <div class="card rounded-0 bg-gray border-0 h-100">

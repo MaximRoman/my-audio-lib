@@ -3,7 +3,7 @@
 @section('content')
     <div class="d-flex flex-column-reverse">
         <div class="card bg-gray border-success mb-3 border-0" >
-            <div class="card-body row">
+            <div class="card-body row justify-content-center">
                 <div class="mb-3 d-flex">
                     <h4 class="text-center w-100">{{ $book->title }}</h4>
                     <div class="d-flex gap-2">
@@ -80,7 +80,9 @@
                             @endif
                         @endforeach
                     </div>
-                    
+                    <div class="d-flex justify-content-end">
+                        <like-book class="mt-1" :book="{{json_encode($book)}}" :user="{{json_encode($user)}}" :btn="{{json_encode(false)}}"></like-book>
+                    </div>
                 </div>
                 <div class="mt-3">
                         <span class="h5 me-2">Описание :</span>
