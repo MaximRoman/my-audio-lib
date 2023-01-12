@@ -10,13 +10,14 @@ use App\Models\Readers;
 use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class HomeController extends Controller
 {
     private function getIndexData() {
         $admin = false;
-        $books = Books::all();
+        $books = DB::table('books')->orderBy('created_at', 'desc')->get();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
                         ->get([
                             'book_id',
@@ -94,6 +95,7 @@ class HomeController extends Controller
     }   
 
     public function globalSearch(Request $request) {
+        $message = "!По вашему запросу ничего не найдено!";
         $userId = null;
         if (Auth::user()) {
             $userId = Auth::user()->id;
@@ -152,6 +154,7 @@ class HomeController extends Controller
                                 'series' => $series,
                                 'categories' => $categories,
                                 'user' => $userId,
+                                'message' => $message,
                             ]);
     }
 

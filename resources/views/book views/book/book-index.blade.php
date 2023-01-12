@@ -4,17 +4,11 @@
     <div class="d-flex flex-column-reverse">
         <div class="card bg-gray border-success mb-3 border-0" >
             <div class="card-body row justify-content-center">
-                <div class="mb-3 d-flex">
-                    <h4 class="text-center w-100">{{ $book->title }}</h4>
-                    <div class="d-flex gap-2">
-                        <form action="/edit-book/{{ $book->id }}">
-                            <button class="btn btn-warning h4" type="submit"><i class="fa-solid fa-pen"></i></button>
-                        </form>
-                        <form action='/delete-book/{{ $book->id }}' method="POST">
-                            @csrf
-                            @method('delete')
-                            <button class="btn btn-danger h4" type="submit"><i class="fa-solid fa-trash"></i></button>
-                        </form>
+                <div class="mb-3">
+                    <div class="row align-items-center">
+                        <add-to-fav :book="{{$book->id}}"></add-to-fav>
+                        <h4 class="col-8 text-center">{{ $book->title }} </h4>
+                        <edit-delete-btns class="col-2" :book="{{$book->id}}"></edit-delete-btns>
                     </div>
                 </div>
                 <div class="col-4">

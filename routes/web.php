@@ -12,6 +12,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DeleteBookController;
 use App\Http\Controllers\EditBookController;
+use App\Http\Controllers\FavBookController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LikeSysController;
 use App\Http\Controllers\ReaderController;
@@ -67,7 +68,7 @@ Route::middleware('auth')->group(function () {
         });
         
         Route::controller(DeleteBookController::class)->group(function () {
-            Route::delete('/delete-book/{book}', 'deleteBook')->name('deleteBook');
+            Route::get('/delete-book/{book}', 'deleteBook')->name('deleteBook');
         });
         
         Route::controller(BookFilesController::class)->group(function () {
@@ -125,12 +126,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/set-book-grade/{book}/{grade}', 'setBookGrade')->name('setBookGrade')->middleware('auth');
         });
         
-        Route::controller(AdminsController::class)->group(function () {
-            Route::post('/admins', 'shoeAdmins')->name('shoeAdmins');
-        });
-        
         Route::controller(CommentController::class)->group(function () {
             Route::post('/add-comment/{book}', 'addComment')->name('addComment');
+        });
+        
+        Route::controller(FavBookController::class)->group(function () {
+            Route::post('/set-fav-book', 'setFavBook')->name('setFavBook');
+            Route::get('/fav-books', 'getFavBooks')->name('getFavBooks');
         });
     });
 });
@@ -138,7 +140,7 @@ Route::middleware('auth')->group(function () {
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/search/{search}/', 'globalSearch')->name('globalSearch');
-    Route::get('/{category}/', 'getBooksByCategory')->name('getBooksByCategory');
+    Route::get('/category/{category}', 'getBooksByCategory')->name('getBooksByCategory');
     
 });
 
@@ -153,4 +155,12 @@ Route::controller(CommentController::class)->group(function () {
         
 Route::controller(LikeSysController::class)->group(function () {
     Route::get('/get-book-grades/{book}', 'getBookGrades')->name('getBookGrades');
+});
+        
+Route::controller(AdminsController::class)->group(function () {
+    Route::get('/get-admin/info', 'getAdminInfo')->name('getAdminInfo');
+});
+        
+Route::controller(FavBookController::class)->group(function () {
+    Route::get('/get-fav-status/{book}', 'getFavStatus')->name('getFavStatus');
 });

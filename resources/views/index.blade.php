@@ -1,21 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="d-flex flex-column-reverse">
+    <div class="d-flex flex-column">
         @forelse ($books as $item)
         <form id="book-{{$item->id}}" action="/book/{{$item->id}}"></form>
         <div class="card bg-gray border-success mb-3">
-            <div class="card-header d-flex justify-content-between align-items-center border-success">
-                <h4 class="text-center w-100"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }}</h4>
-                <div class="d-flex gap-2">
-                    <form action="/edit-book/{{ $item->id }}">
-                        <button class="btn btn-warning h4" type="submit"><i class="fa-solid fa-pen"></i></button>
-                    </form>
-                    <form action='/delete-book/{{ $item->id }}' method="POST">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-danger h4" type="submit"><i class="fa-solid fa-trash"></i></button>
-                    </form>
+            <div class="card-header border-success">
+                <div class="row align-items-center">
+                    <add-to-fav :book="{{$item->id}}"></add-to-fav>
+                    <h4 class="col-8 text-center"  style="cursor: pointer;"  onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }} </h4>
+                    <edit-delete-btns class="col-2" :book="{{$item->id}}"></edit-delete-btns>
                 </div>
             </div>
             <div class="card-body row">
@@ -98,7 +92,15 @@
             </div>
         </div>
         @empty
-            <h3 class="text-center">Нет книг в базе, <a href="/add-book">добавить новую книгу</a></h3>
+            @if (isset($message))
+                <div class="card bg-gray border-success mb-3">
+                    <div class="card-body">
+                        <p class="h3 text-center text-danger">{{$message}}</p>
+                    </div>
+                </div>
+            @else 
+                <h3 class="text-center">Нет книг в базе, <a href="/add-book">добавить новую книгу</a></h3>
+            @endif
         @endforelse
     </div>
 @endsection

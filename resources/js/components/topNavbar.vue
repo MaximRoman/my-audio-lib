@@ -14,7 +14,7 @@
       <button class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" @click="showSearchInput()"><img src="https://my-audio-lib-icons-6vnqjd8ju-maximroman.vercel.app/icons/search.png" alt=""></button>
     </li>
     <li id="fav" class="nav-item col-2 h-100 d-flex align-items-center justify-content-center">
-      <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src="https://my-audio-lib-icons-6vnqjd8ju-maximroman.vercel.app/icons/fav.png" alt=""></a>
+      <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="/fav-books"><img src="https://my-audio-lib-icons-6vnqjd8ju-maximroman.vercel.app/icons/fav.png" alt=""></a>
     </li>
     <li id="chats" class="nav-item col-2 h-100 d-flex align-items-center justify-content-center">
       <a class="nav-link h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src="https://my-audio-lib-icons-6vnqjd8ju-maximroman.vercel.app/icons/obshalka.png" alt=""></a>

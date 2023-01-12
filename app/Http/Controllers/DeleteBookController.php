@@ -9,6 +9,8 @@ use App\Models\BookImages;
 use App\Models\BookReader;
 use App\Models\BookSeries;
 use App\Models\Books;
+use App\Models\FavBook;
+use App\Models\Grades;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteBookController extends Controller
@@ -22,6 +24,8 @@ class DeleteBookController extends Controller
         $bookCategory = BookCategory::where('book_id', $bookId);
         $bookSeries = BookSeries::where('book_id', $bookId);
         $bookImages = BookImages::where('book_id', $bookId);
+        $bookGrades = Grades::where('book_id', $bookId);
+        $favBook = FavBook::where('book_id', $bookId);
         $books = Books::where('id', $bookId);
 
         $this->deleteRowFromTable($bookAuthor);
@@ -29,6 +33,8 @@ class DeleteBookController extends Controller
         $this->deleteRowFromTable($bookCategory);
         $this->deleteRowFromTable($bookSeries);
         $this->deleteRowFromTable($bookImages);
+        $this->deleteRowFromTable($bookGrades);
+        $this->deleteRowFromTable($favBook);
         $this->deleteRowFromTable($books);
         Storage::disk('public')->deleteDirectory('/' . $title);
 

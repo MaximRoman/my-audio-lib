@@ -57,8 +57,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/add-book">{{ __('Добавить Книгу') }}</a>
-                                    <a class="dropdown-item" href="/admins">{{ __('Права Администраторов') }}</a>
+                                    <add-book-link></add-book-link>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                                                     document.getElementById('logout-form').submit();">

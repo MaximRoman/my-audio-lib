@@ -22,6 +22,10 @@ import CommentsSystem from './components/commentsSystem.vue';
 import CalcGrade from './components/calcBookGrade.vue';
 import TopNavbar from './components/topNavbar.vue';
 import CategoriesMenu from './components/categoriesMenu.vue';
+import EditDeleteBtns from './components/editDeleteBtns.vue';
+import AddToFav from './components/addToFav.vue';
+import AddBookLink from './components/addBookLink.vue';
+
 
 
 
@@ -34,6 +38,9 @@ app.component('calc-grade', CalcGrade);
 app.component('comments-system', CommentsSystem);
 app.component('top-navbar', TopNavbar);
 app.component('categories-menu', CategoriesMenu);
+app.component('edit-delete-btns', EditDeleteBtns);
+app.component('add-to-fav', AddToFav);
+app.component('add-book-link', AddBookLink);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
