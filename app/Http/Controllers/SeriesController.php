@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Session;
 
 class SeriesController extends Controller
 {
+    public function addSeries() {
+        return view('book views/series/add-series');
+    }
+
     public function createSeries(Request $request) {
         $form = $request->validate([
             'series' => ['required', 'unique:series', 'max:255']

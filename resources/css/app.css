@@ -9227,6 +9227,14 @@ fieldset:disabled .btn {
 	color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important
 }
 
+.text-transparent {
+	color: transparent!important
+}
+
+.text-white {
+	color: white!important
+}
+
 .text-dark {
 	--bs-text-opacity: 1;
 	color: rgba(var(--bs-text-dark-rgb), var(--bs-text-opacity)) !important

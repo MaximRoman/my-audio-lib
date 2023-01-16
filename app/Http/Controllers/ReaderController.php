@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Session;
 
 class ReaderController extends Controller
 {
+    public function addReader() {
+        return view('book views/reader/add-reader');
+    }
+
     public function createReader(Request $request) {
         $form = $request->validate([
             'reader' => ['required', 'unique:readers', 'max:255']

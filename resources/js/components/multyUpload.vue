@@ -10,9 +10,13 @@
                 </div>
             </div>
             <div class="card-body">               
-                <div class="row justify-content-evenly">
+                <div class="progress" id="total-progress" style="height: 40px;">
+                    <div class="progress-bar" role="progressbar" :style="{width: totalProgress + '%'}">
+                        {{ totalProgress }}%
+                    </div>
+                </div>
+                <div class="row justify-content-evenly mt-3">
                     <div class="col-5 row justify-content-center">
-                        <h3 class="text-center">Files to upload {{ filesOrder.length }}</h3>
                         <select class="form-control" id="text1" multiple style="overflow: auto;" disabled>
                             <option  v-for="file in filesOrder">
                                 {{ file.name }}  
@@ -20,7 +24,6 @@
                         </select>
                     </div>
                     <div class="col-5 row justify-content-center">
-                        <h3 class="text-center">Files uploaded   {{ filesFinish.length }}</h3>
                         <select class="form-control" id="text2" multiple style="overflow: auto;" disabled>
                             <option v-for="file in filesFinish">
                                 {{ file.name }}
@@ -29,8 +32,9 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <input class="form-control" id="inp" type="file" name="book" accept="audio/mpeg" multiple @change="fileInputChange()">
+            <div class="card-footer d-flex gap-3">
+                <input class="form-control" id="inp" type="file" name="book" accept="audio/mpeg" multiple>
+                <button class="btn btn-success" @click="fileInputChange()"><i class="fa-solid fa-cloud-arrow-up"></i></button>
             </div>
             <a id="home" href="/"></a>
         </div>
@@ -49,13 +53,14 @@
                 filesOrder: [],
                 filesFinish: [],
                 fileProgress: 0,
+                totalProgress: 0,
                 fileCurrent: '',
             }
         },
         mounted() {
-            console.log(this.obj);
             document.getElementById('card').classList.value = document.getElementById('card').classList.value + ' ' + this.card;
             document.getElementById('progress').classList.value = document.getElementById('progress').classList.value + ' ' + this.childs;
+            document.getElementById('total-progress').classList.value = document.getElementById('total-progress').classList.value + ' ' + this.childs;
             document.getElementById('text1').classList.value = document.getElementById('text1').classList.value + ' ' + this.childs;
             document.getElementById('text2').classList.value = document.getElementById('text2').classList.value + ' ' + this.childs;
             document.getElementById('inp').classList.value = document.getElementById('inp').classList.value + ' ' + this.childs;
@@ -86,6 +91,7 @@
                     }
                 })
                 .then(response => {
+                    this.totalProgress = (filesFinish.length * 100) / (filesFinish.length + filesOrder.length);
                     this.fileProgress = 0;
                     this.fileCurrent = '';
                     this.filesFinish.push(item);

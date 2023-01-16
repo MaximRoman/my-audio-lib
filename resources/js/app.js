@@ -25,8 +25,8 @@ import CategoriesMenu from './components/categoriesMenu.vue';
 import EditDeleteBtns from './components/editDeleteBtns.vue';
 import AddToFav from './components/addToFav.vue';
 import AddBookLink from './components/addBookLink.vue';
-
-
+import SearchSelect from './components/searchSelect.vue';
+import ListItem from './components/listItem.vue';
 
 
 app.component('example-component', ExampleComponent);
@@ -41,6 +41,8 @@ app.component('categories-menu', CategoriesMenu);
 app.component('edit-delete-btns', EditDeleteBtns);
 app.component('add-to-fav', AddToFav);
 app.component('add-book-link', AddBookLink);
+app.component('search-select', SearchSelect);
+app.component('list-item', ListItem);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

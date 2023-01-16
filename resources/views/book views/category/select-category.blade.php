@@ -4,17 +4,17 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Выбор Категорий Книги : </h3>
-            @if (isset($bookId))
-                <div class="h3 d-flex justify-content-between">
+            <div class="h3 d-flex justify-content-between gap-3">
+                @if (isset($bookId))
                     <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
-                    {{-- <a class="btn btn-success" href="/add-category"><i class="fa-solid fa-plus"></i></a> --}}
-                </div>
-            @else
-                <div class="h3 d-flex justify-content-between">
+                    <search-select :url="'/edit-book/{{$bookId}}/select-category'"></search-select>
+                    {{-- <a class="btn btn-success" href="/edit-book/{{$bookId}}/add-category"><i class="fa-solid fa-plus"></i></a> --}}
+                @else
                     <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
-                    {{-- <a class="btn btn-success" href="/add-category"><i class="fa-solid fa-plus"></i></a> --}}
-                </div>
-            @endif
+                    <search-select :url="'/add-book/select-category'"></search-select>
+                    {{-- <a class="btn btn-success" href="/add-book/add-category"><i class="fa-solid fa-plus"></i></a> --}}
+                @endif
+            </div>
             @if (isset($categories))
                 @if (isset($bookId))
                     <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-category" method="POST">

@@ -215,20 +215,4 @@ class HomeController extends Controller
                                 'user' => $userId,
                             ]);
     }    
-
-    public function addAuthor() {
-        return view('add-author');
-    }
-
-    public function addReader() {
-        return view('add-reader');
-    }
-
-    public function addSeries() {
-        return view('add-series');
-    }
-
-    public function addCategory() {
-        return view('add-category');
-    }
 }

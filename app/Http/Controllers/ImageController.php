@@ -10,19 +10,28 @@ use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
-    public function addImage() {
-        return view('book views/image/upload-image');
+    public function addImage(Request $request) {
+        $bookId = $request->book;
+        return view('book views/image/upload-image', ['bookId' => $bookId]);
     }
 
     public function uploadImage(Request $request) {
+        $bookId = $request->bookId;
         $image = $request->validate([
-            'file_name' => ['required', 'min:1'],
+            'name' => ['required', 'unique:images'],
             'image' => 'required',
         ]);
-        $path = $request->file('image')->storeAs('images', $image['file_name'] . '.' . $image['image']->getClientOriginalExtension(), 'public');
-        
-        Images::create(['image' => $path]);
-        return redirect('/add-book/select-image');
+        $path = $request->file('image')->storeAs('images', $image['name'] . '.' . $image['image']->getClientOriginalExtension(), 'public');
+        $form = [
+            'name' => $image['name'], 
+            'image' => $path,
+        ];
+        Images::create($form);
+        if ($bookId) {    
+            return redirect('/edit-book/' . $bookId . '/select-image');
+        } else {
+            return redirect('/add-book/select-image');
+        }
     }
     
     public function uploadOtherImage(Request $request) {
@@ -78,7 +87,12 @@ class ImageController extends Controller
 
     public function editSelectedImage(Request $request) {
         $bookId = $request->book;
-        $images = Images::all();
+        $name = '';
+        if (isset($request['name'])) {
+            $name = $request->name;
+        }
+        // dd($name);
+        $images = Images::whereRaw('name LIKE("%' . $name . '%")')->get();
 
         return view('book views/image/select-image', ['images' => $images, 'bookId' => $bookId]);
     }

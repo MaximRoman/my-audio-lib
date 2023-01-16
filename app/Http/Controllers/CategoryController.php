@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
+    public function addCategory() {
+        return view('book views/category/add-category');
+    }
+
     public function createCategory(Request $request) {
         $form = $request->validate([
             'category' => ['required', 'unique:categories', 'max:255'],

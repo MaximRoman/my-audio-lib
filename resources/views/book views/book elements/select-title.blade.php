@@ -4,6 +4,13 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Название Книги :</h3>
+            <div class="h3 d-flex justify-content-between">
+                @if (isset($bookId))
+                    <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
+                @else
+                    <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
+                @endif
+            </div>
             @if (isset($bookId))
                 <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-title" method="POST">
             @else

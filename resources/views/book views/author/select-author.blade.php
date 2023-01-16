@@ -4,44 +4,39 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Выбор Автора Книги : </h3>
-            @if (isset($bookId))
-                <div class="h3 d-flex justify-content-between">
-                    <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
-                    <a class="btn btn-success" href="/add-author"><i class="fa-solid fa-plus"></i></a>
-                </div>
-            @else
-                <div class="h3 d-flex justify-content-between">
-                    <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
-                    <a class="btn btn-success" href="/add-author"><i class="fa-solid fa-plus"></i></a>
-                </div>
-            @endif
-            @if (isset($authors))
-            
+            <div class="h3 d-flex justify-content-between gap-3">
                 @if (isset($bookId))
-                    <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-author" method="POST">
+                    <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
+                    <a class="btn btn-success" href="/edit-book/{{$bookId}}/add-author"><i class="fa-solid fa-plus"></i></a>
                 @else
-                    <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookAuthor') }} method="POST">
+                    <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
+                    <a class="btn btn-success" href="/add-book/add-author"><i class="fa-solid fa-plus"></i></a>
                 @endif
-                    @csrf
-                    <ul class="col-7 list-group bg-secondary p-3">
-                        <label class="col-7">Список Авторов :</label>
-                        @foreach ($authors as $item)
-                            <li class="list-group-item bg-gray text-light d-flex justify-content-between mt-2 rounded" id="li-{{ $item->id }}" 
-                                onclick="
-                                    document.getElementById('author-{{ $item->id }}').click(); 
-                                    if (document.getElementById('author-{{ $item->id }}').checked) {
-                                        document.getElementById('li-{{ $item->id }}').classList.add('active');
-                                    } else {
-                                        document.getElementById('li-{{ $item->id }}').classList.remove('active');
-                                    }"
-                            >
-                                <span>{{ $item->author }}</span>
-                                <input class="form-check-input" type="checkbox" name="authors[]" id="author-{{ $item->id }}" value="{{ $item->id }}" onclick="document.getElementById('li-{{ $item->id }}').click(); ">
-                            </li>    
-                        @endforeach
-                    </ul>
-                    <button class="col-6 btn btn-success">Сохранить</button>
-                </form>
+            </div>
+            @if (isset($authors))
+                @if (isset($bookId))
+                    <list-item 
+                        list-name="Список Авторов :" 
+                        :items="{{json_encode($authors)}}" 
+                        name-input="author" 
+                        type-input="checkbox" 
+                        empty-message="Нет Авторов в Базе" 
+                        url="/edit-book/{{$bookId}}/select-book-author"></list-item>
+                        <form action="/edit-book/{{$bookId}}">
+                            <button class="btn btn-success" type="submit">Выбрать</button>
+                        </form>
+                @else
+                    <list-item class="mt-3"
+                        list-name="Список Авторов :" 
+                        :items="{{json_encode($authors)}}" 
+                        name-input="author" 
+                        type-input="checkbox" 
+                        empty-message="Нет Авторов в Базе" 
+                        url="/add-book/select-book-author"></list-item>
+                        <form class="row justify-content-center mt-3" action="/add-book">
+                            <button class="btn btn-success col-6" type="submit">Выбрать</button>
+                        </form>
+                @endif
             @endif
         </div>
     </div>
