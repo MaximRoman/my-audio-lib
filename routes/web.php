@@ -86,7 +86,7 @@ Route::middleware('auth')->group(function () {
         
         Route::controller(ImageController::class)->group(function () {
             Route::get('/add-book/select-image', 'selectImage')->name('selectImage');
-            Route::post('/add-book/select-image/{image}', 'selectBookImage')->name('selectBookImage');
+            Route::get('/add-book/select-book-image/{image}', 'selectBookImage')->name('selectBookImage');
             Route::get('/edit-book/{book}/select-image', 'editSelectedImage')->name('editSelectedImage');
             Route::post('/edit-book/{book}/select-book-image/{image}', 'editSelectedBookImage')->name('editSelectedBookImage');
             Route::get('/add-image', 'addImage')->name('addImage');
@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
         
         Route::controller(ReaderController::class)->group(function () {
             Route::get('/add-book/select-reader', 'selectReader')->name('selectReader');
-            Route::post('/add-book/select-reader', 'selectBookReader')->name('selectBookReader');
+            Route::post('/add-book/select-book-reader', 'selectBookReader')->name('selectBookReader');
             Route::get('/edit-book/{book}/select-reader', 'editSelectedReader')->name('editSelectedReader');  
             Route::post('/edit-book/{book}/select-book-reader', 'editSelectedBookReader')->name('editSelectedBookReader');
             Route::post('/create-reader', 'createReader')->name('createReader');    
@@ -109,7 +109,7 @@ Route::middleware('auth')->group(function () {
         
         Route::controller(SeriesController::class)->group(function () {
             Route::get('/add-book/select-series', 'selectSeries')->name('selectSeries');
-            Route::post('/add-book/select-series', 'selectBookSeries')->name('selectBookSeries');
+            Route::post('/add-book/select-book-series', 'selectBookSeries')->name('selectBookSeries');
             Route::get('/edit-book/{book}/select-series', 'editSelectedSeries')->name('editSelectedSeries');
             Route::post('/edit-book/{book}/select-book-series', 'editSelectedBookSeries')->name('editSelectedBookSeries');
             Route::post('/create-series', 'createSeries')->name('createSeries');
@@ -119,7 +119,7 @@ Route::middleware('auth')->group(function () {
         
         Route::controller(CategoryController::class)->group(function () {
             Route::get('/add-book/select-category', 'selectCategory')->name('selectCategory');
-            Route::post('/add-book/select-category', 'selectBookCategory')->name('selectBookCategory');
+            Route::post('/add-book/select-book-category', 'selectBookCategory')->name('selectBookCategory');
             Route::get('/edit-book/{book}/select-category', 'editSelectedCategory')->name('editSelectedCategory');
             Route::post('/edit-book/{book}/select-book-category', 'editSelectedBookCategory')->name('editSelectedBookCategory');
             // Route::post('/create-category', 'createCategory')->name('createCategory');

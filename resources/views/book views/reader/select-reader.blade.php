@@ -7,40 +7,28 @@
             <div class="h3 d-flex justify-content-between gap-3">
                 @if (isset($bookId))
                     <a class="btn btn-success" href="/edit-book/{{$bookId}}"><i class="fa-solid fa-arrow-left"></i></a>
-                    <search-select :url="'/edit-book/{{$bookId}}/select-reader'"></search-select>
                     <a class="btn btn-success" href="/edit-book/{{$bookId}}/add-reader"><i class="fa-solid fa-plus"></i></a>
                 @else
                     <a class="btn btn-success" href="/add-book"><i class="fa-solid fa-arrow-left"></i></a>
-                    <search-select :url="'/add-book/select-reader'"></search-select>
                     <a class="btn btn-success" href="/add-book/add-reader"><i class="fa-solid fa-plus"></i></a>
                 @endif
             </div>
             @if (isset($readers))
-            
+                <list-item  class="mt-3"
+                    list-name="Список Читателей :" 
+                    :items="{{json_encode($readers)}}" 
+                    name-input="reader" 
+                    type-input="checkbox" 
+                    empty-message="Нет Читателей в Базе" 
+                    url="/add-book/select-book-reader">
+                </list-item>
                 @if (isset($bookId))
-                    <form class="row gap-3 justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-reader" method="POST">
+                    <form class="row justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-reader" method="POST">
+                        @csrf
                 @else
-                    <form class="row gap-3 justify-content-center mt-3" action={{ route('selectBookReader') }} method="POST">
+                    <form class="row justify-content-center mt-3" action="/add-book">
                 @endif
-                    @csrf
-                    <ul class="col-7 list-group bg-secondary p-3">
-                        <label class="col-7">Список Читателей :</label>
-                        @foreach ($readers as $item)
-                            <li class="list-group-item bg-gray text-light d-flex justify-content-between mt-2 rounded" id="li-{{ $item->id }}" 
-                                onclick="
-                                    document.getElementById('reader-{{ $item->id }}').click(); 
-                                    if (document.getElementById('reader-{{ $item->id }}').checked) {
-                                        document.getElementById('li-{{ $item->id }}').classList.add('active');
-                                    } else {
-                                        document.getElementById('li-{{ $item->id }}').classList.remove('active');
-                                    }"
-                            >
-                                <span>{{ $item->reader }}</span>
-                                <input class="form-check-input" type="checkbox" name="readers[]" id="reader-{{ $item->id }}" value="{{ $item->id }}" onclick="document.getElementById('li-{{ $item->id }}').click(); ">
-                            </li>    
-                        @endforeach
-                    </ul>
-                    <button class="col-6 btn btn-success">Сохранить</button>
+                    <button class="btn btn-success col-6" type="submit">Выбрать</button>
                 </form>
             @endif
         </div>

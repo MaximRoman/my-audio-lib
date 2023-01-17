@@ -30,11 +30,17 @@ class CategoryController extends Controller
     }
 
     public function selectBookCategory(Request $request) {
-        $categories = $request->categories;
+        $categoriesChecked = json_decode($request->checked);
 
-        Session::put('bookCategories', $categories);
-
-        return redirect('/add-book');
+        if (count($categoriesChecked) > 0) {
+            Session::pull('bookCategories');
+            Session::put('bookCategories', $categoriesChecked);
+        } else {
+            Session::pull('bookCategories');
+        }
+        return [
+            'result' => Session::get('bookCategories'),
+        ];
     }
 
     public function editSelectedCategory(Request $request) {
@@ -46,8 +52,12 @@ class CategoryController extends Controller
 
     public function editSelectedBookCategory(Request $request) {
         $bookId = $request->book;
-        $categories = $request->categories;
-        $this->updateBookJoin(BookCategory::class, $bookId, 'category_id', $categories);
+        $categories = [];
+        if (Session::get('bookCategories')) {
+            $categories = Session::get('bookCategories');
+        }
+        $editBook = new EditBookController();
+        $editBook->updateBookJoin(BookCategory::class, $bookId, 'category_id', $categories);
         return redirect('/edit-book/' . $bookId);
     }
 }

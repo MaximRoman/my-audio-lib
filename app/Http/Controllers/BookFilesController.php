@@ -12,7 +12,7 @@ class BookFilesController extends Controller
         $bookId = $request->book;
         $title = Books::all()->where('id', $bookId)->first()->title;
         $json = json_encode(['id' => $bookId, 'title' => $title]);
-        return view('book views/book elements/upload-files', ['book' => $json]);
+        return view('book views/book elements/upload-files', ['book' => $json, 'bookId' => $bookId]);
     }
 
     public function addBookFiles(Request $request) {

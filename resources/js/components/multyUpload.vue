@@ -33,8 +33,8 @@
                 </div>
             </div>
             <div class="card-footer d-flex gap-3">
-                <input class="form-control" id="inp" type="file" name="book" accept="audio/mpeg" multiple>
-                <button class="btn btn-success" @click="fileInputChange()"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+                <input class="form-control" id="inp" type="file" name="book" accept="audio/mpeg" multiple @change="fileInputChange()">
+                <button class="btn btn-success" @click=""><i class="fa-solid fa-cloud-arrow-up"></i></button>
             </div>
             <a id="home" href="/"></a>
         </div>
@@ -75,10 +75,17 @@
                 
                 for (let item of files) {
                     await this.uploadFile(item);
+                    await this.calcTotalProgress();
                 }
-                window.location = '/book/' + this.obj.id;
             },
-        
+            calcTotalProgress() {
+                this.totalProgress = Math.round((this.filesFinish.length * 100) / (this.filesFinish.length + this.filesOrder.length));
+                if (this.totalProgress < 100) {
+                    this.fileProgress = 0;
+                } else {
+                    window.location = '/book/' + this.obj.id;
+                }
+            },
             async uploadFile(item) {
                 let form = new FormData();
             
@@ -91,8 +98,6 @@
                     }
                 })
                 .then(response => {
-                    this.totalProgress = (filesFinish.length * 100) / (filesFinish.length + filesOrder.length);
-                    this.fileProgress = 0;
                     this.fileCurrent = '';
                     this.filesFinish.push(item);
                     this.filesOrder.splice(item, 1);

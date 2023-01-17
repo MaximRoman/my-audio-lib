@@ -28,9 +28,17 @@ class ReaderController extends Controller
     }
 
     public function selectBookReader(Request $request) {
-        $readers = $request['readers'];
-        Session::put('bookReaders', $readers);
-        return redirect('/add-book');
+        $readersChecked = json_decode($request->checked);
+
+        if (count($readersChecked) > 0) {
+            Session::pull('bookReaders');
+            Session::put('bookReaders', $readersChecked);
+        } else {
+            Session::pull('bookReaders');
+        }
+        return [
+            'result' => Session::get('bookReaders'),
+        ];
     }
 
     public function editSelectedReader(Request $request) {
@@ -42,8 +50,13 @@ class ReaderController extends Controller
 
     public function editSelectedBookReader(Request $request) {
         $bookId = $request->book;
-        $readers = $request['readers'];
-        $this->updateBookJoin(BookReader::class, $bookId, 'reader_id', $readers);
+        $readers = [];
+        if (Session::get('bookReaders')) {
+            $readers = Session::get('bookReaders');
+        }
+        
+        $editBook = new EditBookController();
+        $editBook->updateBookJoin(BookReader::class, $bookId, 'reader_id', $readers);
         return redirect('/edit-book/' . $bookId);
     }
 }

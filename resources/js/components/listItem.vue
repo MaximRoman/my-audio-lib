@@ -8,13 +8,21 @@
                     <button class="btn btn-danger rounded-0 rounded-end border border-start-0" id="clear-search" @click="resetSearch()"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </label>
-            <li v-for="item in list" class="list-group-item bg-gray text-light d-flex justify-content-between mt-2 rounded" :id="'li-' + item.id" @click="this.click(item.id)">
+            <li v-for="item in list" 
+                :class="[
+                            'list-group-item', 
+                            'bg-gray', 'text-light', 
+                            'd-flex', 'justify-content-between', 
+                            'mt-2', 'rounded', checked.includes(item.id) ? 'active' : '' 
+                        ]" 
+                :id="'li-' + item.id" 
+                @click="typeInput == 'checkbox' ?  
+                                    this.clickCheckbox(item.id) : 
+                                    typeInput == 'radio' ? 
+                                                this.clickRadio(item.id) : 
+                                                this.resetSession()"
+            >
                 <span>{{ item[nameInput] }}</span>
-                <button v-if="typeInput == 'checkbox'" class="btn btn-light d-flex align-items-center justify-content-center" style="width: 20px; height: 20px;" :id="item.id" value="0">
-                    <div class="">
-                        <i :id="'icon-' + item.id" class="fa-solid fa-check text-transparent w-100 h-100"></i>
-                    </div>
-                </button>
             </li>
             <li v-if="list.length == 0" class="list-group-item bg-gray text-light d-flex justify-content-between mt-2 rounded border-danger"><h5 class="m-0 text-danger">{{ message }}</h5></li>
         </ul>        
@@ -34,7 +42,7 @@
         data() {
             return {
                 list: [],
-                checked: false, 
+                checked: [],
                 searchInput: undefined,
                 searchClear: undefined,
                 message: '',
@@ -44,52 +52,60 @@
             this.message = this.emptyMessage;
             this.searchInput = document.getElementById('search');
             this.searchClear = document.getElementById('clear-search');
-            this.list = this.items;
+            this.list = this.items; 
+            console.log(this.items);
             this.resetSession();
         },
         methods: {
-            async click(id) {
+            async postFunction(form, status) {
+                await axios.post(this.url, form).then((result) => {
+                    console.log(result.data.result);
+                }).catch((err) => {
+                    console.log(err); 
+                    switch (status) {
+                        case 1:
+                            this.checked.push(id);
+                            break;
+                        case 2:
+                            this.checked = this.checked.filter(item => item != id); 
+                            break;
+                        case 3:
+                            this.checked = []; 
+                            break;
+                    }
+                });
+            },
+            clickCheckbox(id) {
                 const li = document.getElementById('li-' + id);
-                const btn = document.getElementById(id);
-                const icon = document.getElementById('icon-' + id);
                 let form = new FormData();
                 
-                if (btn.value == 1) {
-                    form.append('author', id);
-                    form.append('checked', 2);
-                    await axios.post(this.url, form).then((result) => {
-                        li.classList.remove('active');
-                        btn.classList.replace('btn-success', 'btn-light');
-                        icon.classList.replace('text-white', 'text-transparent');
-                        btn.value = 0;
-                    }).catch((err) => {
-                       console.log(err); 
-                    });
+                if (this.checked.includes(id)) {
+                    this.checked = this.checked.filter(item => item != id);
+                    form.append('checked', JSON.stringify(this.checked));
+                    this.postFunction(form, 1);
                 } else {
-                    form.append('author', id);
-                    form.append('checked', 1);
-                    await axios.post(this.url, form).then((result) => {
-                        li.classList.add('active');
-                        btn.classList.replace('btn-light', 'btn-success');
-                        icon.classList.replace('text-transparent', 'text-white');
-                        btn.value = 1;
-                    }).catch((err) => {
-                       console.log(err); 
-                    });
+                    this.checked.push(id);
+                    form.append('checked', JSON.stringify(this.checked));
+                    this.postFunction(form, 2);
                 }
             },
-            async resetSession() {
+            clickRadio(id) {
+                const li = document.getElementById('li-' + id);
                 let form = new FormData();
-                form.append('author', 0);
-                form.append('checked', 3);
-                await axios.post(this.url, form).then((result) => {
-                }).catch((err) => {
-                   console.log(err); 
-                });
+
+                this.checked = [id];
+                form.append('checked', JSON.stringify(this.checked));
+                this.postFunction(form, 1);
+            },
+            resetSession() {
+                let form = new FormData();
+                form.append('checked', JSON.stringify([]));
+                this.postFunction(form, 3);
             },
             search() {
                 if (this.searchInput.value.length > 0) {
-                    this.list =  this.list.filter(element => element[this.nameInput].includes(this.searchInput.value));  
+                    this.list =  this.items;
+                    this.list =  this.list.filter(element => element[this.nameInput].toLowerCase().includes(this.searchInput.value.toLowerCase()));  
                     this.message = "Нет результата";
                 } else {
                     this.resetSearch();

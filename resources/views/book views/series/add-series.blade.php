@@ -4,6 +4,13 @@
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
             <h3 class="text-center">Добавить нового Цыкла :</h3>
+            <div class="h3 d-flex justify-content-between">
+                @if (isset($bookId))
+                    <a class="btn btn-success" href="/edit-book/{{$bookId}}/select-series"><i class="fa-solid fa-arrow-left"></i></a>
+                @else
+                    <a class="btn btn-success" href="/add-book/select-series"><i class="fa-solid fa-arrow-left"></i></a>
+                @endif
+            </div>
             <form class="form-group row justify-content-center gap-3" action={{ route('createSeries') }} method="POST">
                 @csrf
                 <div class="col-7">

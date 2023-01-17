@@ -14,29 +14,22 @@
                 @endif
             </div>
             @if (isset($authors))
+                <list-item  class="mt-3"
+                    list-name="Список Авторов :" 
+                    :items="{{json_encode($authors)}}" 
+                    name-input="author" 
+                    type-input="checkbox" 
+                    empty-message="Нет Авторов в Базе" 
+                    url="/add-book/select-book-author">
+                </list-item>
                 @if (isset($bookId))
-                    <list-item 
-                        list-name="Список Авторов :" 
-                        :items="{{json_encode($authors)}}" 
-                        name-input="author" 
-                        type-input="checkbox" 
-                        empty-message="Нет Авторов в Базе" 
-                        url="/edit-book/{{$bookId}}/select-book-author"></list-item>
-                        <form action="/edit-book/{{$bookId}}">
-                            <button class="btn btn-success" type="submit">Выбрать</button>
-                        </form>
+                    <form class="row justify-content-center mt-3" action="/edit-book/{{$bookId}}/select-book-author" method="POST">
+                        @csrf
                 @else
-                    <list-item class="mt-3"
-                        list-name="Список Авторов :" 
-                        :items="{{json_encode($authors)}}" 
-                        name-input="author" 
-                        type-input="checkbox" 
-                        empty-message="Нет Авторов в Базе" 
-                        url="/add-book/select-book-author"></list-item>
-                        <form class="row justify-content-center mt-3" action="/add-book">
-                            <button class="btn btn-success col-6" type="submit">Выбрать</button>
-                        </form>
+                    <form class="row justify-content-center mt-3" action="/add-book">
                 @endif
+                    <button class="btn btn-success col-6" type="submit">Выбрать</button>
+                </form>
             @endif
         </div>
     </div>

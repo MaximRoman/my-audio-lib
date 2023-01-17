@@ -13,7 +13,9 @@
             </div>
             <form class="form-group row justify-content-center gap-3" action={{ route('createReader') }} method="POST">
                 @csrf
-                <input type="hidden" name="bookId" value="{{$bookId}}">
+                @if (isset($bookId))
+                    <input type="hidden" name="bookId" value="{{$bookId}}">
+                @endif
                 <div class="col-7">
                     <label for="reader">Читатель</label>
                     <input class="form-control bg-secondary text-light @error('reader') is-invalid @enderror" type="text" name="reader" id="reader">

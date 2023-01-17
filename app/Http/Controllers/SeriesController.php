@@ -9,8 +9,10 @@ use Illuminate\Support\Facades\Session;
 
 class SeriesController extends Controller
 {
-    public function addSeries() {
-        return view('book views/series/add-series');
+    public function addSeries(Request $request) {
+        $bookId = $request->book;
+
+        return view('book views/series/add-series', ['bookId' => $bookId]);
     }
 
     public function createSeries(Request $request) {
@@ -29,11 +31,17 @@ class SeriesController extends Controller
     }
 
     public function selectBookSeries(Request $request) {
-        $series = $request->series;
+        $seriesChecked = json_decode($request->checked);
 
-        Session::put('bookSeries', $series);
-
-        return redirect('/add-book');
+        if (count($seriesChecked) > 0) {
+            Session::pull('bookSeries');
+            Session::put('bookSeries', $seriesChecked[0]);
+        } else {
+            Session::pull('bookSeries');
+        }
+        return [
+            'result' => Session::get('bookSeries'),
+        ];
     }
 
     public function editSelectedSeries(Request $request) {
@@ -45,8 +53,13 @@ class SeriesController extends Controller
 
     public function editSelectedBookSeries(Request $request) {
         $bookId = $request->book;
-        $series = [$request->series];
-        $this->updateBookJoin(BookSeries::class, $bookId, 'series_id', $series);
+        $series = [];
+        if (Session::get('bookSeries')) {
+            $series = [Session::get('bookSeries')];
+        }
+        
+        $editBook = new EditBookController();
+        $editBook->updateBookJoin(BookSeries::class, $bookId, 'series_id', $series);
 
         return redirect('/edit-book/' . $bookId);
     }

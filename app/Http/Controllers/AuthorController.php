@@ -39,29 +39,16 @@ class AuthorController extends Controller
     }
 
     public function selectBookAuthor(Request $request) {
-        $authorId = $request->author;
-        $checked = $request->checked;
-        $array = [];
+        $authorsChecked = json_decode($request->checked);
 
-        if ($checked != 3) {
-            if (Session::get('bookAuthors')) {
-                $array = Session::get('bookAuthors');
-            }
-    
-            if ($checked == 1) {    
-                Session::pull('bookAuthors');
-                array_push($array, $authorId);
-                Session::put('bookAuthors', $array);
-            } else {
-                Session::pull('bookAuthors');
-                array_splice($array, array_search($authorId, $array), 1);
-                Session::put('bookAuthors', $array);
-            }
+        if (count($authorsChecked) > 0) {
+            Session::pull('bookAuthors');
+            Session::put('bookAuthors', $authorsChecked);
         } else {
             Session::pull('bookAuthors');
         }
         return [
-            'result' => Session::get('bookAuthors')
+            'result' => Session::get('bookAuthors'),
         ];
     }
 
@@ -74,7 +61,10 @@ class AuthorController extends Controller
 
     public function editSelectedBookAuthor(Request $request) {
         $bookId = $request->book;
-        $authors = $request['authors'];
+        $authors = [];
+        if (Session::get('bookAuthors')) {
+            $authors = Session::get('bookAuthors');
+        }
         $editBook = new EditBookController();
         $editBook->updateBookJoin(BookAuthor::class, $bookId, 'author_id', $authors); 
 
