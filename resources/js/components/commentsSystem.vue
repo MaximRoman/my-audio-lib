@@ -29,10 +29,10 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <span>{{ item.name }}</span>
-                            <div class="d-flex gap-2">
+                            <!-- <div class="d-flex gap-2">
                                 <button class="btn btn-outline-success p-1"><i class="fa-regular fa-thumbs-up"></i> {{ 0 }}</button>
                                 <button class="btn btn-outline-success p-1"><i class="fa-regular fa-thumbs-down"></i> {{ 0 }}</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                     <div class="card-body p-0">
@@ -86,10 +86,10 @@
                 if (this.user !== null) {
                     if (this.user.email_verified_at !== null) {
                         let form = new FormData();
-                        let text = document.getElementById('comment-text').value;
+                        let text = document.getElementById('comment').value;
                         form.append('comment', text);
                         axios.post('/add-comment/' + this.book, form).then((result) => {
-                            document.getElementById('comment-text').value = '';
+                            document.getElementById('comment').value = '';
                             this.refreshComments()
                         }).catch((err) => {
                             console.log(err);

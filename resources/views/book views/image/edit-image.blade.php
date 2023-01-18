@@ -15,7 +15,7 @@
                             @method("PUT")
                             <button class="btn btn-danger rounded-0 rounded-top w-100" type="submit"><i class="fa-solid fa-trash"></i></button>
                         </form>
-                        <img class="img-fluid" src="{{ asset('/storage/' . $item->image) }}" alt="">
+                        <img class="img-fluid" src="{{ 'https://laravelmyaudiolib.s3.amazonaws.com/' . $item->image }}" alt="">
                         <form id="image-edit-form" action="/upload-other-image/{{ $item->id }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')

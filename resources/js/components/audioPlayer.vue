@@ -7,10 +7,10 @@
                         <div class="d-flex justify-content-between" id="control-panel">
                             <div class="d-flex align-items-center justify-content-center gap-3">
                                 <button class="btn btn-outline-success" @click="prev()" :disabled="isDisabled('prev')"><i class="fa-solid fa-backward-step"></i></button>
-                                <!-- <button class="btn btn-outline-success" @click="prev15Sec()"><i class="fa-solid fa-backward"></i></button> -->
+                                <button class="btn btn-outline-success" @click="prev15Sec()"><i class="fa-solid fa-backward"></i></button>
                                 <button class="btn btn-outline-success" v-if="!playing" @click="play()"><i  class="fa-solid fa-play"></i></button>
                                 <button class="btn btn-outline-success" v-else @click="pause()"><i class="fa-solid fa-pause"></i></button>
-                                <!-- <button class="btn btn-outline-success" @click="next15Sec()"><i class="fa-solid fa-forward"></i></button> -->
+                                <button class="btn btn-outline-success" @click="next15Sec()"><i class="fa-solid fa-forward"></i></button>
                                 <button class="btn btn-outline-success" @click="next()" :disabled="isDisabled('next')"><i class="fa-solid fa-forward-step"></i></button>
                             </div>
                             <div class="slider-cont text-success d-flex align-items-center gap-1">
@@ -20,13 +20,13 @@
                         </div>
                         <div >
                             <p>{{ currentSong }}</p>
-                            <input class="w-100" type="range" min="0" max="100" value="0"  id="progress-input" disabled>    
+                            <input class="w-100" type="range" min="0" max="100" value="0"  id="progress-input" >    
                             <p>{{ currentTime }} / {{ totalDuration }}</p>
                         </div>
                     </div>    
                     <div class="card-body">
                         <ul class="list-group w-100 p-2 pb-1 rounded-0 bg-gray border-0" style="overflow: auto; max-height: 300px;">
-                            <li v-for="item, idx in file" class="list-group-item list-group-item-action bg-secondary p-1 mb-1 rounded text-light" @click="setSongAndPlay(idx)" :id="'_' + idx">{{ idx + 1 }}. {{item}}</li>
+                            <li v-for="item, idx in file" class="list-group-item list-group-item-action bg-secondary p-1 mb-1 rounded text-light" @click="setSongAndPlay(idx)" :id="'_' + idx">{{item.split('/')[1]}}</li>
                             <li v-if="file.length <= 0" class="text-danger text-center">К сожилению файл не был найден</li>
                         </ul>
                     </div>
@@ -65,7 +65,7 @@ export default {
     created () {
         if (this.file.length > 0) {
             this.currentSong = this.file[this.currentId];
-            this.currentFile = '../../storage/' + this.currentSong;
+            this.currentFile = 'https://laravelmyaudiolib.s3.amazonaws.com/' + this.currentSong;
         }
     },
     mounted() {
@@ -84,7 +84,7 @@ export default {
             this.currentId = id;
             this.prevId = this.currentId;
             this.currentSong = this.file[id];
-            this.currentFile = '../../storage/' + this.currentSong;
+            this.currentFile = 'https://laravelmyaudiolib.s3.amazonaws.com/' + this.currentSong;
             this.audio.src = this.currentFile;
             this.play();
         },
@@ -125,9 +125,9 @@ export default {
             this.play();
         },
         setCurrentTime() {
-            var time = this.progressInput.value;
-            this.audio.currentTime = time;
-            this.play();
+            this.pause();
+            this.audio.currentTime = this.progressInput.value;
+            setTimeout(() => {this.play();}, 1000)           
         },
         _handleLoaded: function () {
             this.progressInput.max = this.audio.duration;
@@ -196,7 +196,7 @@ export default {
         this.audio.removeEventListener('timeupdate', this._handlePlayingUI)
         this.audio.removeEventListener('loadeddata', this._handleLoaded)
         this.audio.removeEventListener('ended', this.next);
-        this.progressInput.removeEventListener('click', this.setCurrentTime);
+        this.progressInput.removeEventListener('change', this.setCurrentTime);
     }
 }
 </script>

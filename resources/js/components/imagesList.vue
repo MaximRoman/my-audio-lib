@@ -6,7 +6,7 @@
         </div>
         <div v-for="item in list" class="col-3 mt-3">
             <a class="btn btn-warning w-100 rounded-0 rounded-top" :href="'/edit-image/' + item.id"><i class="fa-solid fa-gear"></i></a>
-            <img class="img-fluid" :src="'../../storage/' + item.image" >
+            <img class="img-fluid" :src="'https://laravelmyaudiolib.s3.amazonaws.com/' + item.image" >
             <h5 class="bg-secondary m-0 p-1">{{item.name}}</h5>
             <a class="btn btn-success w-100 rounded-0 rounded-bottom" :href="url + item.id">Выбрать</a>
         </div>     

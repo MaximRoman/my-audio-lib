@@ -13,7 +13,7 @@
                                 <div class="row">
                                     <div class="col-12">
                                         @foreach ($image as $item)
-                                            <img class="img-fluid rounded-top" src="{{ asset('/storage/' . $item->image) }}">
+                                            <img class="img-fluid rounded-top" src="{{ 'https://laravelmyaudiolib.s3.amazonaws.com/' . $item->image }}">
                                         @endforeach
                                         <a class="btn btn-warning w-100 rounded-0 rounded-bottom" href="/edit-book/{{$bookId}}/select-image"><i class="fa-solid fa-pen"></i></a>    
                                     </div>

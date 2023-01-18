@@ -16,7 +16,7 @@
                 <div class="col-4">
                     @foreach ($images as $image)
                         @if ($item->id === $image->book_id)
-                            <img class="img-fluid" src="{{ asset('/storage/' . $image->image) }}"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
+                            <img class="img-fluid" src="{{ 'https://laravelmyaudiolib.s3.amazonaws.com/' . $image->image }}"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
                         @endif
                     @endforeach
                 </div>
@@ -99,7 +99,7 @@
                     </div>
                 </div>
             @else 
-                <h3 class="text-center">Нет книг в базе, <a href="/add-book">добавить новую книгу</a></h3>
+                <h3 class="text-center text-danger">! Нет книг в базе !</h3>
             @endif
         @endforelse
     </div>

@@ -17,12 +17,12 @@ class BookFilesController extends Controller
 
     public function addBookFiles(Request $request) {
         $title = $request->title;
-        $request->file('book')->storeAs($title, $request->book->getClientOriginalName(), 'public');
+        $request->file('book')->storeAs($title, $request->book->getClientOriginalName(), 's3');
     }
-
+    
     public function deleteDirectory(Request $request) {
         $title = $request->title;
-        Storage::disk('public')->deleteDirectory('/' . $title);
+        Storage::disk('s3')->deleteDirectory('/' . $title);
     }
 
     public function editSelectedBookFiles(Request $request) {

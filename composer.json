@@ -11,6 +11,7 @@
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.1",
+        "league/flysystem-aws-s3-v3": "^3.12",
         "wapmorgan/mp3info": "^0.0.8"
     },
     "require-dev": {

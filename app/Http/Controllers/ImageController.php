@@ -7,7 +7,6 @@ use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
-
 class ImageController extends Controller
 {
     public function addImage(Request $request) {
@@ -21,7 +20,8 @@ class ImageController extends Controller
             'name' => ['required', 'unique:images'],
             'image' => 'required',
         ]);
-        $path = $request->file('image')->storeAs('images', $image['name'] . '.' . $image['image']->getClientOriginalExtension(), 'public');
+        $path = $request->file('image')->store('images', 's3');
+        Storage::disk('s3')->setVisibility($path, 'public');
         $form = [
             'name' => $image['name'], 
             'image' => $path,
@@ -63,7 +63,7 @@ class ImageController extends Controller
         if (!$bookImage) {
             $images = Images::all()->where('id', $imageId);
             foreach ($images as $value) {
-                Storage::disk('public')->delete($value->image);
+                Storage::disk('s3')->delete('images/' . $value->image);
             }
 
             Images::where('id', $request->image)->delete();

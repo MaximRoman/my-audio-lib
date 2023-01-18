@@ -11,7 +11,6 @@ use App\Models\Readers;
 use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use wapmorgan\Mp3Info\Mp3Info;
@@ -58,13 +57,13 @@ class BookController extends Controller
                                                                 'status'
                                                             ]);
     
-        $files = Storage::disk('public')->files('/' . $book->title);
+        $files = Storage::disk('s3')->files('/' . $book->title);
         $duration = 0.0;
-
-        foreach ($files as $value) {
-            $audio = new Mp3Info('../public/storage/' . $value, true);
-            $duration = $duration + $audio->duration;
-        }
+        // foreach ($files as $value) {
+        //     // dd($value);
+        //     $audio = new Mp3Info('https://laravelmyaudiolib.s3.amazonaws.com/' . $value, true);
+        //     $duration = $duration + $audio->duration;
+        // }
 
         $grades = json_encode($grades);
         $files = json_encode($files);

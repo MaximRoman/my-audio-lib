@@ -14,7 +14,7 @@
                 <div class="col-4">
                     @foreach ($images as $image)
                         @if ($book->id === $image->book_id)
-                            <img class="img-fluid" src="{{ asset('/storage/' . $image->image) }}">
+                            <img class="img-fluid" src="{{ 'https://laravelmyaudiolib.s3.amazonaws.com/' . $image->image }}">
                         @endif
                     @endforeach
                 </div>
@@ -47,7 +47,7 @@
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Длительность :</span>
-                        <audio-duration class="h5 text-primary" :obj="{{$duration}}"></audio-duration>
+                        <audio-duration class="h5 text-primary" :obj="{{$files}}"></audio-duration>
                     </div>
                     <div class="mt-3">
                         <span class="h5 me-2">Оценка :</span>

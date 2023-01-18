@@ -152,6 +152,10 @@ Route::controller(HomeController::class)->group(function () {
 Route::controller(BookController::class)->group(function () {
     Route::get('/book/{book}', 'showBook')->name('showBook');
 });
+        
+Route::controller(ImageController::class)->group(function () {
+    // Route::post('/get-image', 'getImage')->name('getImage');
+});
 
 Route::controller(CommentController::class)->group(function () {
     Route::get('/get-comments/{book}', 'getComments')->name('getComments');
@@ -168,4 +172,8 @@ Route::controller(AdminsController::class)->group(function () {
         
 Route::controller(FavBookController::class)->group(function () {
     Route::get('/get-fav-status/{book}', 'getFavStatus')->name('getFavStatus');
+});
+
+Route::controller(BookFilesController::class)->group(function () {
+    // Route::post('/get-file', 'getFile')->name('getFile');
 });
