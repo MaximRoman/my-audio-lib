@@ -1,6 +1,6 @@
 <template>
     <div class="row justify-content-center">
-        <ul class="col-7 list-group bg-secondary p-3">
+        <div class="col-7 p-2 bg-secondary rounded-top">
             <label class="d-flex w-100 justify-content-between align-items-center">
                 <span>{{ listName }}</span>
                 <div class="d-flex">
@@ -8,6 +8,8 @@
                     <button class="btn btn-danger rounded-0 rounded-end border border-start-0" id="clear-search" @click="resetSearch()"><i class="fa-solid fa-xmark"></i></button>
                 </div>
             </label>
+        </div>
+        <ul class="col-7 list-group bg-secondary rounded-0 p-3 mvh-50" style="overflow: auto;">
             <li v-for="item in list" 
                 :class="[
                             'list-group-item', 

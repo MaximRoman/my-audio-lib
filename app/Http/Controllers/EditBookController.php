@@ -7,7 +7,7 @@ use App\Models\Books;
 use App\Models\Categories;
 use App\Models\Images;
 use App\Models\Readers;
-use App\Models\Series;
+// use App\Models\Series;
 use Illuminate\Http\Request;
 
 class EditBookController extends Controller
@@ -39,9 +39,9 @@ class EditBookController extends Controller
         $readers = Readers::join('book_reader', 'readers.id', '=', 'book_reader.reader_id')
                             ->where('book_id', '=', $bookId)
                             ->get(['reader']);
-        $series = Series::join('book_series', 'series.id', '=', 'book_series.series_id')
-                          ->where('book_id', '=', $bookId)
-                          ->get(['series']);
+        // $series = Series::join('book_series', 'series.id', '=', 'book_series.series_id')
+        //                   ->where('book_id', '=', $bookId)
+        //                   ->get(['series']);
         $categories = Categories::join('book_category', 'categories.id', '=', 'book_category.category_id')
                                 ->where('book_id', '=', $bookId)
                                 ->get(['category']);
@@ -51,7 +51,7 @@ class EditBookController extends Controller
                                     'image' => $image,
                                     'authors' => $authors,
                                     'readers' => $readers,
-                                    'series' => $series,
+                                    // 'series' => $series,
                                     'categories' => $categories,
                                     'bookId' => $bookId,
                                 ]);

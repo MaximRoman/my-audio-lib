@@ -22,7 +22,7 @@ class ReaderController extends Controller
         return redirect('/add-book/select-reader');
     }
     public function selectReader() {
-        $readers = Readers::all();
+        $readers = Readers::orderBy('created_at', 'DESC')->get();
 
         return view('book views/reader/select-reader', ['readers' => $readers]);
     }
@@ -43,7 +43,7 @@ class ReaderController extends Controller
 
     public function editSelectedReader(Request $request) {
         $bookId = $request->book;
-        $readers = Readers::all();
+        $readers = Readers::orderBy('created_at', 'DESC')->get();
 
         return view('book views/reader/select-reader', ['readers' => $readers, 'bookId' => $bookId]);
     }

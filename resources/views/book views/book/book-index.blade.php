@@ -6,9 +6,9 @@
             <div class="card-body row justify-content-center">
                 <div class="mb-3">
                     <div class="row align-items-center">
-                        <add-to-fav :book="{{$book->id}}"></add-to-fav>
+                        <add-to-fav :book="{{$book->id}}" :fav-prop="{{json_encode($fav)}}" :user-id="{{$userId}}"></add-to-fav>
                         <h4 class="col-8 text-center">{{ $book->title }} </h4>
-                        <edit-delete-btns class="col-2" :book="{{$book->id}}"></edit-delete-btns>
+                        <edit-delete-btns class="col-2" :book="{{$book->id}}" :admin-prop="{{json_encode($admin)}}"></edit-delete-btns>
                     </div>
                 </div>
                 <div class="col-4">
@@ -18,64 +18,55 @@
                         @endif
                     @endforeach
                 </div>
-                <div class="col-8">
-                    <div class="m-0">
-                        <span class="h5 me-2">Автор :</span>
-                        @foreach ($authors as $author)
-                            @if ($book->id === $author->book_id)
-                                <span class="h5 text-success">{{ $author->author }}</span>
-                                @if ($loop->index < count($authors) - 1)
+                <div class="col-8 d-flex flex-column justify-content-between gap-3">
+                    <div>
+                        <div class="m-0">
+                            <span class="h5 me-2">Автор :</span>
+                            @foreach ($authors as $author)
+                                @if ($book->id === $author->book_id)
+                                    <a class="my-link h5 text-success" href="/search/{{$author->author}}/">{{ $author->author }}</a>
                                     <span class="h5 me-2">,</span>
                                 @endif
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="mt-3">
-                        <span class="h5 me-2">Читает :</span>
-                        @foreach ($readers as $reader)
-                            @if ($book->id === $reader->book_id)
-                                <span class="h5 text-success">{{ $reader->reader }}</span>
-                                @if ($loop->index < count($readers) - 1)
+                            @endforeach
+                        </div>
+                        <div class="mt-3">
+                            <span class="h5 me-2">Читает :</span>
+                            @foreach ($readers as $reader)
+                                @if ($book->id === $reader->book_id)
+                                    <a class="my-link h5 text-success" href="/search/{{$reader->reader}}/">{{ $reader->reader }}</a>
                                     <span class="h5 me-2">,</span>
                                 @endif
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="mt-3">
-                        <span class="h5 me-2">Год :</span>
-                        <span class="h5 text-primary">{{ $book->year }}</span>
-                    </div>
-                    <div class="mt-3">
-                        <span class="h5 me-2">Длительность :</span>
-                        <audio-duration class="h5 text-primary" :obj="{{$files}}"></audio-duration>
-                    </div>
-                    <div class="mt-3">
-                        <span class="h5 me-2">Оценка :</span>
-                        <calc-grade :grades="{{$grades}}"></calc-grade>
-                    </div>
-                    <div class="mt-3">
-                        <span class="h5 me-2">Цыкл :</span>
-                        @foreach ($series as $seriesItem)
-                            @if ($book->id === $seriesItem->book_id)
-                                <span class="h5 text-success">{{ $seriesItem->series }}</span>
-                                {{-- <span class="h5 text-light">( {{ count($series) }} )</span> --}}
-                                @break
-                            @endif
-                        @endforeach
-                    </div>
-                    <div class="mt-3">
-                        <span class="h5 me-2">Категория :</span>
-                        @foreach ($categories as $category)
-                            @if ($book->id === $category->book_id)
-                                <span class="h5 text-success">{{ $category->category }}</span>
-                                @if ($loop->index < count($categories) - 1)
-                                    <span class="h5 me-1 ms-1">/</span>
+                            @endforeach
+                        </div>
+                        <div class="mt-3">
+                            <span class="h5 me-2">Год :</span>
+                            <span class="h5 text-primary">{{ $book->year }}</span>
+                        </div>
+                        <div class="mt-3">
+                            <span class="h5 me-2">Длительность :</span>
+                            <audio-duration class="h5 text-primary" :obj="{{$files}}"></audio-duration>
+                        </div>
+                        {{-- <div class="mt-3">
+                            <span class="h5 me-2">Цыкл :</span>
+                            @foreach ($series as $seriesItem)
+                                @if ($book->id === $seriesItem->book_id)
+                                    <span class="h5 text-success">{{ $seriesItem->series }}</span>
+                                    @break
                                 @endif
-                            @endif
-                        @endforeach
+                            @endforeach
+                        </div> --}}
+                        <div class="mt-3">
+                            <span class="h5 me-2">Категория :</span>
+                            @foreach ($categories as $category)
+                                @if ($book->id === $category->book_id)
+                                <a class="my-link h5 text-success" href="/category/{{$category->temp_category}}/">{{ $category->category }}</a>
+                                <span class="h5 me-1 ms-1">,</span>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
                     <div class="d-flex justify-content-end">
-                        <like-book class="mt-1" :book="{{json_encode($book)}}" :user="{{json_encode($user)}}" :btn="{{json_encode(false)}}"></like-book>
+                        <like-book :book="{{json_encode($book)}}" :user="{{json_encode($user)}}" :btn="{{json_encode(true)}}"></like-book>
                     </div>
                 </div>
                 <div class="mt-3">

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Authors;
 use App\Models\Books;
 use App\Models\Categories;
+use App\Models\FavBook;
 use App\Models\Grades;
 use App\Models\Images;
 use App\Models\Readers;
 use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use wapmorgan\Mp3Info\Mp3Info;
@@ -40,12 +42,12 @@ class BookController extends Controller
                                         'book_id',
                                         'reader',
                                     ]);
-        $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
-                        ->where('book_id', '=', $bookId)
-                        ->get([
-                            'book_id',
-                            'series',
-                        ]);
+        // $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
+        //                 ->where('book_id', '=', $bookId)
+        //                 ->get([
+        //                     'book_id',
+        //                     'series',
+        //                 ]);
         $categories = Categories::join('book_category', 'book_category.category_id', '=', 'categories.id')
                                 ->where('book_id', '=', $bookId)
                                 ->get([
@@ -68,19 +70,32 @@ class BookController extends Controller
         $grades = json_encode($grades);
         $files = json_encode($files);
         $user = json_encode($user);
+        
+        $admin = false;
+        $userId = null;
+        $fav = [];
+        if (Auth::user()) {
+            $userId = Auth::user()->id;
+            if (DB::table('admin')->where('user_id', $userId)->get()->first()) {
+                $admin = true;
+            }
+            $fav =FavBook::all()->where('user_id', $userId);
+        }
 
         return view('book views/book/book-index', [
                                 'user' => $user, 
+                                'userId' => $userId, 
                                 'book' => $book, 
                                 'images' => $images, 
                                 'authors' => $authors, 
                                 'readers' => $readers, 
-                                'series' => $series,
+                                // 'series' => $series,
                                 'categories' => $categories,
                                 'files' => $files,
                                 'duration' => $duration,
                                 'grades' => $grades,
                                 'admin' => $admin,
+                                'fav' => $fav,
                             ]);
     }
 

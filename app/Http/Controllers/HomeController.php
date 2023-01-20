@@ -5,9 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Authors;
 use App\Models\Books;
 use App\Models\Categories;
+use App\Models\FavBook;
 use App\Models\Images;
 use App\Models\Readers;
-use App\Models\Series;
+// use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,11 +34,11 @@ class HomeController extends Controller
                                         'book_id',
                                         'reader',
                                     ]);
-        $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
-                                    ->get([
-                                        'book_id',
-                                        'series',
-                                    ]);
+        // $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
+        //                             ->get([
+        //                                 'book_id',
+        //                                 'series',
+        //                             ]);
         $categories = Categories::join('book_category', 'book_category.category_id', '=', 'categories.id')
                                     ->get([
                                         'book_id',
@@ -45,8 +46,13 @@ class HomeController extends Controller
                                         'category',
                                     ]);
         $userId = null;
+        $fav = [];
         if (Auth::user()) {
             $userId = Auth::user()->id;
+            if (DB::table('admin')->where('user_id', $userId)->get()->first()) {
+                $admin = true;
+            }
+            $fav =FavBook::all()->where('user_id', $userId);
         }
         Session::pull('bookTitle');
         Session::pull('bookYear');
@@ -54,7 +60,7 @@ class HomeController extends Controller
         Session::pull('bookImage');
         Session::pull('bookAuthors');
         Session::pull('bookReaders');
-        Session::pull('bookSeries');
+        // Session::pull('bookSeries');
         Session::pull('bookCategories');
 
         return [
@@ -62,10 +68,11 @@ class HomeController extends Controller
                 'images' => $images, 
                 'authors' => $authors, 
                 'readers' => $readers, 
-                'series' => $series,
+                // 'series' => $series,
                 'categories' => $categories,
                 'user' => $userId,
                 'admin' => $admin,
+                'fav' => $fav,
             ];
     }
     public function index() {
@@ -75,9 +82,11 @@ class HomeController extends Controller
                                 'images' => $data['images'],
                                 'authors' => $data['authors'],
                                 'readers' => $data['readers'],
-                                'series' => $data['series'],
+                                // 'series' => $data['series'],
                                 'categories' => $data['categories'],
                                 'user' => $data['user'],
+                                'admin' => $data['admin'],
+                                'fav' => $data['fav'],
                             ]);
     }
 
@@ -88,26 +97,34 @@ class HomeController extends Controller
                                 'images' => $data['images'],
                                 'authors' => $data['authors'],
                                 'readers' => $data['readers'],
-                                'series' => $data['series'],
+                                // 'series' => $data['series'],
                                 'categories' => $data['categories'],
                                 'user' => $data['user'],
+                                'admin' => $data['admin'],
+                                'fav' => $data['fav'],
                             ]);
     }   
 
     public function globalSearch(Request $request) {
+        $fav = [];
+        $admin = false;
         $message = "!По вашему запросу ничего не найдено!";
         $userId = null;
         if (Auth::user()) {
             $userId = Auth::user()->id;
+            if (DB::table('admin')->where('user_id', $userId)->get()->first()) {
+                $admin = true;
+            }
+            $fav =FavBook::all()->where('user_id', $userId);
         }
         $search = $request->search;
         $books = Books::join('book_author', 'book_author.book_id', '=', 'books.id')
                         ->join('book_reader', 'book_reader.book_id', '=', 'books.id')
-                        ->join('book_series', 'book_series.book_id', '=', 'books.id')
+                        // ->join('book_series', 'book_series.book_id', '=', 'books.id')
                         ->join('authors', 'book_author.author_id', '=', 'authors.id')
                         ->join('readers', 'book_reader.reader_id', '=', 'readers.id')
-                        ->join('series', 'book_series.series_id', '=', 'series.id')
-                        ->whereRaw("title LIKE('%" . $search . "%') OR author LIKE('%" . $search . "%') OR reader LIKE('%" . $search . "%') OR series LIKE('%" . $search . "%')")
+                        // ->join('series', 'book_series.series_id', '=', 'series.id')
+                        ->whereRaw("title LIKE('%" . $search . "%') OR author LIKE('%" . $search . "%') OR reader LIKE('%" . $search . "%')")//OR series LIKE('%" . $search . "%')
                         ->get([
                             'books.id',
                         ]);
@@ -118,50 +135,46 @@ class HomeController extends Controller
         $books = Books::all()->whereIn('id', $booksId);
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
                         ->whereIn('book_id', $booksId)
-                        ->get([
-                            'book_id',
-                            'image',
-                        ]);
+                        ->get();
         $authors = Authors::join('book_author', 'book_author.author_id', '=', 'authors.id')
                           ->whereIn('book_id', $booksId)
-                                    ->get([
-                                        'book_id',
-                                        'author',
-                                    ]);
+                                    ->get();
         $readers = Readers::join('book_reader', 'book_reader.reader_id', '=', 'readers.id')
                           ->whereIn('book_id', $booksId)
-                                    ->get([
-                                        'book_id',
-                                        'reader',
-                                    ]);
-        $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
-                        ->whereIn('book_id', $booksId)
-                                    ->get([
-                                        'book_id',
-                                        'series',
-                                    ]);
+                                    ->get();
+        // $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
+        //                 ->whereIn('book_id', $booksId)
+        //                             ->get([
+        //                                 'book_id',
+        //                                 'series',
+        //                             ]);
         $categories = Categories::join('book_category', 'book_category.category_id', '=', 'categories.id')
                                 ->whereIn('book_id', $booksId)
-                                ->get([
-                                    'book_id',
-                                    'category',
-                                ]);
+                                ->get();
         return view('index', [
                                 'books' => $books,
                                 'images' => $images,
                                 'authors' => $authors,
                                 'readers' => $readers,
-                                'series' => $series,
+                                // 'series' => $series,
                                 'categories' => $categories,
                                 'user' => $userId,
                                 'message' => $message,
+                                'admin' => $admin,
+                                'fav' => $fav,
                             ]);
     }
 
     public function getBooksByCategory(Request $request) {
+        $admin = false;
         $userId = null;
+        $fav = [];
         if (Auth::user()) {
             $userId = Auth::user()->id;
+            if (DB::table('admin')->where('user_id', $userId)->get()->first()) {
+                $admin = true;
+            }
+            $fav =FavBook::all()->where('user_id', $userId);
         }
         $category = $request->category;
         $books = Books::join('book_category', 'book_category.book_id', '=', 'books.id')
@@ -174,7 +187,7 @@ class HomeController extends Controller
         foreach ($books as $value) {
             array_push($booksId, $value->id);
         }
-        $books = Books::all()->whereIn('id', $booksId);
+        $books = Books::whereIn('id', $booksId)->orderBy('created_at', 'desc')->get();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
                         ->whereIn('book_id', $booksId)
                         ->get([
@@ -193,12 +206,12 @@ class HomeController extends Controller
                                         'book_id',
                                         'reader',
                                     ]);
-        $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
-                        ->whereIn('book_id', $booksId)
-                                    ->get([
-                                        'book_id',
-                                        'series',
-                                    ]);
+        // $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
+        //                 ->whereIn('book_id', $booksId)
+        //                             ->get([
+        //                                 'book_id',
+        //                                 'series',
+        //                             ]);
         $categories = Categories::join('book_category', 'book_category.category_id', '=', 'categories.id')
                                 ->whereIn('book_id', $booksId)
                                 ->get([
@@ -210,9 +223,11 @@ class HomeController extends Controller
                                 'images' => $images,
                                 'authors' => $authors,
                                 'readers' => $readers,
-                                'series' => $series,
+                                // 'series' => $series,
                                 'categories' => $categories,
                                 'user' => $userId,
+                                'admin' => $admin,
+                                'fav' => $fav,
                             ]);
     }    
 }

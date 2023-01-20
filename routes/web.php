@@ -88,7 +88,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/add-book/select-image', 'selectImage')->name('selectImage');
             Route::get('/add-book/select-book-image/{image}', 'selectBookImage')->name('selectBookImage');
             Route::get('/edit-book/{book}/select-image', 'editSelectedImage')->name('editSelectedImage');
-            Route::post('/edit-book/{book}/select-book-image/{image}', 'editSelectedBookImage')->name('editSelectedBookImage');
+            Route::get('/edit-book/{book}/select-book-image/{image}', 'editSelectedBookImage')->name('editSelectedBookImage');
             Route::get('/add-image', 'addImage')->name('addImage');
             Route::get('/add-image/{book}', 'addImage')->name('addImage');
             Route::post('/upload-image',  'uploadImage')->name('uploadImage');

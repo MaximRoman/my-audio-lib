@@ -8,7 +8,8 @@
 <script>
     export default {
         props: [
-            'book'
+            'book',
+            'adminProp',
         ],
         data() {
             return {
@@ -16,7 +17,7 @@
             }
         },
         mounted() {
-            this.getAdminInfo();
+            this.admin = this.adminProp;
         },
         methods: {
             getAdminInfo() {

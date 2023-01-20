@@ -19,7 +19,7 @@
                             </div>
                         </div>
                         <div >
-                            <p>{{ currentSong }}</p>
+                            <p>{{ currentSong.split('/')[1] }}</p>
                             <input class="w-100" type="range" min="0" max="100" value="0"  id="progress-input" >    
                             <p>{{ currentTime }} / {{ totalDuration }}</p>
                         </div>
@@ -113,10 +113,12 @@ export default {
             }
         },
         next15Sec() {
+            this.pause();
             this.audio.currentTime += 15;
             this.play();
         },
         prev15Sec() {
+            this.pause();
             if (this.audio.currentTime >= 15) {
                 this.audio.currentTime -= 15;
             } else {

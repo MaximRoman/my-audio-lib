@@ -7,9 +7,9 @@
         <div class="card bg-gray border-success mb-3">
             <div class="card-header border-success">
                 <div class="row align-items-center">
-                    <add-to-fav :book="{{$item->id}}"></add-to-fav>
+                    <add-to-fav :book="{{$item->id}}" :fav-prop="{{json_encode($fav)}}" :user-id="{{json_encode($user)}}"></add-to-fav>
                     <h4 class="col-8 text-center"  style="cursor: pointer;"  onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }} </h4>
-                    <edit-delete-btns class="col-2" :book="{{$item->id}}"></edit-delete-btns>
+                    <edit-delete-btns class="col-2" :book="{{$item->id}}" :admin-prop="{{json_encode($admin)}}"></edit-delete-btns>
                 </div>
             </div>
             <div class="card-body row">
@@ -25,7 +25,7 @@
                         <span class="h5 me-2">Автор :</span>
                         @foreach ($authors as $author)
                             @if ($item->id === $author->book_id)
-                                <a class="my-link h5 text-success" href="/search/{{$author->author}}">{{ $author->author }}</a>
+                                <a class="my-link h5 text-success" href="/search/{{$author->author}}/">{{ $author->author }}</a>
                                 @if ($loop->index < count($authors) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
@@ -36,7 +36,7 @@
                         <span class="h5 me-2">Читает :</span>
                         @foreach ($readers as $reader)
                             @if ($item->id === $reader->book_id)
-                                <a class="my-link h5 text-success" href="/search/{{$reader->reader}}">{{ $reader->reader }}</a>
+                                <a class="my-link h5 text-success" href="/search/{{$reader->reader}}/">{{ $reader->reader }}</a>
                                 @if ($loop->index < count($readers) - 1)
                                     <span class="h5 me-2">,</span>
                                 @endif
@@ -47,21 +47,20 @@
                         <span class="h5 me-2">Год :</span>
                         <span class="h5 text-primary">{{ $item->year }}</span>
                     </div>
-                    <div class="mt-3">
+                    {{-- <div class="mt-3">
                         <span class="h5 me-2">Цыкл :</span>
                         @foreach ($series as $seriesItem)
                             @if ($item->id === $seriesItem->book_id)
                                 <a class="my-link h5 text-success" href="/search/{{$seriesItem->series}}">{{ $seriesItem->series }}</a>
-                                {{-- <span class="h5 text-light">( {{ count($series) }} )</span> --}}
                                 @break
                             @endif
                         @endforeach
-                    </div>
+                    </div> --}}
                     <div class="mt-3">
                         <span class="h5 me-2">Категория :</span>
                         @foreach ($categories as $category)
                             @if ($item->id === $category->book_id)
-                                <a class="my-link h5 text-success" href="/{{$category->temp_category}}/">{{ $category->category }}</a>
+                                <a class="my-link h5 text-success" href="/category/{{$category->temp_category}}/">{{ $category->category }}</a>
                                 <span class="h5 me-1 ms-1">/</span>
                                 {{-- @if ($loop->index > 1)
                                 @endif --}}

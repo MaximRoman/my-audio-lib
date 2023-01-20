@@ -11,6 +11,7 @@ use App\Models\Series;
 use App\Models\FavBook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FavBookController extends Controller
 {
@@ -54,6 +55,11 @@ class FavBookController extends Controller
     public function getFavBooks() {
         $message = "!У вас нет книг в закладках!";
         $userId = Auth::user()->id;
+        $fav = FavBook::all()->where('user_id', $userId);
+        $admin = false;
+        if (DB::table('admin')->where('user_id', $userId)->get()->first()) {
+            $admin = true;
+        }
         $booksId = [];
         $books = Books::join('fav_book', 'fav_book.book_id', '=', 'books.id')
                         ->whereRaw('user_id = ' . $userId . ' AND fav_book.status = 1')
@@ -107,6 +113,8 @@ class FavBookController extends Controller
                                 'categories' => $categories,
                                 'user' => $userId,
                                 'message' => $message,
+                                'fav' => $fav,
+                                'admin' => $admin,
         ]);
     }
 }

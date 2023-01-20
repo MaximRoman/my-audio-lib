@@ -92,7 +92,7 @@
                             @endif
                         @endif
                     </div>
-                    <div class="col-12 d-flex flex-column align-items-start">
+                    {{-- <div class="col-12 d-flex flex-column align-items-start">
                         <label>Цыкл</label>
                         @if (isset($series))
                             @if (count($series) > 0)
@@ -109,7 +109,7 @@
                             <a class="btn btn-success" href="/add-book/select-series"><i class="fa-solid fa-plus"></i></a>
                             @endif
                         @endif
-                    </div>
+                    </div> --}}
                     <div class="col-12 d-flex flex-column align-items-start">
                         <label>Категория</label>
                         @if (isset($categories))

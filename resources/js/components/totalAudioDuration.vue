@@ -12,21 +12,28 @@ const formatTime = second => new Date(second * 1000).toISOString().substr(11, 8)
             return {
                 duration: null,
                 files: [],
+                loaded: [],
             }
         },
         mounted() {
-            this.obj.forEach(item => {
-                this.files.push(new Audio('https://laravelmyaudiolib.s3.amazonaws.com/' + item))
+            this.obj.forEach((item, index) => {
+                this.files.push({audio: new Audio('https://laravelmyaudiolib.s3.amazonaws.com/' + item)});
+                this.files[index].audio.addEventListener('canplaythrough', () => {
+                    this.loaded.push(true);
+                    console.log('a');  
+                    this.getFile()
+                });
             });
-
-            setTimeout(() => {this.getFile()}, 5000);
         },
         methods: {
             getFile() {    
-                this.files.forEach(item => {
-                    this.duration = this.duration + item.duration;
-                });
-                this.duration = formatTime(this.duration)
+                if (this.loaded.length === this.files.length) {  
+                    console.log('a');  
+                    this.files.forEach(item => {
+                        this.duration = this.duration + item.duration;
+                    });
+                    this.duration = formatTime(this.duration)
+                }
             }
         },
     }

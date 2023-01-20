@@ -20,8 +20,8 @@ class ImageController extends Controller
             'name' => ['required', 'unique:images'],
             'image' => 'required',
         ]);
-        $path = $request->file('image')->store('images', 's3');
-        Storage::disk('s3')->setVisibility($path, 'public');
+        $path = $request->file('image')->storeAs('images', $request['name'] . '.' . $request['image']->getClientOriginalName(), 's3');
+        
         $form = [
             'name' => $image['name'], 
             'image' => $path,
@@ -45,7 +45,7 @@ class ImageController extends Controller
         $request->validate([
             'file' => 'required'
         ]);
-        $path = $request->file('file')->storeAs($imageName[0], $imageName[1], 'public');
+        $request->file('file')->storeAs($imageName[0], $imageName[1], 's3');
         
         return redirect('/edit-image/' . $imageId);
     }
@@ -74,7 +74,7 @@ class ImageController extends Controller
     }
 
     public function selectImage() {
-        $images = Images::all();
+        $images = Images::orderBy('created_at', 'desc')->get();
 
         return view('book views/image/select-image', ['images' => $images]);
     }

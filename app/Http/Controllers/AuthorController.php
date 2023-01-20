@@ -28,12 +28,8 @@ class AuthorController extends Controller
         }
     }
 
-    public function selectAuthor(Request $request) {
-        $name = '';
-        if (isset($request['name'])) {
-            $name = $request->name;
-        }
-        $authors = Authors::whereRaw('author LIKE("%' . $name . '%")')->get();
+    public function selectAuthor() {
+        $authors = Authors::orderBy('created_at', 'DESC')->get();
 
         return view('book views/author/select-author', ['authors' => $authors]);
     }
@@ -54,7 +50,7 @@ class AuthorController extends Controller
 
     public function editSelectedAuthor(Request $request) {
         $bookId = $request->book;
-        $authors = Authors::all();
+        $authors = Authors::orderBy('created_at', 'DESC')->get();
 
         return view('book views/author/select-author', ['authors' => $authors, 'bookId' => $bookId]);
     }

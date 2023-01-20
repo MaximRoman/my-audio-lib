@@ -9,11 +9,11 @@ use App\Models\BookCategory;
 use App\Models\BookImages;
 use App\Models\BookReader;
 use App\Models\Books;
-use App\Models\BookSeries;
+// use App\Models\BookSeries;
 use App\Models\Categories;
 use App\Models\Images;
 use App\Models\Readers;
-use App\Models\Series;
+// use App\Models\Series;
 use Illuminate\Support\Facades\Session;
 
 class AddBookController extends Controller
@@ -26,7 +26,7 @@ class AddBookController extends Controller
         $authors = [];
         $readers = [];
         $year = [];
-        $series = [];
+        // $series = [];
         $categories = [];
         $description = [];
         if (Session::get('bookImage')) {
@@ -59,12 +59,12 @@ class AddBookController extends Controller
         } else {
             $validate = false;
         }
-        if (Session::get('bookSeries')) {
-            $series = Series::all()->whereIn('id', Session::get('bookSeries'));
-            $validate = true;
-        } else {
-            $validate = false;
-        }
+        // if (Session::get('bookSeries')) {
+        //     $series = Series::all()->whereIn('id', Session::get('bookSeries'));
+        //     $validate = true;
+        // } else {
+        //     $validate = false;
+        // }
         if (Session::get('bookCategories')) {
             $categories = Categories::all()->whereIn('id', Session::get('bookCategories'));
             $validate = true;
@@ -84,7 +84,7 @@ class AddBookController extends Controller
                                     'authors' => $authors, 
                                     'readers' => $readers,
                                     'year' => $year,
-                                    'series' => $series,
+                                    // 'series' => $series,
                                     'categories' => $categories,
                                     'description' => $description,
                                     'validate' => $validate,
@@ -98,7 +98,7 @@ class AddBookController extends Controller
         $image = Session::get('bookImage');
         $authors = Session::get('bookAuthors');
         $readers = Session::get('bookReaders');
-        $series = Session::get('bookSeries');
+        // $series = Session::get('bookSeries');
         $categories = Session::get('bookCategories');
         
         $bookForm = [
@@ -132,11 +132,11 @@ class AddBookController extends Controller
             BookReader::create($bookReaderForm);
         }
 
-        $bookSeriesForm = [
-            'book_id' => $bookId,
-            'series_id' => $series,
-        ];
-        BookSeries::create($bookSeriesForm);
+        // $bookSeriesForm = [
+        //     'book_id' => $bookId,
+        //     'series_id' => $series,
+        // ];
+        // BookSeries::create($bookSeriesForm);
 
         foreach ($categories as $value) {
             $bookCategoryForm = [
@@ -153,7 +153,7 @@ class AddBookController extends Controller
         Session::pull('bookImage');
         Session::pull('bookAuthors');
         Session::pull('bookReaders');
-        Session::pull('bookSeries');
+        // Session::pull('bookSeries');
         Session::pull('bookCategories');
 
         return redirect('/add-book/' . $bookId . '/upload-files'); 
