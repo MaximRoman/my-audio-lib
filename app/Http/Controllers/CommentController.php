@@ -19,6 +19,7 @@ class CommentController extends Controller
                                 "book_comments.created_at",
                                 "book_id",
                                 "book_comments.id",
+                                'book_comments.user_id',
                                 "name",
                                 "comment",
                             ]);
@@ -57,5 +58,11 @@ class CommentController extends Controller
         ];
 
         $id = Comments::create($form)->id;
+    }
+
+    public function deleteComment(Request $request) {
+        $commentId = $request->comment;
+        $userId = $request->user;
+        Comments::where('id', $commentId)->where('user_id', $userId)->delete();
     }
 }

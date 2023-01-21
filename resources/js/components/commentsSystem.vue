@@ -29,6 +29,10 @@
                     <div class="card-header">
                         <div class="d-flex justify-content-between align-items-center">
                             <span>{{ item.name }}</span>
+                            <div v-if="user !== null" >
+                                <button v-if="user.id == item.user_id" class="btn btn-danger" @click="deleteComment(item.id, item.user_id)"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                            
                             <!-- <div class="d-flex gap-2">
                                 <button class="btn btn-outline-success p-1"><i class="fa-regular fa-thumbs-up"></i> {{ 0 }}</button>
                                 <button class="btn btn-outline-success p-1"><i class="fa-regular fa-thumbs-down"></i> {{ 0 }}</button>
@@ -53,7 +57,7 @@
         data() {
             return {
                 comments: [],
-                err: null
+                err: null,
             }
         },
         mounted() {
@@ -100,6 +104,17 @@
                 } else {
                     window.location = '/login';
                 }
+            },
+            deleteComment(id, user) {
+                let form = new FormData();
+                form.append('comment', id);
+                form.append('user', user);
+
+                axios.post('/delete-comment', form).then((result) => {
+                    this.refreshComments();
+                }).catch((err) => {
+                    console.log(err);
+                });
             },
             searchResetInput() {
                 document.getElementById('search-comment').value = '';

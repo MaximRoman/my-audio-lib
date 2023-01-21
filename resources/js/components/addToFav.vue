@@ -1,7 +1,7 @@
 <template>
     <div class="col-2">
         <button :id="'fav-btn-' + book" :class="['btn', checked == 1 ? 'btn-success' : 'btn-outline-success', 'rounded-circle']" @click="setFavStatus()">
-            <i :id="'fav-icon-' + book" :class="[, checked == 1 ? 'fa-solid' : 'fa-regular', 'fa-star']"></i>
+            <i :id="'fav-icon-' + book" :class="[ checked == 1 ? 'fa-solid' : 'fa-regular', 'fa-star']"></i>
         </button>
     </div>
 </template>

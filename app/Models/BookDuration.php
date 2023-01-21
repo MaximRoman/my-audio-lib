@@ -11,7 +11,7 @@ class BookDuration extends Model
 
     protected $fillable = [
         'book_id',
-        'duretion',
+        'duration',
     ];
 
     protected $table = 'book_duration';

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Authors;
+use App\Models\BookDuration;
 use App\Models\Books;
 use App\Models\Categories;
 use App\Models\FavBook;
@@ -27,21 +28,12 @@ class BookController extends Controller
         $book = Books::all()->where('id', '=', $bookId)->first();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')
                         ->where('book_id', '=', $bookId)
-                        ->get([
-                            'book_id',
-                            'image',
-                        ]);
+                        ->get();
         $authors = Authors::join('book_author', 'book_author.author_id', '=', 'authors.id')
                             ->where('book_id', '=', $bookId)
-                            ->get([
-                                'book_id',
-                                'author',
-                            ]);
+                            ->get();
         $readers = Readers::join('book_reader', 'book_reader.reader_id', '=', 'readers.id')
-                                    ->get([
-                                        'book_id',
-                                        'reader',
-                                    ]);
+                                    ->get();
         // $series = Series::join('book_series', 'book_series.series_id', '=', 'series.id')
         //                 ->where('book_id', '=', $bookId)
         //                 ->get([
@@ -50,22 +42,13 @@ class BookController extends Controller
         //                 ]);
         $categories = Categories::join('book_category', 'book_category.category_id', '=', 'categories.id')
                                 ->where('book_id', '=', $bookId)
-                                ->get([
-                                    'book_id',
-                                    'category',
-                                ]);        
-        $grades = Grades::where('book_id', '=', $bookId)->get([
-                                                                'id',
-                                                                'status'
-                                                            ]);
+                                ->get();        
+        $grades = Grades::where('book_id', '=', $bookId)->get();
     
         $files = Storage::disk('s3')->files('/' . $book->title);
         $duration = 0.0;
-        // foreach ($files as $value) {
-        //     // dd($value);
-        //     $audio = new Mp3Info('https://laravelmyaudiolib.s3.amazonaws.com/' . $value, true);
-        //     $duration = $duration + $audio->duration;
-        // }
+        
+        $duration = BookDuration::all();
 
         $grades = json_encode($grades);
         $files = json_encode($files);

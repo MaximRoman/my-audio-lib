@@ -1,30 +1,30 @@
 <template>
     <div id="template">
-        <div class="card" id="card">
-            <div class="card-header">
-                <h4 class="mb-2 text-success">Название : {{ obj.title }}</h4>
-                <div class="progress position-relative" id="progress" style="height: 40px;">
-                    <div class="progress-bar" role="progressbar" :style="{width: fileProgress + '%'}">
-                    </div>
-                    <span class="position-absolute h-100 start-50 d-flex align-items-center h6">{{ fileProgress }}%</span>
-                </div>
-            </div>
-            <div class="card-body">                  
-                <div class="progress position-relative" id="total-progress" style="height: 40px;">
+        <div :class="['card', totalProgress == 100 ?'rounded-0' : '', totalProgress == 100 ? 'rounded-top' : '', card]" id="card">
+            <div class="card-header p-3">
+                <h4 class="mb-2 text-success">Название : {{ obj.title }}</h4>      
+                <div :class="['progress', 'position-relative', childs]" id="total-progress" style="height: 40px;">
                     <div class="progress-bar" role="progressbar" :style="{width: totalProgress + '%'}">
                     </div>
                     <span class="position-absolute h-100 start-50 d-flex align-items-center h6">{{ totalProgress }}%</span>
                 </div>
+            </div>
+            <div class="card-body p-3">               
+                <div class="progress position-relative bg-gray text-light" id="total-progress" style="height: 40px;">
+                    <div class="progress-bar" role="progressbar" :style="{width: totalDurationProgress + '%'}">
+                    </div>
+                    <span class="position-absolute h-100 start-50 d-flex align-items-center h6">{{ totalDurationProgress }}%</span>
+                </div>     
                 <div class="row justify-content-evenly mt-3">
                     <div class="col-5 row justify-content-center">
-                        <select class="form-control" id="text1" multiple style="overflow: auto;" disabled>
+                        <select :class="['form-control', childs]" id="text1" multiple style="overflow: auto;" disabled>
                             <option  v-for="file in filesOrder">
                                 {{ file.name }}  
                             </option>
                         </select>
                     </div>
                     <div class="col-5 row justify-content-center">
-                        <select class="form-control" id="text2" multiple style="overflow: auto;" disabled>
+                        <select :class="['form-control', childs]" id="text2" multiple style="overflow: auto;" disabled>
                             <option v-for="file in filesFinish">
                                 {{ file.name }}
                             </option>
@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer d-flex gap-3">
+            <div class="card-footer d-flex gap-3 p-3">
                 <div class="w-100">
                     <input :class="['form-control', 'm-0', childs, error !== '' ? 'is-invalid' : '']" id="inp" type="file" name="book" accept="audio/mpeg" multiple  :disabled="upload" @change="setListToUpload()">
                     <span class="invalid-feedback m-0" role="alert">
@@ -43,7 +43,11 @@
                     <button class="btn btn-success" @click="fileInputChange()" :disabled="upload"><i class="fa-solid fa-cloud-arrow-up"></i></button>
                 </div>
             </div>
-            <a id="home" href="/"></a>
+        </div>
+        <div v-if="totalProgress == 100" class="card rounded-0 rounded-bottom card bg-secondary">
+            <div class="card-footer d-flex justify-content-center gap-3 p-3">
+                <button class="col-7 btn btn-success" @click="goToEditBook()" :disabled="!completeLoad">Сохранить</button>
+            </div>
         </div>
     </div>
 </template>
@@ -60,22 +64,21 @@
                 filesInput: undefined,
                 filesOrder: [],
                 filesFinish: [],
-                fileProgress: 0,
                 totalProgress: 0,
-                fileCurrent: '',
                 error: '',
                 upload: false,
                 totalSize: 0,
                 loaded: 0,
+                filesResult: [],
+                files: [],
+                loadedFiles: [],
+                duration: null,
+                completeLoad: false,
+                totalDurationProgress: 0,
             }
         },
         mounted() {
             this.filesInput = document.getElementById('inp');
-            document.getElementById('card').classList.value = document.getElementById('card').classList.value + ' ' + this.card;
-            document.getElementById('progress').classList.value = document.getElementById('progress').classList.value + ' ' + this.childs;
-            document.getElementById('total-progress').classList.value = document.getElementById('total-progress').classList.value + ' ' + this.childs;
-            document.getElementById('text1').classList.value = document.getElementById('text1').classList.value + ' ' + this.childs;
-            document.getElementById('text2').classList.value = document.getElementById('text2').classList.value + ' ' + this.childs;
         },
         methods: {
             setListToUpload() {
@@ -96,7 +99,7 @@
                     for (let item of files) {
                         await this.uploadFile(item);
                     }
-                    setTimeout(() => { window.location = '/book/' + this.obj.id; }, 3000);
+                    this.getFiles();
                 } else {
                     this.error = "Вы не выбрали файлы для загрузки!"
                 }                
@@ -106,18 +109,13 @@
             
                 form.append('book', item);
                 form.append('title', this.obj.title);
-                this.fileProgress = 0;
+                
                 await axios.post('/add-book/create-url', form, {
                     onUploadProgress: (itemUpload) => {
-                        this.fileProgress = ((itemUpload.loaded / itemUpload.total) * 100).toFixed(2);
-                        this.totalProgress = (((this.loaded + itemUpload.loaded) / this.totalSize) * 100).toFixed(2) ;
-                        console.log(this.loaded + itemUpload.loaded);
-                        this.fileCurrent = item.name + ' ' + this.fileProgress;
+                        this.totalProgress = (((this.loaded + itemUpload.loaded) / this.totalSize) * 100).toFixed(2);
                     }
                 })
                 .then(response => {
-                    console.log(item);
-                    this.fileCurrent = '';
                     this.loaded = this.loaded + item.size;
                     this.filesFinish.unshift(item);
                     this.filesOrder.splice(item, 1);
@@ -125,7 +123,34 @@
                 .catch(error => {
                     console.log(error);
                 })
-            }
+            },
+            getFiles() {
+                axios.get('/get-files/' + this.obj.id).then((result) => {
+                    console.log(result.data.result);
+                    this.calcDuration(result.data.result);
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
+            calcDuration(arr) {
+                arr.forEach((item, index) => {
+                    this.files.push({audio: new Audio('https://laravelmyaudiolib.s3.amazonaws.com/' + item)});
+                    this.files[index].audio.addEventListener('loadedmetadata', () => {
+                        this.loadedFiles.push(true);
+                        this.duration = this.duration + this.files[index].audio.duration;  
+                        this.totalDurationProgress = ((this.loadedFiles.length / this.files.length) * 100).toFixed(0);      
+                        this.completedLoad()
+                    });
+                });
+            },
+            completedLoad() {    
+                if (this.loadedFiles.length === this.files.length) {  
+                    this.completeLoad = true;
+                }
+            },
+            goToEditBook() {
+                window.location = '/set-book-duration/' + this.obj.id + '/' + this.duration;
+            },
         }
     }
 </script>

@@ -44,7 +44,11 @@
                         </div>
                         <div class="mt-3">
                             <span class="h5 me-2">Длительность :</span>
-                            <audio-duration class="h5 text-primary" :obj="{{$files}}"></audio-duration>
+                            @foreach ($duration as $item)
+                                @if ($book->id === $item->book_id)
+                                    <audio-duration class="h5 text-primary" :duration-value="{{$item->duration}}"></audio-duration>
+                                @endif
+                            @endforeach
                         </div>
                         {{-- <div class="mt-3">
                             <span class="h5 me-2">Цыкл :</span>

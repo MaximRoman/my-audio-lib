@@ -44,8 +44,12 @@
                         @endforeach
                     </div>
                     <div class="mt-3">
-                        <span class="h5 me-2">Год :</span>
-                        <span class="h5 text-primary">{{ $item->year }}</span>
+                        <span class="h5 me-2">Длительность :</span>
+                        @foreach ($duration as $durationItem)
+                            @if ($item->id === $durationItem->book_id)
+                                <audio-duration class="h5 text-primary" :duration-value="{{$durationItem->duration}}"></audio-duration>
+                            @endif
+                        @endforeach
                     </div>
                     {{-- <div class="mt-3">
                         <span class="h5 me-2">Цыкл :</span>
@@ -101,5 +105,32 @@
                 <h3 class="text-center text-danger">! Нет книг в базе !</h3>
             @endif
         @endforelse
+        @if ($totalPages > 1)
+            <div class="d-flex justify-content-between mt-5">   
+                <div class="d-flex col-2">                    
+                    @if ($page == 1)
+                        <button class="w-100 btn btn-outline-success" type="submit" @disabled(true)><i class="fa-solid fa-arrow-left"></i></button>
+                    @else
+                        <a class="w-100 btn btn-outline-success" href="/{{$link}}page/{{$page - 1}}"><i class="fa-solid fa-arrow-left"></i></a>
+                    @endif 
+                </div>
+                <div class="d-flex gap-2">
+                    @for ($i = 0; $i < $totalPages; $i++)
+                        @if ($i + 1 == $page)
+                            <button class="btn btn-success rounded-circle">{{$i + 1}}</button>
+                        @else
+                            <a class="btn btn-outline-success rounded-circle" href="/{{$link}}page/{{$i + 1}}">{{$i + 1}}</a>
+                        @endif
+                    @endfor
+                </div>
+                <div class="d-flex gap-2 col-2">
+                    @if($page == $totalPages)
+                        <button class="w-100 btn btn-outline-success" type="submit" @disabled(true)><i class="fa-solid fa-arrow-right"></i></button>
+                    @else
+                        <a class="w-100 btn btn-outline-success" href="/{{$link}}page/{{$page + 1}}"><i class="fa-solid fa-arrow-right"></i></a>
+                    @endif
+                </div>
+            </div>
+        @endif
     </div>
 @endsection

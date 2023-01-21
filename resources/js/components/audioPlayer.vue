@@ -80,12 +80,14 @@ export default {
     },
     methods: {
         setSongAndPlay(id) {
-            document.getElementById('_' + this.prevId).classList.remove('active');
+            this.currentTime = 0;
+            this.totalDuration = 0;
             this.currentId = id;
-            this.prevId = this.currentId;
             this.currentSong = this.file[id];
             this.currentFile = 'https://laravelmyaudiolib.s3.amazonaws.com/' + this.currentSong;
             this.audio.src = this.currentFile;
+            document.getElementById('_' + this.prevId).classList.remove('active');
+            this.prevId = this.currentId;
             this.play();
         },
         play() {

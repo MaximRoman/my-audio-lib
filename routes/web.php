@@ -72,6 +72,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/add-book/delete-directory', 'deleteDirectory')->name('deleteDirectory');
             Route::get('/add-book/{book}/upload-files', 'addBookFilesPage')->name('addBookFilesPage');
             Route::get('/edit-book/{book}/upload-files', 'editSelectedBookFiles')->name('editSelectedBookFiles');
+            Route::get('/get-files/{book}', 'getFilesJson')->name('getFilesJson');
+            Route::get('/set-book-duration/{book}/{duration}', 'setBookDuration')->name('setBookDuration');
         });
         
         Route::controller(AuthorController::class)->group(function () {
@@ -133,19 +135,24 @@ Route::middleware('auth')->group(function () {
         
         Route::controller(CommentController::class)->group(function () {
             Route::post('/add-comment/{book}', 'addComment')->name('addComment');
+            Route::post('/delete-comment', 'deleteComment')->name('deleteComment');
         });
         
         Route::controller(FavBookController::class)->group(function () {
             Route::post('/set-fav-book', 'setFavBook')->name('setFavBook');
             Route::get('/fav-books', 'getFavBooks')->name('getFavBooks');
+            Route::get('/fav-books/page/{page}', 'getFavBooks');
         });
     });
 });
 
 Route::controller(HomeController::class)->group(function () {
     Route::get('/', 'index');
+    Route::get('/page/{page}', 'index');
     Route::get('/search/{search}/', 'globalSearch')->name('globalSearch');
+    Route::get('/search/{search}/page/{page}', 'globalSearch');
     Route::get('/category/{category}', 'getBooksByCategory')->name('getBooksByCategory');
+    Route::get('/category/{category}/page/{page}', 'getBooksByCategory');
     
 });
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BookAuthor;
 use App\Models\BookCategory;
+use App\Models\BookDuration;
 use App\Models\BookImages;
 use App\Models\BookReader;
 // use App\Models\BookSeries;
@@ -28,6 +29,7 @@ class DeleteBookController extends Controller
         $bookGrades = Grades::where('book_id', $bookId);
         $favBook = FavBook::where('book_id', $bookId);
         $bookComments = Comments::where('book_id', $bookId);
+        $bookDuration = BookDuration::where('book_id', $bookId);
         $books = Books::where('id', $bookId);
 
         $this->deleteRowFromTable($bookAuthor);
@@ -38,6 +40,7 @@ class DeleteBookController extends Controller
         $this->deleteRowFromTable($bookGrades);
         $this->deleteRowFromTable($favBook);
         $this->deleteRowFromTable($bookComments);
+        $this->deleteRowFromTable($bookDuration);
         $this->deleteRowFromTable($books);
         Storage::disk('public')->deleteDirectory('/' . $title);
 
