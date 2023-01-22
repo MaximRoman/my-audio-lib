@@ -1,7 +1,7 @@
 <template>
     <div class="col-2">
-        <button :id="'fav-btn-' + book" :class="['btn', checked == 1 ? 'btn-success' : 'btn-outline-success', 'rounded-circle']" @click="setFavStatus()">
-            <i :id="'fav-icon-' + book" :class="[ checked == 1 ? 'fa-solid' : 'fa-regular', 'fa-star']"></i>
+        <button :id="'fav-btn-' + book" :class="['btn', checked ? 'btn-success' : 'btn-outline-success', 'rounded-circle']" @click="setFavStatus()">
+            <i :id="'fav-icon-' + book" :class="[ checked ? 'fa-solid' : 'fa-regular', 'fa-star']"></i>
         </button>
     </div>
 </template>
@@ -10,7 +10,6 @@
     export default {
         props: [
             'book',
-            'favProp',
             'userId'
         ],
         data() {
@@ -26,16 +25,21 @@
             this.favBtn = document.getElementById('fav-btn-' + this.book);
             this.favIcon = document.getElementById('fav-icon-' + this.book);
             if (this.user !== null) {
-                if (this.favProp.length > 0) {
-                this.favProp.forEach(item => {
-                    if (item.book_id === this.book && item.status == 1) {
-                        this.checked = true;
-                    }
-                });
-            }
+                this.getFavStatus();
             }
         },
         methods: {
+            getFavStatus() {
+                let form = new FormData();
+                form.append('user', this.userId);
+                form.append('book', this.book);
+                axios.post('/get-fav-status', form).then((result) => {
+                    console.log(this.book, result.data.status);
+                    this.checked = result.data.status;
+                }).catch((err) => {
+                    console.log(err);
+                });
+            },
             setFavStatus() {
                 if (this.user !== null) {
                     let form = new FormData();
@@ -44,8 +48,10 @@
                     
                     axios.post('/set-fav-book', form).then((result) => {
                         this.checked = !this.checked;
-                        if (this.checked) {
-                            window.location = '/fav-books';
+                        if (!this.checked) {
+                            if (window.location.href.includes('/fav-books')) {
+                                window.location.reload(); 
+                            }
                         }
                     }).catch((err) => {
                         console.log(err);

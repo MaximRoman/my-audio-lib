@@ -178,7 +178,7 @@ Route::controller(AdminsController::class)->group(function () {
 });
         
 Route::controller(FavBookController::class)->group(function () {
-    Route::get('/get-fav-status/{book}', 'getFavStatus')->name('getFavStatus');
+    Route::post('/get-fav-status', 'getFavStatus')->name('getFavStatus');
 });
 
 Route::controller(BookFilesController::class)->group(function () {

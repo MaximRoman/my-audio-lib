@@ -7,7 +7,7 @@
         <div class="card bg-gray border-success mb-3">
             <div class="card-header border-success">
                 <div class="row align-items-center">
-                    <add-to-fav :book="{{$item->id}}" :fav-prop="{{json_encode($fav)}}" :user-id="{{json_encode($user)}}"></add-to-fav>
+                    <add-to-fav :book="{{$item->id}}" :user-id="{{json_encode($user)}}"></add-to-fav>
                     <h4 class="col-8 text-center"  style="cursor: pointer;"  onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }} </h4>
                     <edit-delete-btns class="col-2" :book="{{$item->id}}" :admin-prop="{{json_encode($admin)}}"></edit-delete-btns>
                 </div>

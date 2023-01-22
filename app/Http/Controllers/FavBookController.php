@@ -35,22 +35,18 @@ class FavBookController extends Controller
     }
 
     public function getFavStatus(Request $request) {
-        $userId = Auth::user();
-        if ($userId) {
-            $userId = $userId->id;
-            $bookId = $request->book;
-            $favBook = FavBook::whereRaw('user_id = ' . $userId . ' AND book_id = ' . $bookId)->get('status')->first();
-            
-            if ($favBook) {
-                return [
-                    'status' => $favBook->status
-                ];
-            }
+        $userId = $request->user;
+        $bookId = $request->book;
+        $favBook = FavBook::whereRaw('user_id = ' . $userId . ' AND book_id = ' . $bookId)->get('status')->first();
+        if ($favBook) {
+            return [
+                'status' => $favBook->status
+            ];
+        } else {
+            return [
+                'status' => false
+            ];
         }
-        return [
-            'status' => json_encode(false),
-            'user' => $userId,
-        ];
     }
 
     public function getFavBooks(Request $request) {
