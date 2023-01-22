@@ -3,15 +3,15 @@
 @section('content')
     <div class="card rounded-0 h-100 bg-gray border-0">
         <div class="card-body">
-            <h3 class="text-center">Confirm Password</h3>
+            <h3 class="text-center">Подтвердить Пароль</h3>
             <br>
-            {{ __('Please confirm your password before continuing.') }}
+            {{ __('Пожалуйста, подтвердите свой пароль, прежде чем продолжить.') }}
             <form method="POST" action="{{ route('password.confirm') }}">
                 @csrf
                 <div class="row mb-3">
-                    <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                    <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Пароль') }}</label>
                     <div class="col-md-6">
-                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                        <input id="password" type="password" class="form-control bg-secondary text-light @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -22,11 +22,11 @@
                 <div class="row mb-0">
                     <div class="col-md-8 offset-md-4">
                         <button type="submit" class="btn btn-primary">
-                            {{ __('Confirm Password') }}
+                            {{ __('Подтвердить Парол') }}
                         </button>
                         @if (Route::has('password.request'))
                             <a class="btn btn-link" href="{{ route('password.request') }}">
-                                {{ __('Forgot Your Password?') }}
+                                {{ __('Забыли свой пароль?') }}
                             </a>
                         @endif
                     </div>

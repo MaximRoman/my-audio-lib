@@ -6,23 +6,21 @@
         <form id="book-{{$item->id}}" action="/book/{{$item->id}}"></form>
         <div class="card bg-gray border-success mb-3">
             <div class="card-header border-success">
-                <div class="row align-items-center">
-                    <add-to-fav :book="{{$item->id}}" :user-id="{{json_encode($user)}}"></add-to-fav>
-                    <h4 class="col-8 text-center"  style="cursor: pointer;"  onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }} </h4>
-                    <edit-delete-btns class="col-2" :book="{{$item->id}}" :admin-prop="{{json_encode($admin)}}"></edit-delete-btns>
+                <div class="row w-100 align-items-center justify-content-center">
+                    <h4 class="m-0 p-0 text-center"  style="cursor: pointer;"  onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }} </h4>
                 </div>
             </div>
-            <div class="card-body row">
-                <div class="col-4">
+            <div class="card-body row justify-content-start">
+                <div class="col-md-auto col-12 d-flex justify-content-center">
                     @foreach ($images as $image)
                         @if ($item->id === $image->book_id)
-                            <img class="img-fluid" src="{{ 'https://laravelmyaudiolib.s3.amazonaws.com/' . $image->image }}"  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
+                            <img src="{{ 'https://laravelmyaudiolib.s3.amazonaws.com/' . $image->image }}"  style="cursor: pointer; height: 300px; width: 200px;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
                         @endif
                     @endforeach
                 </div>
-                <div class="col-8">
+                <div class="col-lg-8 col-md-6">
                     <div class="m-0">
-                        <span class="h5 me-2">Автор :</span>
+                        <span class="h5 me-2">Автор:</span>
                         @foreach ($authors as $author)
                             @if ($item->id === $author->book_id)
                                 <a class="my-link h5 text-success" href="/search/{{$author->author}}/">{{ $author->author }}</a>
@@ -33,7 +31,7 @@
                         @endforeach
                     </div>
                     <div class="mt-3">
-                        <span class="h5 me-2">Читает :</span>
+                        <span class="h5 me-2">Читает:</span>
                         @foreach ($readers as $reader)
                             @if ($item->id === $reader->book_id)
                                 <a class="my-link h5 text-success" href="/search/{{$reader->reader}}/">{{ $reader->reader }}</a>
@@ -44,7 +42,7 @@
                         @endforeach
                     </div>
                     <div class="mt-3">
-                        <span class="h5 me-2">Длительность :</span>
+                        <span class="h5 me-2">Длительность:</span>
                         @foreach ($duration as $durationItem)
                             @if ($item->id === $durationItem->book_id)
                                 <audio-duration class="h5 text-primary" :duration-value="{{$durationItem->duration}}"></audio-duration>
@@ -61,7 +59,7 @@
                         @endforeach
                     </div> --}}
                     <div class="mt-3">
-                        <span class="h5 me-2">Категория :</span>
+                        <span class="h5 me-2">Категория:</span>
                         @foreach ($categories as $category)
                             @if ($item->id === $category->book_id)
                                 <a class="my-link h5 text-success" href="/category/{{$category->temp_category}}/">{{ $category->category }}</a>
@@ -72,7 +70,7 @@
                         @endforeach
                     </div>
                     <div class="mt-3">
-                        <span class="h5 me-2">Описание :</span>
+                        <span class="h5 me-2">Описание:</span>
                         <p  style="cursor: pointer;" onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">
                             @foreach (explode(' ', $item->description) as $str)
                                 @if ($loop->index < 30)
@@ -111,23 +109,24 @@
                     @if ($page == 1)
                         <button class="w-100 btn btn-outline-success" type="submit" @disabled(true)><i class="fa-solid fa-arrow-left"></i></button>
                     @else
-                        <a class="w-100 btn btn-outline-success" href="/{{$link}}page/{{$page - 1}}"><i class="fa-solid fa-arrow-left"></i></a>
+                        <a class="w-100 btn btn-outline-success d-flex align-items-center justify-content-center" href="/{{$link}}page/{{$page - 1}}"><i class="fa-solid fa-arrow-left"></i></a>
                     @endif 
                 </div>
                 <div class="d-flex gap-2">
-                    @for ($i = 0; $i < $totalPages; $i++)
+                    {{-- @for ($i = 0; $i < $totalPages; $i++)
                         @if ($i + 1 == $page)
                             <button class="btn btn-success rounded-circle">{{$i + 1}}</button>
                         @else
                             <a class="btn btn-outline-success rounded-circle" href="/{{$link}}page/{{$i + 1}}">{{$i + 1}}</a>
                         @endif
-                    @endfor
+                    @endfor --}}
+                    <h3 class="text-success">{{$page}} / {{$totalPages}}</h3>
                 </div>
                 <div class="d-flex gap-2 col-2">
                     @if($page == $totalPages)
                         <button class="w-100 btn btn-outline-success" type="submit" @disabled(true)><i class="fa-solid fa-arrow-right"></i></button>
                     @else
-                        <a class="w-100 btn btn-outline-success" href="/{{$link}}page/{{$page + 1}}"><i class="fa-solid fa-arrow-right"></i></a>
+                        <a class="w-100 btn btn-outline-success d-flex align-items-center justify-content-center" href="/{{$link}}page/{{$page + 1}}"><i class="fa-solid fa-arrow-right"></i></a>
                     @endif
                 </div>
             </div>

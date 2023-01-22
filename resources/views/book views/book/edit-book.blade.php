@@ -3,7 +3,7 @@
 @section('content')
     <div class="card border-0 h-100 rounded-0 bg-gray">
         <div class="card-body">
-            <h3 class="text-center">Изменить Данные Книги :</h3>
+            <h3 class="text-center">Редактировать Данные Книги :</h3>
             <form class="form-group row justify-content-center" action="/">
                 <div class="col-4 h-100 p-0 m-0">
                     <div class="d-flex flex-column align-items-start gap-2">

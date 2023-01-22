@@ -4,18 +4,24 @@
             <div class="col-md-8">
                 <div class="card bg-secondary">
                     <div class="card-header d-flex flex-column gap-3">
-                        <div class="d-flex justify-content-between" id="control-panel">
-                            <div class="d-flex align-items-center justify-content-center gap-3">
-                                <button class="btn btn-outline-success" @click="prev()" :disabled="isDisabled('prev')"><i class="fa-solid fa-backward-step"></i></button>
+                        <div class="row justify-content-between align-items-center" id="control-panel">
+                            <div class="col-6 d-flex align-items-center justify-content-start gap-1">
+                                <!-- <button class="btn btn-outline-success" @click="prev()" :disabled="isDisabled('prev')"><i class="fa-solid fa-backward-step"></i></button> -->
                                 <button class="btn btn-outline-success" @click="prev15Sec()"><i class="fa-solid fa-backward"></i></button>
                                 <button class="btn btn-outline-success" v-if="!playing" @click="play()"><i  class="fa-solid fa-play"></i></button>
                                 <button class="btn btn-outline-success" v-else @click="pause()"><i class="fa-solid fa-pause"></i></button>
                                 <button class="btn btn-outline-success" @click="next15Sec()"><i class="fa-solid fa-forward"></i></button>
-                                <button class="btn btn-outline-success" @click="next()" :disabled="isDisabled('next')"><i class="fa-solid fa-forward-step"></i></button>
+                                <!-- <button class="btn btn-outline-success" @click="next()" :disabled="isDisabled('next')"><i class="fa-solid fa-forward-step"></i></button> -->
                             </div>
-                            <div class="slider-cont text-success d-flex align-items-center gap-1">
-                                <i class="fa-solid fa-volume-high" id="volume-icon" @click="muted()"></i>    
-                                <input type="range" min="0" max="100" value="100" id="volume-input" @input="volume()">
+                            <div class="col-6 text-success d-flex justify-content-end ">
+                                <div class="row align-items-center">
+                                    <div class="col-2 d-flex align-items-center">
+                                        <i class="fa-solid fa-volume-high" id="volume-icon" @click="muted()"></i>    
+                                    </div>
+                                    <div class="col-10 d-flex align-items-center">
+                                        <input class="w-100" type="range" min="0" max="100" value="100" id="volume-input" @input="volume()">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div >

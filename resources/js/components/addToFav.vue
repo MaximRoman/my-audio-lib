@@ -34,7 +34,6 @@
                 form.append('user', this.userId);
                 form.append('book', this.book);
                 axios.post('/get-fav-status', form).then((result) => {
-                    console.log(this.book, result.data.status);
                     this.checked = result.data.status;
                 }).catch((err) => {
                     console.log(err);

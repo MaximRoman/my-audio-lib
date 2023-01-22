@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card rounded-0 h-100 bg-gray border-0">
-        <h3 class="text-center">Reset Password:</h3>
+        <h3 class="text-center">Сброс пароля:</h3>
         <br>
         <div class="card-body">
             @if (session('status'))
@@ -13,9 +13,9 @@
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
                 <div class="row mb-3">
-                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                    <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Эл. адрес') }}</label>
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                        <input id="email" type="email" class="form-control bg-secondary text-light @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -26,7 +26,7 @@
                 <div class="row mb-0">
                     <div class="col-md-6 offset-md-4">
                         <button type="submit" class="btn btn-success">
-                            {{ __('Send Password Reset Link') }}
+                            {{ __('Отправить ссылку для сброса пароля') }}
                         </button>
                     </div>
                 </div>
