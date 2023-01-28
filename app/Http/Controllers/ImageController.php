@@ -74,7 +74,7 @@ class ImageController extends Controller
     }
 
     public function selectImage() {
-        $images = Images::orderBy('created_at', 'desc')->get();
+        $images = Images::orderBy('created_at', 'DESC')->get();
 
         return view('book views/image/select-image', ['images' => $images]);
     }

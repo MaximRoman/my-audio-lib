@@ -7,7 +7,6 @@
                 <div class="mb-3">
                     <edit-delete-btns class="d-flex justify-content-between" :book="{{$book->id}}" :admin-prop="{{json_encode($admin)}}"></edit-delete-btns>
                     <h4 class="text-center">{{ $book->title }} </h4>
-                    
                 </div>
                 <div class="col-md-auto col-12  d-flex justify-content-center">
                     @foreach ($images as $image)
@@ -74,7 +73,7 @@
                 </div>
                 
                 <div class="mt-3 d-flex justify-content-between">
-                    <add-to-fav :book="{{$book->id}}" :fav-prop="{{json_encode($fav)}}" :user-id="{{$userId}}"></add-to-fav>
+                    <add-to-fav :book="{{$book->id}}" :user-id="{{json_encode($userId)}}"></add-to-fav>
                     <like-book :book="{{json_encode($book)}}" :user="{{json_encode($user)}}" :btn="{{json_encode(true)}}"></like-book>
                 </div>
                 <audio-player class="mt-5" :file="{{ $files }}"></audio-player>

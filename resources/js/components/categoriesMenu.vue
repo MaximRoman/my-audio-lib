@@ -127,6 +127,7 @@
             this.ul = document.getElementById('categories-menu')
             this.pageWidth = document.querySelector('html').clientWidth;
             if (this.pageWidth < 768) {
+                this.ul.style.display = 'none';
                 this.ul.classList.add('invisible');
             }
         },
@@ -134,8 +135,10 @@
             showHidden() {
                 console.log(this.ul.classList);
                 if (this.ul.classList.contains('invisible')) {
+                    this.ul.style.display = 'inline-block';
                     this.ul.classList.remove('invisible');
                 } else {
+                    this.ul.style.display = 'none';
                     this.ul.classList.add('invisible');
                 }
             },

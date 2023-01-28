@@ -2,7 +2,7 @@
   <div  id="top-navbar" class="row h-100 p-0 m-0">
     <div v-if="show" id="search-input-container" class="col-10 h-100 row p-3">
       <div class="col-10 p-0 m-0">
-        <input id="search-input" class="form-control rounded-0 rounded-start w-100 h-100 bg-secondary text-light"  placeholder="Поиск..." @keypress="press()">
+        <input id="search-input" class="form-control rounded-0 rounded-start w-100 h-100 bg-secondary text-light"  placeholder="Поиск..." @change="globalSearch()">
       </div>
       <div class="col-2 p-0 m-0">
         <button id="search-clear" class="btn btn-danger rounded-0 rounded-end w-100 h-100 border-start-0 border-light" @click="hiddenSearchInput()"><i class="fa-solid fa-xmark"></i></button>
@@ -20,7 +20,7 @@
     <div id="faq" class="col-2 h-100 d-flex align-items-center justify-content-center">
       <a class="h-100 w-100 btn btn-outline-gray d-flex align-items-center justify-content-center border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" href="#"><img src="https://my-audio-lib-icons-6vnqjd8ju-maximroman.vercel.app/icons/faq1.png" alt=""></a>
     </li>        -->
-    <div v-if="!show" id="theme" class="col-4 p-0">
+    <div id="theme" :class="['col-4', 'p-0', show ? 'invisible' : '']">
       <a class="h-100 w-100 p-0 d-flex align-items-center justify-content-center text-dark btn btn-outline-gray border-top-0 border-bottom-0 border-start-0 border-end-2 rounded-0" id="theme-btn"><h1><i class="fa-solid fa-moon" ></i></h1></a>
     </div> 
   </div>
@@ -43,16 +43,8 @@
           hiddenSearchInput() {
             this.show = false;
           },
-          press() {
-            console.log(event.target.value);
-              switch (event.key) {
-                case 'Enter':
-                  this.globalSearch(event.target.value);
-                  break;
-              }
-            },
-          globalSearch(text) {
-            window.location = '/search/' + text + '/';
+          globalSearch() {
+            window.location = '/search/' + event.target.value + '/';
           },
         },
     }

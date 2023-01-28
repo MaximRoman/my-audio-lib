@@ -149,6 +149,7 @@ class HomeController extends Controller
         // dd($page*$limit);
         $totalPages = ceil(count(Books::whereIn('id', $booksId)->get()) / $limit);
         $books = Books::whereIn('id', $booksId)
+                        ->orderBy('created_at', 'DESC')
                         ->skip(($page - 1)*$limit)->take($limit)
                         ->get();
         $images = Images::join('book_image', 'book_image.image_id', '=', 'images.id')

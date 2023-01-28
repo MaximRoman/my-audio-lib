@@ -14,23 +14,7 @@
                     <div class="progress-bar" role="progressbar" :style="{width: totalDurationProgress + '%'}">
                     </div>
                     <span class="position-absolute h-100 start-50 d-flex align-items-center h6">{{ totalDurationProgress }}%</span>
-                </div>     
-                <div class="row justify-content-evenly mt-3">
-                    <div class="col-5 row justify-content-center">
-                        <select :class="['form-control', childs]" id="text1" multiple style="overflow: auto;" disabled>
-                            <option  v-for="file in filesOrder">
-                                {{ file.name }}  
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-5 row justify-content-center">
-                        <select :class="['form-control', childs]" id="text2" multiple style="overflow: auto;" disabled>
-                            <option v-for="file in filesFinish">
-                                {{ file.name }}
-                            </option>
-                        </select>
-                    </div>
-                </div>
+                </div>   
             </div>
             <div class="card-footer d-flex gap-3 p-3">
                 <div class="w-100">

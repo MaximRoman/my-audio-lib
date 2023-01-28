@@ -111,7 +111,7 @@
         <footer class="container bg-secondary border-top border-dark pt-4 pb-4 rounded-md-bottom-4">
             <div class="container">            
                 <div class="d-flex flex-warp justify-content-between gap-2" id="navbarSupportedContent">
-                    <h5>Copyright &copy; 2022 | Design by Roman Maxim</h5>
+                    <small>Copyright &copy; 2022 | Design by Roman Maxim</small>
                     <div class="d-flex gap-2">
                         <a class="nav-link link-success" href="https://www.facebook.com/maxim.roman.18" target="_blank"><h5><i class="fa-brands fa-facebook-f"></i></h5></a>
                         <a class="nav-link link-success" href="https://www.linkedin.com/in/maxim-roman-392888253/" target="_blank"><h5><i class="fa-brands fa-linkedin-in"></i></h5></a>

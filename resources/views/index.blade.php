@@ -6,7 +6,8 @@
         <form id="book-{{$item->id}}" action="/book/{{$item->id}}"></form>
         <div class="card bg-gray border-success mb-3">
             <div class="card-header border-success">
-                <div class="row w-100 align-items-center justify-content-center">
+                <div class="">
+                    <edit-delete-btns class="d-flex justify-content-between" :book="{{$item->id}}" :admin-prop="{{json_encode($admin)}}"></edit-delete-btns>
                     <h4 class="m-0 p-0 text-center"  style="cursor: pointer;"  onclick="event.preventDefault(); document.getElementById('book-{{$item->id}}').submit();">{{ $item->title }} </h4>
                 </div>
             </div>

@@ -3,10 +3,10 @@
         <div class="card-header ">
             <div class="row align-items-center">
                 <span class="col-3">Коментарии :</span>
-                <div class="col-9 d-flex">
+                <!-- <div class="col-9 d-flex">
                     <input id="search-comment" class="form-control bg-secondary text-light" type="text" name="search-comment" placeholder="Поиск . . ." @input="searchComment()">
                     <button id="search-comment-btn" class="btn btn-danger rounded-0 rounded-end border border-start-0 invisible" @click="searchResetInput()"><i class="fa-solid fa-xmark"></i></button>
-                </div>
+                </div> -->
             </div>
         </div>
         <div class="card-body">
@@ -61,21 +61,21 @@
             }
         },
         mounted() {
-            document.getElementById('search-comment').addEventListener('input', (event) => {
-                switch (event.target.value.length) {
-                    case 0:
-                        document.getElementById('search-comment-btn').classList.add('invisible');
-                        document.getElementById('search-comment').classList.remove('rounded-0');
-                        document.getElementById('search-comment').classList.remove('rounded-start');
-                        break;
+            // document.getElementById('search-comment').addEventListener('input', (event) => {
+            //     switch (event.target.value.length) {
+            //         case 0:
+            //             document.getElementById('search-comment-btn').classList.add('invisible');
+            //             document.getElementById('search-comment').classList.remove('rounded-0');
+            //             document.getElementById('search-comment').classList.remove('rounded-start');
+            //             break;
                 
-                    default:
-                        document.getElementById('search-comment-btn').classList.remove('invisible');
-                        document.getElementById('search-comment').classList.add('rounded-0');
-                        document.getElementById('search-comment').classList.add('rounded-start');
-                        break;
-                }
-            });
+            //         default:
+            //             document.getElementById('search-comment-btn').classList.remove('invisible');
+            //             document.getElementById('search-comment').classList.add('rounded-0');
+            //             document.getElementById('search-comment').classList.add('rounded-start');
+            //             break;
+            //     }
+            // });
             this.refreshComments();
         },
         methods: {
@@ -116,36 +116,36 @@
                     console.log(err);
                 });
             },
-            searchResetInput() {
-                document.getElementById('search-comment').value = '';
-                document.getElementById('search-comment-btn').classList.add('invisible');
-                document.getElementById('search-comment').classList.remove('rounded-0');
-                document.getElementById('search-comment').classList.remove('rounded-start');
-                this.err = null;
-                this.searchComment();
-            },
-            searchComment() {
-                let form = new FormData();
-                const inp = document.getElementById('search-comment');
-                if (inp.value.length > 0) {
-                    form.append('book', this.book);
-                    form.append('comment', inp.value);
+            // searchResetInput() {
+            //     document.getElementById('search-comment').value = '';
+            //     document.getElementById('search-comment-btn').classList.add('invisible');
+            //     document.getElementById('search-comment').classList.remove('rounded-0');
+            //     document.getElementById('search-comment').classList.remove('rounded-start');
+            //     this.err = null;
+            //     this.searchComment();
+            // },
+            // searchComment() {
+            //     let form = new FormData();
+            //     const inp = document.getElementById('search-comment');
+            //     if (inp.value.length > 0) {
+            //         form.append('book', this.book);
+            //         form.append('comment', inp.value);
 
-                    axios.post('/search-comments', form).then((result) => {
-                        if (result.data.comments.length > 0) {
-                            this.comments = result.data.comments;
-                            this.err = null;
-                        } else {
-                            this.comments = [];
-                            this.err = "По вашему запросу ничего не найдено.";
-                        }
-                    }).catch((err) => {
-                        console.log(err);
-                    });
-                } else {
-                    this.refreshComments();
-                }
-            },
+            //         axios.post('/search-comments', form).then((result) => {
+            //             if (result.data.comments.length > 0) {
+            //                 this.comments = result.data.comments;
+            //                 this.err = null;
+            //             } else {
+            //                 this.comments = [];
+            //                 this.err = "По вашему запросу ничего не найдено.";
+            //             }
+            //         }).catch((err) => {
+            //             console.log(err);
+            //         });
+            //     } else {
+            //         this.refreshComments();
+            //     }
+            // },
         },
     }
 </script>
