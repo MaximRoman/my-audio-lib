@@ -40,7 +40,7 @@
                         </div>
                     </div>
                     <div class="card-body p-0">
-                        <pre class="form-control border-0 rounded-0 rounded-bottom bg-secondary text-light m-0" name="comment" id="comment-text" disabled>{{ item.comment }}</pre>
+                        <p class="form-control border-0 rounded-0 rounded-bottom bg-secondary text-light m-0 w-100" name="comment" id="comment-text">{{ item.comment }}</p>
                     </div>
                 </div>
             </div>
